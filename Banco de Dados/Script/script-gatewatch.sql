@@ -1,0 +1,2 @@
+CREATE DATABASE GateWatch;
+USE GateWatch;
