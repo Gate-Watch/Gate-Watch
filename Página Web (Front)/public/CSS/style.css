@@ -1,7 +1,10 @@
 * {
+    
     margin: 0;
     padding: 0;
 }
+
+
 
 body {
     font-size: 25px;
@@ -11,29 +14,36 @@ body {
 
 .header {
     background-color: #1D2332;
-    width: 100vw;
+    width: 100%;
+    height: 60%;
     display: flex;
     justify-content: center;
+    margin-bottom: 0%;
 }
 
 .header img {
-    width: 200px;
+    width: 108px;
 }
+
 
 .header .navbar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 35%;
+    font-size: 17px;
+    font-family: Inter, monospace;
+    margin-right: 5%;
 }
 
 .header .navbar a {
     color: white;
+    text-decoration: none;
 }
 
 .header .navbar a:hover{
-    color: red;
+    color: #5A8FB1;
 }
 
 .content {
@@ -42,7 +52,7 @@ body {
 
 .footer {
     background-color: #1D2332;
-    width: 100vw;
+    width: 100%;
     color: white;
 }
 
@@ -51,8 +61,21 @@ body {
 }
 
 .containerHeader {
-    width: 90%;
-    height: 100%;
+    width: 100%;
+    height: 20%;
     display: flex;
     justify-content: space-between;
+}
+
+.viao{
+    width: 100%;
+}
+
+.containerContent {
+    background-color: #1D2332;
+    background-image: url(../Images/viao.png);
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
