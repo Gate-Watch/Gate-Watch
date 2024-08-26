@@ -106,3 +106,25 @@ body {
     bottom: 180px;
     left: 35px;
 }
+
+.containerContent button{
+    background-color: #1D2332;
+    border: none;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    bottom: 50px;
+    left: 300px;
+    padding: 20px 50px ;
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+    border-radius: 27px;
+    font-family: poppins;
+}
+
+.content b{
+    font-family: poppins-sb;
+    position: relative;
+    left: 50%;
+    right: 50%;
+}
