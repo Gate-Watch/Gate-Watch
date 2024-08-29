@@ -18,15 +18,40 @@
     <div class="header">
         <div class="containerHeader">
             <img src="../Images/gwLogo_white.png" alt="Gate Watch Logo">
+
             <div class="navbar" id="home">
-                <a href="index.html#home">Home</a>
-                <a href="sobre.html">Sobre Nós</a>
-                <a href="index.html#servicos-ir">Serviços</a>
-                <a href="">Fale Conosco</a>
-                <a href="">Login</a>
+                <a href="index.html#home" id="home-link">Home</a>
+                <a href="sobre.html" id="sobre-link">Sobre Nós</a>
+                <a href="index.html#servicos-ir" id="servicos-link">Serviços</a>
+                <a href="#" id="contato-link">Fale Conosco</a>
+                <a href="#" id="cadastro-link">Cadastro</a>
+                
+
             </div>
         </div>
     </div>
+
+    <div class="container-cadastro" id="cadastro-container" style="display: none;">
+        <div class="cadastro-box">
+            <img src="../Images/gwLogo_black.png" alt="">
+            <h2>Seja bem-vindo ao</h2>
+                 <h1><b>Gatewatch</b></h1>
+            <form>
+                <select>
+                    <option>Analista</option>
+                    <option>Supervisor</option>
+                </select>
+                <input type="text" placeholder="Insira seu nome">
+                <input type="email" placeholder="Insira seu email">
+                <input type="text" placeholder="Insira seu ID">
+                <input type="password" placeholder="Insira sua senha">
+                <input type="password" placeholder="Confirme sua senha">
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+
     <div class="content">
         <div class="containerContent">
             <br>
@@ -62,3 +87,34 @@
 </body>
 
 </html>
+
+<script>
+
+var cadastroLink = document.getElementById('cadastro-link');
+var cadastroContainer = document.getElementById('cadastro-container');
+
+cadastroLink.onclick = function() {
+    cadastroContainer.style.display = 'flex';
+};
+
+
+document.getElementById('home-link').onclick = function() {
+    cadastroContainer.style.display = 'none';
+};
+
+document.getElementById('sobre-link').onclick = function() {
+    cadastroContainer.style.display = 'none';
+};
+
+document.getElementById('servicos-link').onclick = function() {
+    cadastroContainer.style.display = 'none';
+};
+
+document.getElementById('contato-link').onclick = function() {
+    cadastroContainer.style.display = 'none';
+};
+
+
+
+
+</script>

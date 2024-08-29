@@ -169,3 +169,62 @@ body {
     margin: 15px;
     margin-top: 0px;
   }
+
+  .container-cadastro {
+    position: fixed; 
+    top: 40;
+    right: 0;
+    width: 70vh; 
+    height: 90vh;
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    background-color: #e9e9e8; 
+}
+
+.cadastro-box {
+    width: 40vh; 
+    height: auto;
+    background-color: #e9e9e8;
+    padding: 20px;
+    border-radius: 10px;
+    margin-right: 5%; 
+}
+
+.cadastro-box h1{
+    font-family:Arial, Helvetica, sans-serif
+}
+
+.cadastro-box img {
+    width: 100px;
+    height: 90px;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, select, button {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #5f637a;
+
+}
+input::placeholder {
+    background-color: #5f637a;
+    color: white;
+}
+
+button {
+    background-color: #3e446b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555;
+}
