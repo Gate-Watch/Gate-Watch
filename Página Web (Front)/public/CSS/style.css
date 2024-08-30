@@ -57,7 +57,7 @@ body {
 }
 
 .content {
-    background-color: #9e9e9e;
+    background-color: #B4B4B4;
     text-align: center;
 }
 
@@ -91,7 +91,7 @@ body {
     background-size: cover;
     color: white;
     text-shadow: 2px 2px 5px black;
-    border-bottom:solid 2px #1D2332;
+    border-bottom:solid 1px #464f66;
 }
 
 .containerContent span{
@@ -106,7 +106,7 @@ body {
     font-size: 1.3vw;
     position: absolute;
     font-family: poppins;
-    bottom: 180px;
+    bottom: 175px;
     left: 35px;
 }
 
@@ -115,8 +115,8 @@ body {
     border: none;
     position: absolute;
     transform: translate(-50%, -50%);
-    bottom: 115px;
-    left: 170px;
+    bottom: 108px;
+    left: 165px;
     padding: 10px 35px ;
     font-size: 12px;
     color: white;
@@ -147,7 +147,7 @@ body {
 
 .flex-container > div {
     background-color: #1D2332;
-    width: 450vw;
+    width: 50vw;
     margin: 35px;
     text-align: center;
     line-height: 35px;
@@ -166,65 +166,29 @@ body {
   .flex-container .flex-texto{
     font-family: poppins;
     font-size: 15px;
-    margin: 15px;
-    margin-top: 0px;
+    margin: 5%;
+    margin-top: -15px;
   }
+  
+    .containerInformativo{
+      margin: 0% 7% 0% 7%;
+      line-height: 40px;
+    }
 
-  .container-cadastro {
-    position: fixed; 
-    top: 40;
-    right: 0;
-    width: 70vh; 
-    height: 90vh;
-    display: none; 
-    justify-content: center;
-    align-items: center;
-    background-color: #e9e9e8; 
+  .containerInformativo .h2-esquerda{
+      color: #2d3241;
+    position: relative;
+    text-align: left;
+    left: 15px;
+    margin-top: 5%;
+    font-weight: 550;
 }
 
-.cadastro-box {
-    width: 40vh; 
-    height: auto;
-    background-color: #e9e9e8;
-    padding: 20px;
-    border-radius: 10px;
-    margin-right: 5%; 
-}
-
-.cadastro-box h1{
-    font-family:Arial, Helvetica, sans-serif
-}
-
-.cadastro-box img {
-    width: 100px;
-    height: 90px;
-}
-
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-input, select, button {
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #5f637a;
-
-}
-input::placeholder {
-    background-color: #5f637a;
-    color: white;
-}
-
-button {
-    background-color: #3e446b;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #555;
-}
+.containerInformativo .h2-direita{
+    color: #2d3241;
+    position: relative;
+    text-align: right;
+    right: 15px;
+    font-weight: 550;
+    margin-top: 2%;
+  }
