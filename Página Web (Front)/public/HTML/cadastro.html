@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro-GateWatch</title>
+    <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    
+
+<div class="header">
+    <div class="containerHeader">
+        <img src="../Images/gwLogo_white.png" alt="Gate Watch Logo">
+
+        <div class="navbar" id="home">
+            <a href="index.html#home" id="home-link">Home</a>
+            <a href="sobre.html" id="sobre-link">Sobre Nós</a>
+            <a href="index.html#servicos-ir" id="servicos-link">Serviços</a>
+            <a href="#" id="contato-link">Fale Conosco</a>
+            <a href="#" id="cadastro-link">Cadastro</a>
+            
+
+        </div>
+    </div>
+</div>
+
+    <div class="cad_Container">
+        <div class="cad_sideImage"> 
+            <h4>Já possui login?</h4>
+            <button class="cad_button"> Entrar </button>
+        </div>
+            <div class="cad_Info">
+                <img class="cad_logo" src="../Images/gwLogo_black.png" alt="">
+                <h2>Seja bem vindo ao <h3>GateWatch</h3> ! </h2>
+                <div class="cad_marcador"> <h3>Cadastro</h3> </div>
+
+                <div class="cad_dados">
+                <select name="" id="inp_cargo">
+                    <option value="#">Insira o cargo da pessoa que deseja cadastrar:</option>
+                    <option value="1">Analista</option>
+                    <option value="2">Supervisor</option>
+                </select>
+                <input class="cad_inp" type="text" placeholder="Insira seu nome">
+                <input class="cad_inp" type="email" placeholder="Insira seu email">
+                <input class="cad_inp" type="text" placeholder="Insira seu ID">
+                <input class="cad_inp" type="password" placeholder="Insira sua senha">
+                <input class="cad_inp" type="password" placeholder="Confirme sua senha">
+                <button class="cad_button" type="submit">Cadastrar</button>
+            </div>
+
+            </div> 
+
+    </div>
+
+    <div class="footer">
+        <div class="containerFooter">
+            <ul>
+                <li>gatewatch@gmail.com</li>
+                <li>+55 (11) 99999-9999</li>
+            </ul>
+            <img src="../Images/gwLogo_white.png" alt="">
+        </div>
+    </div>
+
+</body>
+</html>
+
+<style>
+
+:root{
+    --blue: 101010; 
+}
+    .cad_Container{
+        display: flex;
+        
+    }
+
+    .cad_Container .cad_sideImage .cad_Info{
+        width: 50%; /* Cada coluna ocupa 50% da largura */
+        padding: 70px; /* Espaço interno */
+        
+    }
+
+    .cad_sideImage{
+        width: 100%;
+        background-image: url(../Images/viao.png);
+        align-items: center;
+        text-align: center;
+    }
+
+    .cad_sideImage h4{
+        
+    }
+
+    .cad_Info{
+        background-color: white;
+        align-items: center;
+    }
+
+    .cad_Info .cad_logo{
+        width: 20%;
+    }
+
+    .cad_marcador{
+        align-items: center;
+        width: 50%;
+        text-align: center;
+        background-color: blue;
+    }
+
+    .cad_dados{
+        align-items: center;
+        background-color: rgb(237, 237, 235);
+        border: black solid 1px;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .cad_dados select{
+        width: 94%;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .cad_dados input{
+        width: 90%;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .cad_button{
+        width: 50%;
+        margin-left: 20%;
+        border-radius: 5px;
+    }
+
+</style>
