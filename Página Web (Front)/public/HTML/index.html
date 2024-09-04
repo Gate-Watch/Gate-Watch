@@ -15,21 +15,24 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="containerHeader">
-            <img src="../Images/gwLogo_white.png" alt="Gate Watch Logo">
-
-            <div class="navbar" id="home">
-                <a href="index.html#home" id="home-link">Home</a>
-                <a href="sobre.html" id="sobre-link">Sobre Nós</a>
-                <a href="index.html#servicos-ir" id="servicos-link">Serviços</a>
-                <a href="#" id="contato-link">Fale Conosco</a>
-                <a href="cadastro.html" id="cadastro-link">Cadastro</a>
-                
-
-            </div>
+    <nav class="navbar">
+        <div class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-    </div>
+    
+        <div class="logo">
+          <img style="width: 20%; margin-top: 2.5%;" src="../Images/gwLogo_white.png" alt="">
+        </div>
+    
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#servicos-ir" id="servicos-link">Serviços</a></li>
+          <li><a href="sobre.html">Sobre Nós</a></li>
+          <li><a href="cadastro.html">Cadastro</a></li>
+        </ul>
+      </nav>
 
     <div class="container-cadastro" id="cadastro-container" style="display: none;">
         <div class="cadastro-box">
@@ -86,14 +89,41 @@
             Vestibulum malesuada lacus sed risus venenatis, eget varius ex condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam nisl nulla, posuere accumsan fringilla non, tristique vitae purus. Pellentesque vitae vehicula urna, sit amet molestie magna. Cras ultricies dapibus tempus.
         </div>
         </div>
-    <div class="footer">
-        <div class="containerFooter">
-            <ul>
-                <li>gatewatch@gmail.com</li>
-                <li>+55 (11) 99999-9999</li>
-            </ul>
-            <img src="../Images/gwLogo_white.png" alt="">
-        </div>
-    </div>
+        <div class="footer">
+            <div class="container">
+        
+              <div class="row">
+                <div class="col-md-6 col-lg-4">
+                  <div class="footer-about">
+                    <h3>About Us</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu lectus a leo tristique dictum nec non
+                      quam. Suspendisse convallis, tortor eu placerat rhoncus, lorem quam iaculis felis, sed eleifend lacus
+                      neque id eros. Integer convallis volutpat neque
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-8">
+                  <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                      <div class="footer-contact">
+                        <h3>Entre em Contato</h3>
+                        <p><i class="fa fa-map-marker-alt"></i>123 Street, New York, USA</p>
+                        <p><i class="fa fa-phone-alt"></i>+012 345 67890</p>
+                        <p><i class="fa fa-envelope"></i>info@example.com</p>
+                        <p><i class="fa fa-clock"></i>8:00 | 20:00</p>
+        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container copyright">
+              <div class="row">
+                <p>&copy; <a href="#">Your Site Name</a>, All Right Reserved.</p>
+              </div>
+            </div>
+          </div>
 </body>
 </html>
