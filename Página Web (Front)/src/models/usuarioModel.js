@@ -7,15 +7,17 @@ function autenticar(email, senha) {
             idFuncionario, 
             nome, 
             email,
-            cargo,
+            cargo,  -- Certifique-se de que o cargo está sendo selecionado
             fkCompanhia
         FROM 
             Funcionario 
-        WHERE email = '${email}' AND senha = '${senha}';
+        WHERE 
+            email = '${email}' AND senha = '${senha}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
 
 function verificarCodigoSeguranca(codSeg) {
     const instrucao = `

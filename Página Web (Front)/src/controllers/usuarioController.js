@@ -16,7 +16,7 @@ async function autenticar(req, res) {
                     id: resultado[0].idFuncionario,
                     nome: resultado[0].nome,
                     email: resultado[0].email,
-                    cargo: resultado[0].cargo,
+                    cargo: resultado[0].cargo,  // Certifique-se de que o cargo é retornado aqui
                     fkCompanhia: resultado[0].fkCompanhia
                 });
             } else if (resultado.length === 0) {
