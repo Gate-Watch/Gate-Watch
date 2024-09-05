@@ -1,32 +1,43 @@
 var database = require("../database/config");
 
-function autenticar(email, senha, chaveSeguranca) {
-    console.log("Autenticando o usuario...");
+function autenticar(email, senha) {
+    console.log("Autenticando o usuário...");
     var instrucaoSql = `
-    SELECT 
-        idUsuario, 
-        nome, 
-        email,
-        senha
-    FROM 
-        usuario 
-    WHERE email = '${email}' AND senha = '${senha}' AND chaveSeguranca = '${chaveSeguranca}';
+        SELECT 
+            idFuncionario, 
+            nome, 
+            email,
+            cargo,
+            fkCompanhia
+        FROM 
+            Funcionario 
+        WHERE email = '${email}' AND senha = '${senha}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function cadastrar(idEmpresa, chaveSeguranca, cargo, nome, email, senha) {
-    console.log("Cadastrando o usuario...");
-
-    var instrucaoSql = `
-        INSERT INTO usuario (fkEmpresa, chaveSeguranca, cargo, nome, email, senha) VALUES ('${idEmpresa}', '${chaveSeguranca}', '${cargo}', '${nome}', '${email}', '${senha}');
+function verificarCodigoSeguranca(codSeg) {
+    const instrucao = `
+        SELECT idCompanhia 
+        FROM Companhia 
+        WHERE chave_seguranca = '${codSeg}';
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function cadastrar(idCompanhia, cargo, nome, email, senha) {
+    const instrucao = `
+        INSERT INTO Funcionario (nome, cargo, email, senha, fkCompanhia)
+        VALUES ('${nome}', '${cargo}', '${email}', '${senha}', ${idCompanhia});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
 }
 
 module.exports = {
     autenticar,
+    verificarCodigoSeguranca,
     cadastrar
 };
