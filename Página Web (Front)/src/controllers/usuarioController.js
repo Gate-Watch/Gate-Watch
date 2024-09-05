@@ -1,89 +1,85 @@
 var usuarioModel = require("../models/usuarioModel");
 
-function autenticar(req, res) {
+async function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var chaveSeguranca = req.body.chaveSegurancaServer;
 
-    if (email == undefined) {
+    if (!email) {
         res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
+    } else if (!senha) {
         res.status(400).send("Sua senha está indefinida!");
-    } else if (chaveSeguranca == undefined) {
-        res.status(400).send("Sua chave de segurança está undefined!");
     } else {
-
-        usuarioModel.autenticar(email, senha, chaveSeguranca)
-        .then(
-            function (resultadoAutenticar) {
-                console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); 
-
-                if (resultadoAutenticar.length == 1) {
-                    const usuario = resultadoAutenticar[0];
-                    res.json({
-                        id: usuario.idUsuario,
-                        email: usuario.email,
-                        nome: usuario.nome,
-                        senha: usuario.senha
-                                        });
-                } else if (resultadoAutenticar.length == 0) {
-                    res.status(403).send("Email e/ou senha inválido(s)");
-                } else {
-                    res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-                }
+        try {
+            const resultado = await usuarioModel.autenticar(email, senha);
+            if (resultado.length === 1) {
+                res.json({
+                    id: resultado[0].idFuncionario,
+                    nome: resultado[0].nome,
+                    email: resultado[0].email,
+                    cargo: resultado[0].cargo,  // Certifique-se de que o cargo é retornado aqui
+                    fkCompanhia: resultado[0].fkCompanhia
+                });
+            } else if (resultado.length === 0) {
+                res.status(403).send("Email e/ou senha inválido(s)");
+            } else {
+                res.status(403).send("Mais de um usuário com o mesmo login e senha!");
             }
-        ).catch(
-            function (erro) {
-                console.log(erro);
-                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            }
-            );
+        } catch (erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        }
     }
 }
 
-function cadastrar(req, res) {
-    var idEmpresa = req.body.idEmpresaServer;
-    var chaveSeguranca = req.body.chaveSegurancaServer;
-    var cargo = req.body.cargoServer;
+async function verificarCodigoSeguranca(req, res) {
+    var codSeg = req.body.codSeg;
+
+    try {
+        const result = await usuarioModel.verificarCodigoSeguranca(codSeg);
+        if (result.length > 0) {
+            res.json({ idCompanhia: result[0].idCompanhia });
+        } else {
+            res.status(400).send("Código de segurança inválido.");
+        }
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).send("Erro ao verificar o código de segurança.");
+    }
+}
+
+async function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
+    var codSeg = req.body.codSegServer;
+    var cargo = req.body.cargoServer;
 
+    if (!nome || !email || !senha || !codSeg || !cargo) {
+        res.status(400).send("Todos os campos devem ser preenchidos.");
+        return;
+    }
 
-    if (nome == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    } else if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
-        res.status(400).send("Sua senha está undefined!");
-    } else if (idEmpresa == undefined) {
-        res.status(400).send("Sua empresa está undefined!");
-    } else if (chaveSeguranca == undefined) {
-        res.status(400).send("Sua chave de segurança está undefined!");
-    } else if (cargo == undefined) {
-        res.status(400).send("Seu cargo está undefined!");
-    } else {
-        usuarioModel.cadastrar(idEmpresa, chaveSeguranca, cargo, nome, email, senha)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+    try {
+        // Verificar o código de segurança e obter o id da companhia
+        const result = await usuarioModel.verificarCodigoSeguranca(codSeg);
+        if (result.length === 0) {
+            return res.status(400).send("Código de segurança inválido.");
+        }
+
+        const idCompanhia = result[0].idCompanhia;
+
+        // Realizar o cadastro do funcionário
+        await usuarioModel.cadastrar(idCompanhia, cargo, nome, email, senha);
+
+        res.json({ message: "Usuário cadastrado com sucesso!" });
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).send("Erro ao realizar o cadastro.");
     }
 }
 
 module.exports = {
     autenticar,
+    verificarCodigoSeguranca,
     cadastrar
 };

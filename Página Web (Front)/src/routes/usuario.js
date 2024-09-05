@@ -12,5 +12,8 @@ router.post("/autenticar", function (req, res) {
 });
 
 
+router.post('/verificarCodigoSeguranca', function (req, res) {
+    usuarioController.verificarCodigoSeguranca(req, res);
+  });
 
 module.exports = router;

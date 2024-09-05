@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro-GateWatch</title>
   <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
-  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="./CSS/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
@@ -17,6 +18,8 @@
   <meta name="keywords" content="navbar, responsive, HTML, CSS, JavaScript, nav" />
   <meta name="author" content="Manikanta Vedula" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="../JavaScript/sessao.js"></script>
 </head>
 
 <body>
@@ -39,21 +42,21 @@
   </nav>
 
   <!-- 
-<div class="header">
-    <div class="containerHeader">
-        <img src="../Images/gwLogo_white.png" alt="Gate Watch Logo">
+  <div class="header">
+      <div class="containerHeader">
+          <img src="../Images/gwLogo_white.png" alt="Gate Watch Logo">
 
-        <div class="navbar" id="home">
-            <a href="index.html#home" id="home-link">Home</a>
-            <a href="sobre.html" id="sobre-link">Sobre Nós</a>
-            <a href="index.html#servicos-ir" id="servicos-link">Serviços</a>
-            <a href="#" id="contato-link">Fale Conosco</a>
-            <a href="#" id="cadastro-link">Cadastro</a>
-            
-        </div>
-    </div>
-</div>
--->
+          <div class="navbar" id="home">
+              <a href="index.html#home" id="home-link">Home</a>
+              <a href="sobre.html" id="sobre-link">Sobre Nós</a>
+              <a href="index.html#servicos-ir" id="servicos-link">Serviços</a>
+              <a href="#" id="contato-link">Fale Conosco</a>
+              <a href="#" id="cadastro-link">Cadastro</a>
+              
+          </div>
+      </div>
+  </div>
+  -->
   <div class="espaco"></div>
 
   <div class="cad_container painel-direito-ativo">
@@ -61,29 +64,38 @@
     <div class="cad_container__form cad_container--logIn">
       <form action="#" class="form" id="form1">
         <h2 class="cad_form__title">Cadastre-se</h2>
-        <select name="" id="inp_cargo" class="cad_slct">
+        <select name="cargo" id="inp_cargo" class="cad_slct">
           <option value="#">Insira o cargo da pessoa que deseja cadastrar:</option>
-          <option value="1">Analista</option>
-          <option value="2">Supervisor</option>
+          <option value="Analista">Analista</option>
+          <option value="Gerente">Gerente</option>
         </select>
-        <input class="cad_inp" type="text" placeholder="Insira seu nome">
-        <input class="cad_inp" type="email" placeholder="Insira seu email">
-        <input class="cad_inp" type="text" placeholder="Insira seu ID">
-        <input class="cad_inp" type="password" placeholder="Insira sua senha">
-        <input class="cad_inp" type="password" placeholder="Confirme sua senha">
-        <button class="cad_btn">Cadastrar</button>
+        <input id="nomeCadastro_input" class="cad_inp" type="text" placeholder="Insira seu nome">
+        <input id="emailCadastro_input" class="cad_inp" type="email" placeholder="Insira seu email">
+        <input id="codSegCadastro_input" class="cad_inp" type="text" placeholder="Insira seu código de segurança">
+        <input id="senhaCadastro_input" class="cad_inp" type="password" placeholder="Insira sua senha">
+        <input id="confirmaSenhaCadastro_input" class="cad_inp" type="password" placeholder="Confirme sua senha">
+        <button type="button" class="cad_btn" onclick="cadastrar()">Cadastrar</button>
       </form>
     </div>
+
 
     <!-- Sign In -->
     <div class="cad_container__form cad_container--cadastro">
       <form action="#" class="form" id="form2">
         <h2 class="cad_form__title">Logar</h2>
-        <input type="email" placeholder="Email" class="cad_inp" />
-        <input type="password" placeholder="Password" class="cad_inp" />
-        <a href="#" class="cad_link">Forgot your password?</a>
-        <button class="cad_btn">Login</button>
+        <input id="emailLogin_input" type="email" placeholder="Email" class="cad_inp" />
+        <input id="senhaLogin_input" type="password" placeholder="Senha" class="cad_inp" />
+        <a href="#" class="cad_link">Esqueceu sua senha?</a>
+        <button onclick="entrar()" class="cad_btn">Login</button>
       </form>
+    </div>
+
+    <!-- Error and Loading Cards -->
+    <div class="card_erro" id="cardErro" style="display: none; text-align: center; color: red;">
+      <span id="mensagem_erro"></span>
+    </div>
+    <div class="card_aguardar" id="div_aguardar" style="display: none; text-align: center; color: blue;">
+      <span>Aguarde...</span>
     </div>
 
     <!-- cad_sobreposicao -->
@@ -164,6 +176,7 @@
   <!-- Footer End -->
 
 </body>
+
 </html>
 
 
@@ -449,6 +462,172 @@
   };
 
   menuSlide();
+
+  async function cadastrar() {
+    var nomeVar = document.getElementById('nomeCadastro_input').value;
+    var emailVar = document.getElementById('emailCadastro_input').value;
+    var codSegVar = document.getElementById('codSegCadastro_input').value;
+    var senhaVar = document.getElementById('senhaCadastro_input').value;
+    var confirmacaoSenhaVar = document.getElementById('confirmaSenhaCadastro_input').value;
+    var cargoVar = document.getElementById('inp_cargo').value;
+
+    if (
+      nomeVar === "" || emailVar === "" || codSegVar === "" || senhaVar === "" ||
+      confirmacaoSenhaVar === "" || cargoVar === "#" || cargoVar === ""
+    ) {
+      mostrarErro("Todos os campos devem ser preenchidos.");
+      return false;
+    } else if (nomeVar.length <= 1) {
+      mostrarErro("O nome é muito curto.");
+      return false;
+    } else if (emailVar.indexOf("@") < 0 || emailVar.indexOf(".") < 0) {
+      mostrarErro("O email não é válido.");
+      return false;
+    } else if (senhaVar !== confirmacaoSenhaVar) {
+      mostrarErro("As senhas não coincidem.");
+      return false;
+    } else {
+      document.getElementById('div_aguardar').style.display = "block";
+    }
+
+    try {
+      const idEmpresa = await verificarCodigoSeguranca(codSegVar);
+
+      if (!idEmpresa) {
+        mostrarErro("Código de segurança inválido.");
+        return false;
+      }
+
+      const response = await fetch("/usuario/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nomeServer: nomeVar,
+          emailServer: emailVar,
+          codSegServer: codSegVar,
+          senhaServer: senhaVar,
+          cargoServer: cargoVar
+        }),
+      });
+
+      if (response.ok) {
+        document.getElementById('div_aguardar').style.display = "none";
+        mostrarSucesso("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
+
+        // Ao invés de redirecionar, adicionar a classe que ativa o painel de login
+        setTimeout(() => {
+          cad_container.classList.remove('painel-direito-ativo');  // Alterna para a tela de login
+        }, 2000);
+
+      } else {
+        const erroTexto = await response.text();
+        throw new Error(erroTexto);
+      }
+    } catch (erro) {
+      console.log(`#ERRO: ${erro}`);
+      mostrarErro(erro.message);
+    }
+  }
+
+
+  function mostrarErro(mensagem) {
+    document.getElementById('cardErro').style.display = "block";
+    document.getElementById('mensagem_erro').innerHTML = mensagem;
+    sumirMensagem();
+  }
+
+  function mostrarSucesso(mensagem) {
+    document.getElementById('cardErro').style.display = "block";
+    document.getElementById('mensagem_erro').style.color = "green";
+    document.getElementById('mensagem_erro').innerHTML = mensagem;
+  }
+
+  function sumirMensagem() {
+    setTimeout(() => {
+      document.getElementById('cardErro').style.display = "none";
+      document.getElementById('mensagem_erro').innerHTML = "";
+      document.getElementById('mensagem_erro').style.color = "red";
+    }, 5000);
+  }
+
+  async function verificarCodigoSeguranca(codSegVar) {
+    try {
+      const response = await fetch('/usuario/verificarCodigoSeguranca', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ codSeg: codSegVar }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Resposta do servidor:', data);
+        return data.idCompanhia;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Erro ao verificar o código de segurança:', error);
+      return null;
+    }
+  }
+
+  // Funcao login 
+  function entrar() {
+    aguardar();
+
+    var emailVar = document.getElementById("emailLogin_input").value;
+    var senhaVar = document.getElementById("senhaLogin_input").value;
+
+    if (emailVar == "" || senhaVar == "") {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Preencha todos os campos!";
+      finalizarAguardar();
+      return false;
+    } else {
+      setInterval(sumirMensagem, 3000);
+    }
+
+    fetch("/usuario/autenticar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        emailServer: emailVar,
+        senhaServer: senhaVar
+      })
+    }).then(function (resposta) {
+      if (resposta.ok) {
+        resposta.json().then(json => {
+          sessionStorage.ID_USUARIO = json.id;
+          sessionStorage.EMAIL_USUARIO = json.email;
+          sessionStorage.NOME_USUARIO = json.nome;
+          sessionStorage.CARGO_USUARIO = json.cargo;
+
+          // Redirecionar com base no cargo do usuário
+          if (json.cargo === 'Analista') {
+            window.location = "./dashboard1.html";
+          } if (json.cargo === 'Gerente') {
+            window.location = "./dashboard2.html";
+          }
+        });
+
+      } else {
+        resposta.text().then(texto => {
+          console.error(texto);
+          finalizarAguardar(texto);
+        });
+      }
+    }).catch(function (erro) {
+      console.log(erro);
+    });
+
+    return false;
+  }
 
 
 </script>
