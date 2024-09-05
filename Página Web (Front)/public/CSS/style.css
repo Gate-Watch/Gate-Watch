@@ -19,6 +19,7 @@ html {
 
 body {
     font-family: poppins;
+    background-color: #A3A3A6;
 }
 
 .navbar {
@@ -183,7 +184,7 @@ body {
 
 
 .content {
-    background-color: #B4B4B4;
+    background-color: #A3A3A6;
     text-align: center;
 }
 
@@ -297,7 +298,7 @@ body {
     }
 
   .containerInformativo .h2-direita{
-      color: #2d3241;
+      color: #314472;
     position: relative;
     text-align: left;
     left: 15px;
@@ -306,7 +307,7 @@ body {
 }
 
 .containerInformativo .h2-esquerda{
-    color: #2d3241;
+    color: #314472;
     position: relative;
     text-align: right;
     right: 15px;

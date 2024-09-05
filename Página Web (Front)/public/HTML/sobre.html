@@ -1,12 +1,114 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
     <title>GateWatch | Sobre nós</title>
+    <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 </head>
 <body>  
-    SOBRE NÓS
+    <nav class="navbar">
+        <div class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+    
+        <div class="logo">
+          <img style="width: 20%; margin-top: 2.5%;" src="../Images/gwLogo_white.png" alt="">
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+          </ul>
+        </nav>
+        <div class="quemSomos">
+            <h2>QUEM SOMOS?</h2>
+            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a nibh ac nisi semper lobortis vitae ac tortor. Suspendisse pellentesque mattis orci, sit amet sodales ligula. Vivamus et porttitor nibh. Mauris laoreet quam nec auctor maximus. Pellentesque lobortis tincidunt justo, ac pulvinar nibh lacinia vitae. Duis volutpat ut orci at pulvinar. Praesent bibendum et risus eget vehicula. In tristique sapien imperdiet, auctor ligula id, lobortis augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque felis erat, elementum ac semper nec, aliquet non tortor. Praesent varius semper ipsum efficitur laoreet. Nullam porta lobortis ipsum vitae pharetra. Donec tempus fringilla turpis hendrerit faucibus. Mauris egestas ante diam, ut ullamcorper elit luctus bibendum. Vestibulum quis risus non enim malesuada malesuada. Curabitur dignissim velit lacus. Etiam at sodales nisi. Aenean luctus turpis in tortor aliquet faucibus. Proin non est vulputate, venenatis elit quis, facilisis ante. Morbi mollis metus sed mi scelerisque, vitae commodo nulla lacinia. Cras ut suscipit mauris, ut rutrum arcu. Praesent vitae elementum ligula. Nullam volutpat auctor nibh in congue.</h5>
+            <img src="../Images/janelaviao.jpg" alt="Vista de um avião">
+            <h5>Nulla tempus aliquet eros ut laoreet. In vitae laoreet nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed imperdiet lobortis molestie. Aliquam in turpis urna. Quisque vitae magna ac elit lobortis tristique sit amet sit amet massa. Pellentesque commodo finibus quam nec vehicula. Mauris pellentesque mollis enim, vitae ultricies sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed in sollicitudin augue. Nunc sapien tellus, tempor eu nisl blandit, luctus sagittis tortor. Pellentesque pellentesque sapien mauris, at malesuada est iaculis eget.</h5>
+            <div class="comoMonitoramos">
+                <h2>COMO MONITORAMOS?</h2>
+                <div class="card">
+                    Click me
+                  </div>
+                  <div class="card">
+                    Click me
+                  </div>
+                  <div class="card">
+                    Click me
+                  </div>
+            </div>
+        </div>
 </body>
 </html>
+
+<style>
+
+.quemSomos{
+    font-family: poppins;
+    text-align: center;
+}
+
+.quemSomos h2{
+    font-family: poppins-sb;
+    font-size: 50px;
+    margin-top: 25px;
+    color: #314472;
+}
+
+.quemSomos h5{
+    font-family: poppins;
+    font-weight: 500;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.quemSomos img{
+    width: 80vw;
+    margin-top: 15px;
+    position: relative;
+    border-radius: 25px;
+}
+
+.card {
+  box-sizing: border-box;
+  width: 300px;
+  height: 404px;
+  background: rgba(217, 217, 217, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  color: black;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 50px;
+}
+
+.card:hover {
+  border: 1px solid black;
+  transform: scale(1.05);
+}
+
+.card:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}
+
+
+</style>
+
