@@ -67,10 +67,8 @@ CREATE TABLE Desempenho(
     cpu_freq DOUBLE,
     memory_usage DOUBLE,
     memory_total DOUBLE,
-    memory_perc DOUBLE,
     disk_usage DOUBLE,
     disk_total DOUBLE,
-    disk_perc DOUBLE,
     dtHora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
