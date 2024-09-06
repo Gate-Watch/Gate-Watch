@@ -1,59 +1,298 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro-GateWatch</title>
-  <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
-  <link rel="stylesheet" href="./CSS/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
-  <!-- <meta http-equiv="refresh" content="3" /> -->
-  <meta name="keywords" content="navbar, responsive, HTML, CSS, JavaScript, nav" />
-  <meta name="author" content="Manikanta Vedula" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro da Máquina</title>
+    <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script src="../JavaScript/sessao.js"></script>
 
-  <script src="../JavaScript/sessao.js"></script>
 </head>
 <body>
-    <div class="totem-container">
-        <div class="sidebar">
-            <div class="menu-perfil">
-                <div class="menu-perfil-foto"></div>
-                <h2>Margarida Sant'Anna</h2>
-                <p>Gerente de TI</p>
-            </div>
-            <div class="menu">
-                <button>Media das Máquinas</button>
-                <button>Registros de Alerta</button>
-            </div>
-        </div>
 
-        <div class="container-cadastro">
-            <h1>Cadastro do Totem</h1>
-            <div class="respostas">
-                <div class="input-cadastro">
-                    <input type="text" placeholder="Insira seu ID">
-                    <input type="password" placeholder="Insira sua senha">
-                </div>
-                <div class="input-cadastro">
-                    <input type="text" placeholder="Insira seu ID">
-                    <input type="password" placeholder="Insira sua senha">
-                </div>
-                <div class="input-cadastro">
-                    <input type="text" placeholder="Insira seu ID">
-                    <input type="password" placeholder="Insira sua senha">
-                </div>
-                <button class="cadastro-button">Cadastrar</button>
-            </div>
+<!-- Barra lateral -->
+<div class="sidebar" id="sidebar">
+  <div class="logo">
+    <img src="Images/gwLogo_white.png" alt="Logotipo" />
+  </div>
+  <a href="#home"><i class="fas fa-home"></i> Home</a>
+  <a href="#services"><i class="fas fa-concierge-bell"></i> Serviços</a>
+  <a href="#clients"><i class="fas fa-users"></i> Clientes</a>
+  <a href="#contact"><i class="fas fa-envelope"></i> Contato</a>
+</div>
+
+<!-- Conteúdo principal -->
+<div class="main-content">
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <div class="totem-container">
+    <div class="sub-sidebar">
+        <div class="menu-perfil">
+            <div class="menu-perfil-foto"></div>
+            <h2>Margarida Sant'Anna</h2>
+            <p>Gerente de TI</p>
+        </div>
+        <div class="menu">
+            <button>Média das Máquinas</button>
+            <button>Registros de Alerta</button>
         </div>
     </div>
+
+    <div class="container-cadastro">
+        <h1>Cadastro do Totem</h1>
+        <div class="respostas">
+            <div class="input-cadastro">
+                <input type="text" placeholder="Insira seu ID">
+                <input type="password" placeholder="Insira sua senha">
+            </div>
+            <div class="input-cadastro">
+                <input type="text" placeholder="Insira seu ID">
+                <input type="password" placeholder="Insira sua senha">
+            </div>
+            <div class="input-cadastro">
+                <input type="text" placeholder="Insira seu ID">
+                <input type="password" placeholder="Insira sua senha">
+            </div>
+            <button class="cadastro-button">Cadastrar</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('active');
+  }
+</script>
+
+<!-- Footer -->
+<section class="foot2">
+    <div class="footer2">
+        <div class="container2 copyright2">
+            <p>&copy; <a href="index.html">GateWatch</a>, Todos os direitos reservados.</p>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>
 
+<style>
+    /* Estilos da Barra Lateral */
+    .sidebar {
+        height: 100%;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        padding-top: 20px;
+        transition: width 0.3s;
+        overflow-x: hidden;
+    }
+    
+    .logo {
+        text-align: center;
+        padding: 10px 0;
+        margin-bottom: 20px;
+    }
+
+    .logo img {
+        max-width: 80%;
+        height: auto;
+    }
+
+    .sidebar a {
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: flex;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+    .sidebar a i {
+        margin-right: 10px;
+    }
+
+    .sidebar a:hover {
+        background-color: #575757;
+    }
+
+    .main-content {
+        margin-left: 250px;
+        padding: 20px;
+        transition: margin-left 0.3s;
+    }
+
+    .menu-btn {
+        display: none;
+        font-size: 30px;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background-color: #111;
+        color: white;
+        border: none;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    /* Responsividade */
+    @media screen and (max-width: 768px) {
+        .sidebar {
+            width: 0;
+        }
+
+        .sidebar.active {
+            width: 200px;
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
+        .menu-btn {
+            display: block;
+        }
+    }
+
+    /* Estilos do Cadastro de Máquina */
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .totem-container {
+        display: flex;
+        flex-wrap: wrap; /* Permite que os elementos se ajustem ao tamanho da tela */
+        height: auto;
+        background-color: #d3d7de;
+        color: #333;
+        padding: 20px;
+    }
+
+    .sub-sidebar {
+        width: 100%;
+        max-width: 500px;
+        background-color: #4a5268;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .menu-perfil {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .menu-perfil-foto {
+        width: 150px;
+        height: 150px;
+        background-color: white;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        margin-left: 20%;
+    }
+
+    .menu button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #37425a;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .menu button:hover {
+        background-color: #2c3651;
+    }
+
+    .container-cadastro {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .container-cadastro h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #333;
+        background-color: #88899b;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .respostas {
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .input-cadastro {
+        display: flex;
+        flex-direction: column; /* Mudança para vertical em telas pequenas */
+        gap: 10px;
+    }
+
+    .input-cadastro input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #000000;
+        border-radius: 5px;
+        background-color: #5f637a;
+    }
+
+    input::placeholder {
+        color: white;
+        opacity: 0.7;
+    }
+
+    .cadastro-button {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        margin-top: 20px;
+        background-color: #4a5268;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .cadastro-button:hover {
+        background-color: #37425a;
+    }
+
+    .footer2 {
+        background: #2c3e50;
+        color: #fff;
+        padding: 15px 0;
+        text-align: center;
+    }
+
+    .footer2 p {
+        margin: 0;
+    }
+
+    .footer2 a {
+        color: #fff;
+        text-decoration: none;
+    }
+</style>

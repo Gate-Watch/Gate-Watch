@@ -31,7 +31,7 @@
     </div>
 
     <div class="logo">
-      <img style="width: 20%; margin-top: -3%;" src="../Images/gwLogo_white.png" alt="">
+      <img class="logoImg" src="Images/gwLogo_white.png" alt="">
     </div>
 
     <ul class="nav-links">
@@ -41,23 +41,7 @@
     </ul>
   </nav>
 
-  <!-- 
-  <div class="header">
-      <div class="containerHeader">
-          <img src="../Images/gwLogo_white.png" alt="Gate Watch Logo">
-
-          <div class="navbar" id="home">
-              <a href="index.html#home" id="home-link">Home</a>
-              <a href="sobre.html" id="sobre-link">Sobre Nós</a>
-              <a href="index.html#servicos-ir" id="servicos-link">Serviços</a>
-              <a href="#" id="contato-link">Fale Conosco</a>
-              <a href="#" id="cadastro-link">Cadastro</a>
-              
-          </div>
-      </div>
-  </div>
-  -->
-  <div class="espaco"></div>
+  <div class="cad_espaco"></div>
 
   <div class="cad_container painel-direito-ativo">
     <!-- Sign Up -->
@@ -113,16 +97,16 @@
     </div>
   </div>
 
-  <div class="espaco"></div>
+  <div class="cad_espaco"></div>
 
   <!-- Footer Start -->
+   <section class="foot">
   <div class="footer">
     <div class="container">
-
       <div class="row">
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6">
           <div class="footer-about">
-            <h3>About Us</h3>
+            <h3>Sobre nós</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu lectus a leo tristique dictum nec non
               quam. Suspendisse convallis, tortor eu placerat rhoncus, lorem quam iaculis felis, sed eleifend lacus
@@ -130,51 +114,27 @@
             </p>
           </div>
         </div>
-        <div class="col-md-6 col-lg-8">
-          <div class="row">
-            <div class="col-md-6 col-lg-4">
-              <div class="footer-link">
-                <h3>Service Area</h3>
-                <a href="">Lorem ipsum</a>
-                <a href="">tempus posuere </a>
-                <a href="">velit id accumsan</a>
-                <a href="">ut porttitor</a>
-                <a href="">Nam pretium</a>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <div class="footer-link">
-                <h3>Useful Link</h3>
-                <a href="">Sed pretium</a>
-                <a href="">ultricies turpis at</a>
-                <a href="">Mauris cursus</a>
-                <a href="">consectetur</a>
-                <a href="">condimentum</a>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <div class="footer-contact">
-                <h3>Entre em Contato</h3>
-                <p><i class="fa fa-map-marker-alt"></i>123 Street, New York, USA</p>
-                <p><i class="fa fa-phone-alt"></i>+012 345 67890</p>
-                <p><i class="fa fa-envelope"></i>info@example.com</p>
-                <p><i class="fa fa-clock"></i>8:00 | 20:00</p>
-
-              </div>
-            </div>
+        <div class="col-md-6">
+          <div class="footer-contact">
+            <h3>Entre em Contato</h3>
+            <p><i class="fa fa-map-marker-alt"></i>Rua Haddock Lobo, 545</p>
+            <p><i class="fa fa-phone-alt"></i>+55 11 99999-9999</p>
+            <p><i class="fa fa-envelope"></i>gatewatch@outlook.com</p>
+            <p><i class="fa fa-clock"></i>8:00 | 20:00</p>
           </div>
         </div>
       </div>
     </div>
+    
     <div class="container copyright">
       <div class="row">
-        <p>&copy; <a href="#">Your Site Name</a>, All Right Reserved.</p>
+        <p>&copy; <a href="index.html">GateWatch</a>, Todos os direitos reservados.</p>
       </div>
     </div>
   </div>
   </div>
   <!-- Footer End -->
-
+</section>
 </body>
 
 </html>
@@ -204,217 +164,6 @@
     place-items: center;
   }
 
-  .espaco {
-    padding-top: 2%;
-  }
-
-  .cad_form__title {
-    color: #384470;
-    font-family: poppins-sb;
-    font-weight: 300;
-    margin: 0;
-    margin-bottom: 1.2rem;
-  }
-
-  .cad_link {
-    color: #515662;
-    font-size: 0.9rem;
-    margin: 1.5rem 0;
-    text-decoration: none;
-  }
-
-  h5 {
-    color: #515662;
-    font-size: 1.1rem;
-    margin: 0.5rem 0;
-    text-decoration: none;
-  }
-
-  .cad_container {
-    background-color: var(--white);
-    border-radius: var(--button-radius);
-    box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
-      0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
-    height: var(--max-height);
-    max-width: var(--max-width);
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    padding-top: 10%;
-    place-items: center;
-    align-items: center;
-  }
-
-  .cad_container__form {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    transition: all 0.6s ease-in-out;
-  }
-
-  .cad_container--cadastro {
-    left: 0;
-    width: 50%;
-    z-index: 2;
-  }
-
-  .cad_container.painel-direito-ativo .cad_container--cadastro {
-    transform: translateX(100%);
-  }
-
-  .cad_container--logIn {
-    left: 0;
-    opacity: 0;
-    width: 50%;
-    z-index: 1;
-  }
-
-  .cad_container.painel-direito-ativo .cad_container--logIn {
-    animation: show 0.6s;
-    opacity: 1;
-    transform: translateX(100%);
-    z-index: 5;
-  }
-
-  .cad_container__cad_sobreposicao {
-    height: 100%;
-    left: 50%;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    transition: transform 0.6s ease-in-out;
-    width: 50%;
-    z-index: 100;
-  }
-
-  .cad_container.painel-direito-ativo .cad_container__cad_sobreposicao {
-    transform: translateX(-100%);
-  }
-
-  .cad_sobreposicao {
-    background-color: var(--lightblue);
-    background: url("https://images7.alphacoders.com/987/thumb-1920-987916.jpg");
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-    left: -100%;
-    position: relative;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
-    width: 200%;
-  }
-
-  .cad_container.painel-direito-ativo .cad_sobreposicao {
-    transform: translateX(50%);
-  }
-
-  .cad_sobreposicao__panel {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
-    width: 50%;
-  }
-
-  .cad_sobreposicao--esquerdo {
-    transform: translateX(-20%);
-  }
-
-  .cad_container.painel-direito-ativo .cad_sobreposicao--esquerdo {
-    transform: translateX(0);
-  }
-
-  .cad_sobreposicao--right {
-    right: 0;
-    transform: translateX(0);
-  }
-
-  .cad_container.painel-direito-ativo .cad_sobreposicao--right {
-    transform: translateX(20%);
-  }
-
-  .cad_btn {
-    background-color: #eec95c;
-    background-image: linear-gradient(90deg, #d6a845 0%, #eed876 74%);
-    border-radius: 20px;
-    border: 1px solid #dfbb6c;
-    color: var(--white);
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 0.1rem;
-    padding: 0.9rem 4rem;
-    text-transform: uppercase;
-    transition: transform 80ms ease-in;
-  }
-
-  .form>.cad_btn {
-    margin-top: 1.5rem;
-  }
-
-  .cad_btn:active {
-    transform: scale(0.95);
-  }
-
-  .cad_btn:focus {
-    outline: none;
-  }
-
-  .form {
-    background-color: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 3rem;
-    height: 100%;
-    text-align: center;
-  }
-
-  .cad_inp {
-    background-color: #fff;
-    border-radius: 20px;
-    border: none;
-    padding: 0.9rem 0.9rem;
-    margin: 0.5rem 0;
-    width: 100%;
-  }
-
-  .cad_slct {
-    background-color: #fff;
-    border-radius: 20px;
-    border: none;
-    padding: 0.9rem 0.9rem;
-    margin: 0.5rem 0;
-    width: 100%;
-  }
-
-  @keyframes show {
-
-    0%,
-    49.99% {
-      opacity: 0;
-      z-index: 1;
-    }
-
-    50%,
-    100% {
-      opacity: 1;
-      z-index: 5;
-    }
-  }
-
-  a {
-    transition: .3s;
-  }
 </style>
 
 <script>

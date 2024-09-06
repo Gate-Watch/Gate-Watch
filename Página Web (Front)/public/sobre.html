@@ -6,110 +6,260 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GateWatch | Sobre nós</title>
     <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="./CSS/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
-</head>
-<body>  
-    <nav class="navbar">
-        <div class="menu-icon">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-    
-        <div class="logo">
-          <img style="width: 20%; margin-top: 2.5%;" src="../Images/gwLogo_white.png" alt="">
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="cadastro.html">Cadastro</a></li>
-          </ul>
-        </nav>
-        <div class="quemSomos">
-            <h2>QUEM SOMOS?</h2>
-            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a nibh ac nisi semper lobortis vitae ac tortor. Suspendisse pellentesque mattis orci, sit amet sodales ligula. Vivamus et porttitor nibh. Mauris laoreet quam nec auctor maximus. Pellentesque lobortis tincidunt justo, ac pulvinar nibh lacinia vitae. Duis volutpat ut orci at pulvinar. Praesent bibendum et risus eget vehicula. In tristique sapien imperdiet, auctor ligula id, lobortis augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque felis erat, elementum ac semper nec, aliquet non tortor. Praesent varius semper ipsum efficitur laoreet. Nullam porta lobortis ipsum vitae pharetra. Donec tempus fringilla turpis hendrerit faucibus. Mauris egestas ante diam, ut ullamcorper elit luctus bibendum. Vestibulum quis risus non enim malesuada malesuada. Curabitur dignissim velit lacus. Etiam at sodales nisi. Aenean luctus turpis in tortor aliquet faucibus. Proin non est vulputate, venenatis elit quis, facilisis ante. Morbi mollis metus sed mi scelerisque, vitae commodo nulla lacinia. Cras ut suscipit mauris, ut rutrum arcu. Praesent vitae elementum ligula. Nullam volutpat auctor nibh in congue.</h5>
-            <img src="../Images/janelaviao.jpg" alt="Vista de um avião">
-            <h5>Nulla tempus aliquet eros ut laoreet. In vitae laoreet nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed imperdiet lobortis molestie. Aliquam in turpis urna. Quisque vitae magna ac elit lobortis tristique sit amet sit amet massa. Pellentesque commodo finibus quam nec vehicula. Mauris pellentesque mollis enim, vitae ultricies sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed in sollicitudin augue. Nunc sapien tellus, tempor eu nisl blandit, luctus sagittis tortor. Pellentesque pellentesque sapien mauris, at malesuada est iaculis eget.</h5>
-            <div class="comoMonitoramos">
-                <h2>COMO MONITORAMOS?</h2>
-                <div class="card">
-                    Click me
-                  </div>
-                  <div class="card">
-                    Click me
-                  </div>
-                  <div class="card">
-                    Click me
-                  </div>
-            </div>
-        </div>
-</body>
-</html>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+    <script src="../JavaScript/sessao.js"></script>
+    <style>
 
-<style>
-
-.quemSomos{
+        /* Estilos da Seção Sobre */
+        .sobre{
     font-family: poppins;
     text-align: center;
+    padding: 3%;
+    padding-top: 1.5%;
 }
 
-.quemSomos h2{
+.sobre h2{
     font-family: poppins-sb;
     font-size: 50px;
     margin-top: 25px;
     color: #314472;
 }
 
-.quemSomos h5{
+.sobre h5{
     font-family: poppins;
     font-weight: 500;
     margin-left: 120px;
     margin-right: 120px;
 }
 
-.quemSomos img{
-    width: 80vw;
-    margin-top: 15px;
-    position: relative;
-    border-radius: 25px;
+.sobre img{
+  width: 35%;
+  height: 45vh;
 }
 
-.card {
-  box-sizing: border-box;
-  width: 900px;
-  height: 404px;
-  background: rgba(217, 217, 217, 0.58);
-  border: 1px solid white;
-  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(6px);
-  border-radius: 17px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.5s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bolder;
-  color: black;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  margin-left: 50px;
+.sobre_Lateral {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 1%;
+  }
 
-}
+  .sobre_Lateral img {
+    vertical-align: middle;
+    border-radius: 2px;
+  }
 
-.card:hover {
-  border: 1px solid black;
-  transform: scale(1.05);
-}
+  .txt {
+    width: 50%;
+    text-align: justify;
+  }
 
-.card:active {
-  transform: scale(0.95) rotateZ(1.7deg);
-}
+        /* Estilos de "Como Monitoramos" */
+        .containerComoMonitoramos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .CardComoMonitoramos {
+            text-align: center;
+            flex: 1 1 250px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .CardComoMonitoramos:hover {
+            background-color: #e0e0e0;
+        }
+
+        .CardComoMonitoramos .imgMonitor {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .CardComoMonitoramos h4 {
+            font-weight: bold;
+            color: #001219;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .CardComoMonitoramos p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Estilos de "Nossos Valores" */
+        .containerValores {
+            margin: 2% 5%;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .h2-valores-esq, .h2-valores-dir {
+            color: #314472;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .h2-valores-esq {
+            text-align: left;
+        }
+
+        .h2-valores-dir {
+            text-align: right;
+        }
+
+        
 
 
-</style>
+    </style>
+</head>
 
+<body>
+    <nav class="navbar">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="logo">
+            <img class="logoImg" src="Images/gwLogo_white.png" alt="GateWatch Logo">
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+        </ul>
+    </nav>
+
+    <div class="sobre">
+      <h2>QUEM SOMOS?</h2>
+
+      <div class="cad_espaco"></div>
+       
+      <div class="sobre_Lateral">
+        <div class="txt">
+          <p class="texto_princ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe dolores consequuntur soluta voluptas unde. In sequi voluptatem nulla architecto consequatur, quos nobis consequuntur maiores illo hic nihil distinctio dicta? Similique et illum, ipsum ratione odit, officiis nulla error dolorem voluptatibus maxime natus optio consequatur debitis. Ut suscipit doloribus eaque enim omnis velit accusamus minus ipsum repellat perferendis, alias quae ullam aspernatur recusandae aliquam obcaecati? Eligendi recusandae doloremque praesentium iusto! Quibusdam voluptatibus distinctio iste. Nam exercitationem atque fuga autem perferendis aspernatur blanditiis ratione consectetur. Aperiam odit laudantium quaerat aliquam, temporibus ea veniam magni maxime accusamus nisi labore voluptatem ipsum unde, cumque maiores natus architecto. Dolores modi excepturi veniam maxime, nam quia?
+          </p>
+        </div>
+        <img src="https://www.designi.com.br/images/preview/10081601-m.jpg">
+      </div>
+
+
+      <div class="cad_espaco"></div>
+
+      <div class="sobre_Lateral">
+        <img src="https://www.designi.com.br/images/preview/10081601-m.jpg">
+        <div class="txt">
+          <p class="texto_princ"> <br> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste fugit quia nam debitis ad excepturi veritatis, sunt est ullam, vitae, dolorem adipisci! Rem et ducimus repellat odit sint quaerat itaque omnis aperiam, possimus veniam ut, officiis facilis hic temporibus natus! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus sint dolorem neque expedita alias magnam quae illo nulla debitis mollitia architecto aperiam, quisquam sunt deserunt commodi! Quas natus porro asperiores laborum nisi mollitia. Asperiores atque, impedit laborum debitis labore autem. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint magnam qui earum asperiores magni placeat nemo maxime molestias, aperiam, aliquid architecto repellat mollitia accusamus nesciunt adipisci molestiae. Itaque, sequi blanditiis!
+          </p>
+        </div>
+      </div>
+
+      <div class="cad_espaco"></div>
+
+        <div class="comoMonitoramos">
+            <h2>COMO MONITORAMOS?</h2>
+            <div class="containerComoMonitoramos">
+                <div class="CardComoMonitoramos">
+                    <img class="imgMonitor" src="https://cdn-icons-png.freepik.com/256/3205/3205038.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" alt="Avião">
+                    <h4>Avião</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic voluptas nesciunt sequi?.</p>
+                </div>
+
+                <div class="CardComoMonitoramos">
+                    <img class="imgMonitor" src="https://cdn-icons-png.freepik.com/256/17555/17555298.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" alt="Italiana">
+                    <h4>Italiana</h4>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat neque quos at?</p>
+                </div>
+
+                <div class="CardComoMonitoramos">
+                    <img class="imgMonitor" src="https://cdn-icons-png.freepik.com/256/1086/1086581.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" alt="Manutenção">
+                    <h4>Manutenção</h4>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum tempora neque velit.</p>
+                </div>
+
+                <div class="CardComoMonitoramos">
+                    <img class="imgMonitor" src="https://cdn-icons-png.freepik.com/256/689/689401.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" alt="Armazenamento">
+                    <h4>Armazenamento</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio accusamus sit sed.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Nossos Valores?</h2>
+        <div class="containerValores">
+            <h1 class="h2-valores-esq">MISSÃO</h1>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce facilisis imperdiet magna, vitae tempor
+            diam porttitor vitae. Nam posuere mi vel metus lacinia, vel condimentum augue fermentum. Praesent vitae
+            ante consectetur, congue augue in, aliquet leo. Integer eget lacus ornare, pellentesque tortor in, aliquet
+            metus.
+
+            <h1 class="h2-valores-dir">VISÃO</h1>
+            Vestibulum malesuada lacus sed risus venenatis, eget varius ex condimentum. Orci varius natoque penatibus et
+            magnis dis parturient montes, nascetur ridiculus mus. Etiam nisl nulla, posuere accumsan fringilla non,
+            tristique vitae purus. Pellentesque vitae vehicula urna, sit amet molestie magna. Cras ultricies dapibus
+            tempus.
+
+            <h1 class="h2-valores-esq">VALORES</h1>
+            Vestibulum malesuada lacus sed risus venenatis, eget varius ex condimentum. Orci varius natoque penatibus et
+            magnis dis parturient montes, nascetur ridiculus mus. Etiam nisl nulla, posuere accumsan fringilla non,
+            tristique vitae purus. Pellentesque vitae vehicula urna, sit amet molestie magna. Cras ultricies dapibus
+            tempus.
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <section class="foot">
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="footer-about">
+                            <h3>Sobre nós</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu lectus a leo tristique dictum nec non quam. Suspendisse convallis, tortor eu placerat rhoncus, lorem quam iaculis felis, sed eleifend lacus neque id eros. Integer convallis volutpat neque</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="footer-contact">
+                            <h3>Entre em Contato</h3>
+                            <p><i class="fa fa-map-marker-alt"></i>Rua Haddock Lobo, 545</p>
+                            <p><i class="fa fa-phone-alt"></i>+55 11 99999-9999</p>
+                            <p><i class="fa fa-envelope"></i>gatewatch@outlook.com</p>
+                            <p><i class="fa fa-clock"></i>8:00 | 20:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container copyright">
+                <div class="row">
+                    <p>&copy; <a href="index.html">GateWatch</a>, Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer End -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</body>
+</html>
