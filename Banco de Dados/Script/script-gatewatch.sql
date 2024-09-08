@@ -42,8 +42,8 @@ CREATE TABLE Funcionario(
 );
 
 CREATE TABLE Totem(
-	idTotem INT PRIMARY KEY AUTO_INCREMENT,
-	status_totem INT NOT NULL,
+	codigo_serie VARCHAR(40) PRIMARY KEY,
+	status_totem TINYINT NOT NULL,
 	modelo_totem VARCHAR(45),
     fkCompanhia INT,
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia),
@@ -53,12 +53,12 @@ CREATE TABLE Totem(
 CREATE TABLE Monitoramento(
 	idMonitoramento INT AUTO_INCREMENT, 
 	fkFuncionario INT,
-    fkTotem INT,
+    fkTotem VARCHAR(40),
     PRIMARY KEY(idMonitoramento, fkFuncionario, fkTotem),
     dtHora_inicio DATETIME,
 	dtHora_fim DATETIME,
     FOREIGN KEY(fkFuncionario) REFERENCES Funcionario(idFuncionario),
-    FOREIGN KEY(fkTotem) REFERENCES Totem(idTotem)
+    FOREIGN KEY(fkTotem) REFERENCES Totem(codigo_serie)
 );
 
 CREATE TABLE Desempenho(
@@ -67,8 +67,10 @@ CREATE TABLE Desempenho(
     cpu_freq DOUBLE,
     memory_usage DOUBLE,
     memory_total DOUBLE,
+    memory_perc DOUBLE,
     disk_usage DOUBLE,
     disk_total DOUBLE,
+    disk_perc DOUBLE,
     dtHora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
@@ -83,3 +85,11 @@ INSERT INTO Operacao VALUES(DEFAULT, 1, 1), (DEFAULT, 2, 1);
 SELECT * FROM Aeroporto;
 SELECT * FROM Companhia;
 SELECT * FROM Operacao;
+SELECT * FROM Companhia Where nome_fantasia LIKE '%Azul%';
+
+INSERT INTO Totem VALUES
+	('1A2B3C4D', true, 'Modelo A', 1),
+	('5E6F7G8H', true, 'Modelo B', 1),
+	('9I10J11K', true, 'Modelo C', 1);
+    
+select * from Totem;
