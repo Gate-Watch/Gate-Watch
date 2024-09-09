@@ -46,12 +46,6 @@ body {
     width: 15%;
   }
 
-  .navbar .logo .logoImg:hover{
-    width: 18%;
-    transition: 0.5s;
-  }
-
-
   .navbar ul.nav-links {
     display: flex;
     justify-content: space-around;
