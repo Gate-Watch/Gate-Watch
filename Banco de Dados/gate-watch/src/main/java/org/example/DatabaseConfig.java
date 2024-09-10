@@ -11,9 +11,9 @@ public class DatabaseConfig {
     public DatabaseConfig(){
         BasicDataSource bancoDeDados = new BasicDataSource();
         bancoDeDados.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        bancoDeDados.setUrl("jdbc:mysql://localhost:3306/GateWatch");
+        bancoDeDados.setUrl("jdbc:mysql://localhost:3306/gatewatch");
         bancoDeDados.setUsername("root");
-        bancoDeDados.setPassword("#Gf52291945882");
+        bancoDeDados.setPassword("7895");
 
         template = new JdbcTemplate(bancoDeDados);
     }
