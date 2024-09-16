@@ -16,7 +16,7 @@ async function autenticar(req, res) {
                     id: resultado[0].idFuncionario,
                     nome: resultado[0].nome,
                     email: resultado[0].email,
-                    cargo: resultado[0].cargo,  // Certifique-se de que o cargo é retornado aqui
+                    cargo: resultado[0].cargo,
                     fkCompanhia: resultado[0].fkCompanhia
                 });
             } else if (resultado.length === 0) {
@@ -36,8 +36,8 @@ async function verificarCodigoSeguranca(req, res) {
 
     try {
         const result = await usuarioModel.verificarCodigoSeguranca(codSeg);
-        if (result.length > 0) {
-            res.json({ idCompanhia: result[0].idCompanhia });
+        if (result.length > 0 && result[0].cargo) {
+            res.json({ idCompanhia: result[0].idCompanhia, cargo: result[0].cargo });
         } else {
             res.status(400).send("Código de segurança inválido.");
         }
@@ -52,21 +52,21 @@ async function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var codSeg = req.body.codSegServer;
-    var cargo = req.body.cargoServer;
 
-    if (!nome || !email || !senha || !codSeg || !cargo) {
+    if (!nome || !email || !senha || !codSeg) {
         res.status(400).send("Todos os campos devem ser preenchidos.");
         return;
     }
 
     try {
-        // Verificar o código de segurança e obter o id da companhia
+        // Verificar o código de segurança e obter o id da companhia e o cargo
         const result = await usuarioModel.verificarCodigoSeguranca(codSeg);
-        if (result.length === 0) {
+        if (result.length === 0 || !result[0].cargo) {
             return res.status(400).send("Código de segurança inválido.");
         }
 
         const idCompanhia = result[0].idCompanhia;
+        const cargo = result[0].cargo;
 
         // Realizar o cadastro do funcionário
         await usuarioModel.cadastrar(idCompanhia, cargo, nome, email, senha);

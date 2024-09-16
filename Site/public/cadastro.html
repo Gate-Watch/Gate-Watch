@@ -49,15 +49,15 @@
       <form action="#" class="form" id="form1">
         <h2 class="cad_form__title">Cadastre-se</h2>
         <select name="cargo" id="inp_cargo" class="cad_slct">
-          <option value="#">Insira o cargo da pessoa que deseja cadastrar:</option>
+          <option value="#">Cargo</option>
           <option value="Analista">Analista</option>
           <option value="Gerente">Gerente</option>
         </select>
-        <input id="nomeCadastro_input" class="cad_inp" type="text" placeholder="Insira seu nome">
-        <input id="emailCadastro_input" class="cad_inp" type="email" placeholder="Insira seu email">
-        <input id="codSegCadastro_input" class="cad_inp" type="text" placeholder="Insira seu código de segurança">
-        <input id="senhaCadastro_input" class="cad_inp" type="password" placeholder="Insira sua senha">
-        <input id="confirmaSenhaCadastro_input" class="cad_inp" type="password" placeholder="Confirme sua senha">
+        <input id="nomeCadastro_input" class="cad_inp" type="text" placeholder="Nome">
+        <input id="emailCadastro_input" class="cad_inp" type="email" placeholder="Email">
+        <input id="codSegCadastro_input" class="cad_inp" type="text" placeholder="Código de segurança">
+        <input id="senhaCadastro_input" class="cad_inp" type="password" placeholder="Senha">
+        <input id="confirmaSenhaCadastro_input" class="cad_inp" type="password" placeholder="Repita a Senha">
         <button type="button" class="cad_btn" onclick="cadastrar()">Cadastrar</button>
       </form>
     </div>
@@ -299,28 +299,28 @@
     }, 5000);
   }
 
-  async function verificarCodigoSeguranca(codSegVar) {
-    try {
-      const response = await fetch('/usuario/verificarCodigoSeguranca', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ codSeg: codSegVar }),
-      });
+  async function verificarCodigoSeguranca(codSegVar, cargoVar) {
+  try {
+    const response = await fetch('/usuario/verificarCodigoSeguranca', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ codSeg: codSegVar, cargo: cargoVar }),
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Resposta do servidor:', data);
-        return data.idCompanhia;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error('Erro ao verificar o código de segurança:', error);
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Resposta do servidor:', data);
+      return data.idCompanhia; // Retorna a companhia se o código for válido
+    } else {
       return null;
     }
+  } catch (error) {
+    console.error('Erro ao verificar o código de segurança:', error);
+    return null;
   }
+}
 
   // Funcao login 
   function entrar() {
@@ -356,9 +356,9 @@
           sessionStorage.CARGO_USUARIO = json.cargo;
 
           // Redirecionar com base no cargo do usuário
-          if (json.cargo === 'Analista') {
+          if (json.cargo === 'analista') {
             window.location = "./dashboard1.html";
-          } if (json.cargo === 'Gerente') {
+          } if (json.cargo === 'gerente') {
             window.location = "./dashboard2.html";
           }
         });
@@ -375,6 +375,5 @@
 
     return false;
   }
-
 
 </script>

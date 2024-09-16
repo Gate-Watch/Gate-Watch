@@ -1,4 +1,4 @@
-DROP DATABASE GateWatch;
+DROP DATABASE IF EXISTS GateWatch;
 CREATE DATABASE GateWatch;
 USE GateWatch;
 
@@ -18,7 +18,8 @@ CREATE TABLE Companhia(
 	codigo_iata VARCHAR(3),
 	email_comp VARCHAR(45) NOT NULL,
 	telefone_comp VARCHAR(11) NOT NULL,
-    chave_seguranca VARCHAR(45) NOT NULL
+    chave_analista VARCHAR(45) NOT NULL,
+	chave_gerente VARCHAR(45) NOT NULL
 );
 
 Create Table Operacao (
@@ -74,7 +75,7 @@ CREATE TABLE Desempenho(
     dtHora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-INSERT INTO Companhia VALUES (DEFAULT, 'Azul', 'AZUL LINHAS AEREAS BRASILEIRAS S.A.', '12345678910111', 'AZU', 'AD', 'azul@azulairlines.com', '11989898989', '1A2B3C4D5E');
+INSERT INTO Companhia VALUES (DEFAULT, 'Azul', 'AZUL LINHAS AEREAS BRASILEIRAS S.A.', '12345678910111', 'AZU', 'AD', 'azul@azulairlines.com', '11989898989', '1A2B3C4D5E', 'A1B2C3D4E5');
 
 INSERT INTO Aeroporto VALUES 
 	(DEFAULT, 'Aeroporto Internacional de Guarulhos', 'SBGR', 'GRU'),

@@ -25,17 +25,20 @@
 
             <div class="menu-perfil">
                 <div class="menu-perfil-foto"></div>
-                <h2 class="fonte_perfil">Margarida Sant’anna</h2>
+                <h2 class="fonte_perfil" id="nome_perfil"></h2>
                 <p>Gerente</p>
             </div>
         </div>
 
         <a class="atual" href="#"><i class="fas fa-server"></i> Média das máquinas</a>
-<<<<<<< HEAD
-        <a href="https://docs.google.com/spreadsheets/d/1V9YiRG868daDzOMiHIur40ezF8NrSCXw_XM0hUlzUho/edit?usp=sharing"><i class="fas fa-print"></i> Registros do alerta</a>
-=======
-        <a href="https://docs.google.com/spreadsheets/d/1V9YiRG868daDzOMiHIur40ezF8NrSCXw_XM0hUlzUho/edit?gid=1895007718#gid=1895007718"><i class="fas fa-print"></i> Registros do alerta</a>
->>>>>>> 8c2353156123e043cce79bcf6098bbec6fd16fc7
+
+        <a href="https://docs.google.com/spreadsheets/d/1V9YiRG868daDzOMiHIur40ezF8NrSCXw_XM0hUlzUho/edit?usp=sharing"><i
+                class="fas fa-print"></i> Registros do alerta</a>
+
+        <a
+            href="https://docs.google.com/spreadsheets/d/1V9YiRG868daDzOMiHIur40ezF8NrSCXw_XM0hUlzUho/edit?gid=1895007718#gid=1895007718"><i
+                class="fas fa-print"></i> Registros do alerta</a>
+
         <a href="index.html"><i class="fas fa-home"></i> Sair</a>
     </div>
 
@@ -71,7 +74,7 @@
                     <h3>Memória</h3>
                     <p class="dash_metric-value">60%</p>
                 </div>
-                
+
                 <div class="metric-card">
                     <h4>Média semanal</h4>
                     <h3>Disco</h3>
@@ -136,6 +139,16 @@
 
 </html>
 
+<script>
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+ 
+    if (nomeUsuario) {
+        document.getElementById('nome_perfil').textContent = nomeUsuario;
+    } else {
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+    }
+</script>
+
 <style>
     /* Estilos da Barra Lateral */
     .sidebar {
@@ -144,7 +157,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        background-color:#2c3651;
+        background-color: #2c3651;
         padding-top: 20px;
         transition: width 0.3s;
         overflow-x: hidden;
@@ -172,7 +185,7 @@
         transition: 0.3s;
     }
 
-    .sidebar .atual{
+    .sidebar .atual {
         background-color: #1d263f;
     }
 
@@ -252,37 +265,40 @@
 
 
     .menu-perfil {
-            text-align: center;
-            margin-bottom: 5px;
-        }
+        text-align: center;
+        margin-bottom: 5px;
+    }
 
-        .menu-perfil-foto {
-            width: 110px;
-            height: 110px;
-            background-color: white;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            margin-left: 70px;
-        }
+    .menu-perfil-foto {
+        width: 110px;
+        height: 110px;
+        background-color: white;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        margin-left: 70px;
+    }
 
-        h2.fonte_perfil {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: white;
-        }
+    h2.fonte_perfil {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        color: white;
+    }
 
-        p{
-            color: #a3a3a3;
-        }
+    p {
+        color: #a3a3a3;
+    }
 
-        /* Estilos para as Métricas */
-        .metrics-container {
-            display: flex 20px;
-            flex-wrap: wrap; /* Permite que os cartões se ajustem ao tamanho da tela */
-            gap: 20px; /* Espaço entre os cartões */
-            margin-top: 20px;
-            justify-content: space-around; /* Alinha os cartões com espaçamento igual */
-        }
+    /* Estilos para as Métricas */
+    .metrics-container {
+        display: flex 20px;
+        flex-wrap: wrap;
+        /* Permite que os cartões se ajustem ao tamanho da tela */
+        gap: 20px;
+        /* Espaço entre os cartões */
+        margin-top: 20px;
+        justify-content: space-around;
+        /* Alinha os cartões com espaçamento igual */
+    }
 
     .menu button {
         width: 100%;
@@ -338,7 +354,7 @@
         /* Inclui o padding e a borda no cálculo da largura */
     }
 
-    .dash_metric-value{
+    .dash_metric-value {
         background-color: #246ab0;
         margin: 5%;
         padding: 10%;
@@ -346,12 +362,12 @@
         color: #d3d7de;
     }
 
-    .dash_metric-value:hover{
+    .dash_metric-value:hover {
         background-color: #246ab0bc;
         transition: 0.5s;
     }
 
-    .dash_metric-value2{
+    .dash_metric-value2 {
         margin-top: 1%;
         margin-bottom: 1%;
         background-color: #7590ab;
@@ -372,7 +388,7 @@
         margin-top: 30px;
         color: #333;
     }
-    
+
 
     .dash_slct {
         background-color: #fff;
@@ -385,14 +401,15 @@
         margin: 2%;
     }
 
-    .metric_card_color{
+    .metric_card_color {
         background-color: #2c3651;
         padding: 20px;
         width: 100%;
         color: white;
     }
-            /* Estilos do Footer */
-            .footer2 {
+
+    /* Estilos do Footer */
+    .footer2 {
         background: #1e263a;
         color: #fff;
         padding: 15px 0;
@@ -407,5 +424,4 @@
         color: #fff;
         text-decoration: none;
     }
-
 </style>

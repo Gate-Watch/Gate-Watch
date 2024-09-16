@@ -7,7 +7,7 @@ function autenticar(email, senha) {
             idFuncionario, 
             nome, 
             email,
-            cargo,  -- Certifique-se de que o cargo está sendo selecionado
+            cargo,
             fkCompanhia
         FROM 
             Funcionario 
@@ -18,12 +18,16 @@ function autenticar(email, senha) {
     return database.executar(instrucaoSql);
 }
 
-
 function verificarCodigoSeguranca(codSeg) {
     const instrucao = `
-        SELECT idCompanhia 
-        FROM Companhia 
-        WHERE chave_seguranca = '${codSeg}';
+            SELECT idCompanhia, 
+                CASE 
+                    WHEN chave_seguranca_analista = '${codSeg}' THEN 'analista'
+                    WHEN chave_seguranca_gerente = '${codSeg}' THEN 'gerente'
+                    ELSE null 
+                END AS cargo
+            FROM Companhia 
+            WHERE chave_seguranca_analista = '${codSeg}' OR chave_seguranca_gerente = '${codSeg}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
