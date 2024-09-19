@@ -3,17 +3,10 @@ var router = express.Router();
 
 var usuarioController = require("../controllers/usuarioController");
 
-router.post("/cadastrar", function (req, res) {
-    usuarioController.cadastrar(req, res);
-})
+router.post("/cadastrar", usuarioController.cadastrar);
 
-router.post("/autenticar", function (req, res) {
-    usuarioController.autenticar(req, res);
-});
+router.post("/autenticar", usuarioController.autenticar);
 
-
-router.post('/verificarCodigoSeguranca', function (req, res) {
-    usuarioController.verificarCodigoSeguranca(req, res);
-  });
+router.post("/verificarCodigoSeguranca", usuarioController.verificarCodigoSeguranca);
 
 module.exports = router;

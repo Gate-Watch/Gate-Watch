@@ -1,79 +1,70 @@
 var usuarioModel = require("../models/usuarioModel");
 
 async function autenticar(req, res) {
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
+    const { emailServer: email, senhaServer: senha } = req.body;
 
     if (!email) {
-        res.status(400).send("Seu email está undefined!");
+        return res.status(400).send("Seu email está undefined!");
     } else if (!senha) {
-        res.status(400).send("Sua senha está indefinida!");
-    } else {
-        try {
-            const resultado = await usuarioModel.autenticar(email, senha);
-            if (resultado.length === 1) {
-                res.json({
-                    id: resultado[0].idFuncionario,
-                    nome: resultado[0].nome,
-                    email: resultado[0].email,
-                    cargo: resultado[0].cargo,
-                    fkCompanhia: resultado[0].fkCompanhia
-                });
-            } else if (resultado.length === 0) {
-                res.status(403).send("Email e/ou senha inválido(s)");
-            } else {
-                res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-            }
-        } catch (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
+        return res.status(400).send("Sua senha está indefinida!");
+    }
+
+    try {
+        const resultado = await usuarioModel.autenticar(email, senha);
+        if (resultado.length === 1) {
+            const { idFuncionario, nome, email, cargo, fkCompanhia } = resultado[0];
+            res.json({ id: idFuncionario, nome, email, cargo, fkCompanhia });
+        } else if (resultado.length === 0) {
+            res.status(403).send("Email e/ou senha inválido(s)");
+        } else {
+            res.status(403).send("Mais de um usuário com o mesmo login e senha!");
         }
+    } catch (erro) {
+        console.error(erro);
+        res.status(500).json(erro.sqlMessage);
     }
 }
 
 async function verificarCodigoSeguranca(req, res) {
-    var codSeg = req.body.codSeg;
+    const { codSeg } = req.body;
+
+    if (!codSeg) {
+        return res.status(400).send("Código de segurança não fornecido.");
+    }
 
     try {
         const result = await usuarioModel.verificarCodigoSeguranca(codSeg);
         if (result.length > 0 && result[0].cargo) {
-            res.json({ idCompanhia: result[0].idCompanhia, cargo: result[0].cargo });
+            const { idCompanhia, cargo } = result[0];
+            res.json({ idCompanhia, cargo });
         } else {
             res.status(400).send("Código de segurança inválido.");
         }
     } catch (erro) {
-        console.log(erro);
+        console.error(erro);
         res.status(500).send("Erro ao verificar o código de segurança.");
     }
 }
 
 async function cadastrar(req, res) {
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-    var codSeg = req.body.codSegServer;
+    const { nomeServer: nome, emailServer: email, senhaServer: senha, codSegServer: codSeg } = req.body;
 
     if (!nome || !email || !senha || !codSeg) {
-        res.status(400).send("Todos os campos devem ser preenchidos.");
-        return;
+        return res.status(400).send("Todos os campos devem ser preenchidos.");
     }
 
     try {
-        // Verificar o código de segurança e obter o id da companhia e o cargo
         const result = await usuarioModel.verificarCodigoSeguranca(codSeg);
         if (result.length === 0 || !result[0].cargo) {
             return res.status(400).send("Código de segurança inválido.");
         }
 
-        const idCompanhia = result[0].idCompanhia;
-        const cargo = result[0].cargo;
-
-        // Realizar o cadastro do funcionário
+        const { idCompanhia, cargo } = result[0];
         await usuarioModel.cadastrar(idCompanhia, cargo, nome, email, senha);
 
         res.json({ message: "Usuário cadastrado com sucesso!" });
     } catch (erro) {
-        console.log(erro);
+        console.error(erro);
         res.status(500).send("Erro ao realizar o cadastro.");
     }
 }
