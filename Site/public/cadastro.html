@@ -350,7 +350,7 @@ async function entrar() {
       if (json.cargo === "analista") {
         window.location = "./dashboard1.html"; 
       } else if (json.cargo === "gerente") {
-        window.location = "./dashboard2.html"; 
+        window.location = "./dashGerenteMetricas.html"; 
       }
     } else {
       const erroTexto = await response.text();

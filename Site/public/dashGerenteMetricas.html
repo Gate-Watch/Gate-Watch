@@ -59,38 +59,40 @@
       <div class="boxMetricasGerais">
         <div class="titulo">
           <h2>Métricas Gerais por Componente</h2>
-          <select id="select_periodo">
+          <select id="select_periodo" onchange="buscarMedias()">
             <option value="0" selected disabled>Período</option>
-            <option value="diaria">Diária</option>
+            <option value="hoje">Diária</option>
             <option value="semanal">Semanal</option>
             <option value="mensal">Mensal</option>
           </select>
         </div>
-
+    
         <div class="metricas">
           <div class="box">
-            <div class="tituloBox">MÉDIA SEMANAL CPU</div>
+            <div class="tituloBox">MÉDIA CPU</div>
             <div class="boxDados">
-              <div class="dados">75%</div>
+              <div class="dados" id="media_cpu">0%</div>
               <div class="legenda"></div>
             </div>
           </div>
           <div class="box">
-            <div class="tituloBox">MÉDIA SEMANAL MEMÓRIA</div>
+            <div class="tituloBox">MÉDIA MEMÓRIA</div>
             <div class="boxDados">
-              <div class="dados">75%</div>
+              <div class="dados" id="media_memory">0%</div>
               <div class="legenda"></div>
             </div>
           </div>
           <div class="box">
-            <div class="tituloBox">MÉDIA SEMANAL DISCO</div>
+            <div class="tituloBox">MÉDIA DISCO</div>
             <div class="boxDados">
-              <div class="dados">75%</div>
+              <div class="dados" id="media_disk">0%</div>
               <div class="legenda"></div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    
 
 
       <div class="mediasTotem">
@@ -110,15 +112,15 @@
             <div class="boxDados">
               <div class="dados">
                 <h2>CPU:</h2>
-                <div class="boxInterno">75%</div>
+                <div class="boxInterno">0%</div>
               </div>
               <div class="dados">
                 <h2>MEMÓRIA:</h2>
-                <div class="boxInterno">75%</div>
+                <div class="boxInterno">0%</div>
               </div>
               <div class="dados">
                 <h2>DISCO:</h2>
-                <div class="boxInterno">75%</div>
+                <div class="boxInterno">0%</div>
               </div>
             </div>
           </div>
@@ -131,19 +133,19 @@
                 <option value="3">Totem 3</option>
               </select>
             </div>
-          
+
             <div class="boxDados">
               <div class="dados">
                 <h2>CPU:</h2>
-                <div class="boxInterno">75%</div>
+                <div class="boxInterno">0%</div>
               </div>
               <div class="dados">
                 <h2>MEMÓRIA:</h2>
-                <div class="boxInterno">75%</div>
+                <div class="boxInterno">0%</div>
               </div>
               <div class="dados">
                 <h2>DISCO:</h2>
-                <div class="boxInterno">75%</div>
+                <div class="boxInterno">0%</div>
               </div>
             </div>
           </div>
@@ -165,7 +167,6 @@
 </html>
 
 <script>
-
   const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
 
   if (nomeUsuario) {
@@ -173,4 +174,31 @@
   } else {
     document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
   }
+
+  function buscarMedias() {
+    const periodo = document.getElementById('select_periodo').value;
+
+    if (periodo !== '0') {
+      fetch(`/dashGerenteMetricas/media/${periodo}`, { method: "GET" })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        document.querySelector('.boxDados .dados').textContent = `${data.media_cpu_usage.toFixed(2)}%`;
+        document.querySelector('.boxDados .dados:nth-of-type(2)').textContent = `${data.media_memory_usage.toFixed(2)}%`;
+        document.querySelector('.boxDados .dados:nth-of-type(3)').textContent = `${data.media_disk_usage.toFixed(2)}%`;
+    })
+    .catch(error => {
+        console.error("Erro ao buscar médias:", error);
+    });
+
+    }
+  }
 </script>
+
+
+
+
