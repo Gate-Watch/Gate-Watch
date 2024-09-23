@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GateWatch | Dashboard</title>
+        <link rel="shortcut icon" type="image/png" href="Images/gwLogo_white.png">
+        <link rel="stylesheet" href="./CSS/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+        <!-- <meta http-equiv="refresh" content="3" /> -->
+        <meta name="keywords" content="navbar, responsive, HTML, CSS, JavaScript, nav" />
+        <meta name="author" content="Manikanta Vedula" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+      </head>
+
+<body>
+
+    <!-- NavBar -->
+    <nav class="navbar">
+        <div class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="logo">
+          <img class="logoImg" src="Images/gwLogo_white.png" alt="">
+        </div>
+    
+        <ul class="nav-linksDash">
+          <li><a href="cadastro.html">Sair</a></li>
+        </ul>
+    </nav>
+      <!-- NavBar -->
+
+
+    <!-- Side Bar -->
+    <div class="sidebar">
+        <div class="menu-perfil">
+            <div class="menu-perfil-foto"></div>
+            <h2 class="fonte_perfil" id="nome_perfil"></h2>
+            <p>Gerente</p>
+        </div>
+        <div class="opcoesDashboard">
+          <a href="dashGerenteMetricas.html"><button class="boxOpcoes" style="background-color: #656c99;">MÉTRICAS</button></a>            
+          <button class="boxOpcoes">ALERTAS</button>
+        </div>
+    </div>
+
+
+    <!-- Side Bar -->
+
+
+
+
+</body>
+
+</html>
+
+<script>
+
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+
+    if (nomeUsuario) {
+        document.getElementById('nome_perfil').textContent = nomeUsuario;
+    } else {
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+    }
+</script>
+
