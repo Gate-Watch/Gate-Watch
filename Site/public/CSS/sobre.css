@@ -147,12 +147,13 @@
     padding: 3%;
     padding-top: 1.5%;
     align-items: center;
-    /* display: flex; */
+    display: flex;
+    flex-direction: column;
 }
 
 .sobre h2 {
     font-family: aero;
-    font-size: 50px;
+    font-size: 10vh;
     margin-top: 25px;
     color: #314472;
     border-top: 1px solid black;
@@ -172,6 +173,11 @@
 .sobre img {
     width: 35%;
     height: 45vh;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); */
+}
+
+.texto_princ{
+  margin-top: 7vh;
 }
 
 .sobre_Lateral {
@@ -183,7 +189,8 @@
 
 .sobre_Lateral img {
     vertical-align: middle;
-    border-radius: 2px;
+    border-radius: 5%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .txt {
@@ -201,11 +208,17 @@
     padding: 20px 0;
 }
 
+.comoMonitoramos{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .CardComoMonitoramos {
     text-align: center;
     flex: 1 1 250px;
-    margin: 10px;
-    padding: 20px;
+    margin: 2vh;
+    padding: 6vh;
     background-color: #f4f4f4;
     border-radius: 10px;
     transition: background-color 0.2s;
@@ -236,9 +249,24 @@
 
 /* Estilos de "Nossos Valores" */
 .containerValores {
-    margin: 2% 5%;
     line-height: 1.8;
     text-align: justify;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.title-img{
+  display: flex;
+  flex-direction: row;
+}
+
+.title-img img{
+  width: 4%;
+  height: 4%;
+  margin-right: 3vh;
 }
 
 .h2-valores-esq,
@@ -255,4 +283,65 @@
 
 .h2-valores-dir {
     text-align: right;
+}
+
+
+
+/* FLIP CARD */
+.flip-container {
+  width: 63vh;
+  height: 54vh;
+  perspective: 100vh;
+  text-align: center;
+  margin: 2vh;
+}
+
+.flipper{
+	width: 100%;
+	height: 100%;
+	transition: transform 1.5s;
+	transform-style: preserve-3d;
+  position: relative;
+}
+
+.flipper img{
+  width: 50%;
+  height: 50%;
+}
+
+.flip-container:hover .flipper{
+	transform: rotateY(180deg);
+}
+
+.frente, .verso{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.frente{
+  background-color: #f4f4f4;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 3.5%;
+  
+}
+
+.frente img{
+  width: 38%;
+  height: 38%;
+  margin-bottom: 5%;
+  margin-top: 10%;
+}
+
+.frente h3{
+  margin-top: 10%;
+  font-weight: bold;
+}
+
+.verso{
+	transform: rotateY(180deg);
 }

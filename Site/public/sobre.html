@@ -2,217 +2,153 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GateWatch | Sobre nós</title>
-    <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
-    <link rel="stylesheet" href="./CSS/style.css">
-    <link rel="stylesheet" href="./CSS/sobre.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
-    <script src="../JavaScript/sessao.js"></script>
-    <style>
-
-        /* Estilos da Seção Sobre */
-        .sobre{
-    font-family: poppins;
-    text-align: center;
-    padding: 3%;
-    padding-top: 1.5%;
-}
-
-.sobre h2{
-    font-family: poppins-sb;
-    font-size: 50px;
-    margin-top: 25px;
-    color: #314472;
-}
-
-.sobre h5{
-    font-family: poppins;
-    font-weight: 500;
-    margin-left: 120px;
-    margin-right: 120px;
-}
-
-.sobre img{
-  width: 35%;
-  height: 45vh;
-}
-
-.sobre_Lateral {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding-bottom: 1%;
-  }
-
-  .sobre_Lateral img {
-    vertical-align: middle;
-    border-radius: 2px;
-  }
-
-  .txt {
-    width: 50%;
-    text-align: justify;
-  }
-
-        /* Estilos de "Como Monitoramos" */
-        .containerComoMonitoramos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px 0;
-        }
-
-        .CardComoMonitoramos {
-            text-align: center;
-            flex: 1 1 250px;
-            margin: 10px;
-            padding: 20px;
-            background-color: #f4f4f4;
-            border-radius: 10px;
-            transition: background-color 0.2s;
-        }
-
-        .CardComoMonitoramos:hover {
-            background-color: #e0e0e0;
-        }
-
-        .CardComoMonitoramos .imgMonitor {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-
-        .CardComoMonitoramos h4 {
-            font-weight: bold;
-            color: #001219;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-
-        .CardComoMonitoramos p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        /* Estilos de "Nossos Valores" */
-        .containerValores {
-            margin: 2% 5%;
-            line-height: 1.8;
-            text-align: justify;
-        }
-
-        .h2-valores-esq, .h2-valores-dir {
-            color: #314472;
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin: 20px 0;
-        }
-
-        .h2-valores-esq {
-            text-align: left;
-        }
-
-        .h2-valores-dir {
-            text-align: right;
-        }
-
-        
-
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GateWatch | Sobre nós</title>
+  <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
+  <link rel="stylesheet" href="./CSS/style.css">
+  <link rel="stylesheet" href="./CSS/sobre.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+  <script src="../JavaScript/sessao.js"></script>
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="menu-icon" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <div class="logo">
-            <img class="logoImg" src="Images/gwLogo_white.png" alt="GateWatch Logo">
-        </div>
-
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="sobre.html">Sobre Nós</a></li>
-            <li><a href="cadastro.html">Cadastro</a></li>
-        </ul>
-    </nav>
-
-    <div class="sobre">
-      <h2>QUEM SOMOS?</h2>
-
-      <div class="cad_espaco"></div>
-       
-      <div class="sobre_Lateral">
-        <div class="txt">
-          <p class="texto_princ">A GateWatch é uma empresa inovadora e especialista no desenvolvimento de soluções de monitoramento em tempo real para sistemas críticos, com foco especial no setor de aviação. Fundada com a missão de transformar a forma como as companhias aéreas gerenciam seus processos operacionais, oferecemos tecnologia de ponta para garantir a eficiência contínua de sistemas como os totens de check-in e outros equipamentos vitais para a operação diária de nossos clientes. Nosso trabalho se destaca pela capacidade de prever e evitar problemas antes que eles afetem as operações, gerando ganhos financeiros e operacionais para nossos parceiros. A expertise da GateWatch em análise de dados e automação de processos de alerta nos permite entregar soluções que aumentam a segurança, reduzem custos e melhoram a experiência dos passageiros. Contamos com uma equipe altamente qualificada e comprometida, composta por engenheiros, especialistas em TI e profissionais com profundo conhecimento do setor aéreo, que trabalham para oferecer as melhores ferramentas de monitoramento e suporte técnico.
-          </p>
-        </div>
-        <img src="https://img.freepik.com/fotos-premium/aviao-pousando-exatamente-no-aeroporto-da-pista_165577-193.jpg">
-      </div>
-
-
-      <div class="cad_espaco"></div>
-
-      <div class="sobre_Lateral">
-        <img src="https://www.designi.com.br/images/preview/10081601-m.jpg">
-        <div class="txt">
-          <p class="texto_princ"> <br> A confiança de grandes companhias como a Azul Linhas Aéreas reforça nossa credibilidade no mercado. Acreditamos que a inovação e a tecnologia são peças-chave para o sucesso de qualquer operação, e por isso investimos constantemente em pesquisa e desenvolvimento para criar soluções que atendam às necessidades presentes e futuras de nossos clientes. Ao atuar como um parceiro estratégico, a GateWatch contribui diretamente para que as companhias aéreas operem com excelência, pontualidade e eficiência, mantendo sua liderança no mercado competitivo da aviação.
-
-
-          </p>
-        </div>
-      </div>
-
-      <div class="cad_espaco"></div>
-
-        <div class="comoMonitoramos">
-            <h2>COMO MONITORAMOS?</h2>
-            <div class="containerComoMonitoramos">
-                <div class="CardComoMonitoramos">
-                    <img class="imgMonitor" src="https://cdn-icons-png.freepik.com/256/17555/17555298.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" alt="Italiana">
-                    <h4>Análise de Sistemas</h4>
-                    <p>Utilizamos tecnologia avançada para monitorar os sistemas críticos da companhia, identificando possíveis falhas antes que afetem o desempenho.</p>
-                </div>
-
-                <div class="CardComoMonitoramos">
-                    <img class="imgMonitor" src="https://cdn-icons-png.freepik.com/256/1086/1086581.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" alt="Manutenção">
-                    <h4>Gestão de Manutenção</h4>
-                    <p>Nosso sistema antecipa a necessidade de manutenção, permitindo intervenções rápidas e programadas para evitar paradas inesperadas.</p>
-                </div>
-
-                <div class="CardComoMonitoramos">
-                    <img class="imgMonitor" src="https://cdn-icons-png.freepik.com/256/689/689401.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" alt="Armazenamento">
-                    <h4>Controle de Armazenamento</h4>
-                    <p>Monitoramos a capacidade e o uso dos servidores, garantindo que os dados sejam processados e armazenados de forma eficiente e segura.</p>
-                </div>
-            </div>
-        </div>
-
-        <h2>Nossos Príncipios</h2>
-        <div class="containerValores">
-            <h1 class="h2-valores-esq">MISSÃO</h1>
-            Prover soluções inteligentes de monitoramento de sistemas, assegurando a eficiência operacional e a continuidade dos negócios de nossos clientes, com foco em qualidade e inovação.
-
-            <h1 class="h2-valores-dir">VISÃO</h1>
-            Ser referência global em monitoramento preventivo de sistemas críticos, transformando o setor de aviação através da tecnologia e contribuindo para operações mais seguras e eficientes.
-
-            <h1 class="h2-valores-esq">VALORES</h1>
-            Nós valorizamos a inovação contínua, buscando sempre soluções tecnológicas que melhorem a eficiência operacional de nossos clientes. Acreditamos na transparência e no compromisso com a excelência em cada projeto que desenvolvemos. Nosso foco é sempre garantir a satisfação dos clientes, criando parcerias duradouras baseadas em confiança e resultados.
-        </div>
+  <nav class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
 
-    <!-- Footer Start -->
+    <div class="logo">
+      <img class="logoImg" src="Images/gwLogo_white.png" alt="GateWatch Logo">
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="sobre.html">Sobre Nós</a></li>
+      <li><a href="cadastro.html">Cadastro</a></li>
+    </ul>
+  </nav>
+
+  <div class="sobre">
+    <h2>QUEM SOMOS?</h2>
+
+    <div class="cad_espaco"></div>
+
+    <div class="sobre_Lateral">
+      <div class="txt">
+        <p class="texto_princ">A GateWatch é uma empresa especializada em soluções de monitoramento em tempo real para
+          sistemas críticos, focando no setor de aviação. Nossa missão é transformar a gestão operacional das companhias
+          aéreas com tecnologia avançada que previne problemas e otimiza processos, resultando em ganhos financeiros e
+          operacionais. Nossa expertise em análise de dados e automação melhora a segurança, reduz custos e aprimora a
+          experiência dos passageiros. Nossa equipe é composta por profissionais altamente qualificados em engenharia,
+          TI e setor aéreo, dedicada a fornecer as melhores ferramentas de monitoramento e suporte técnico.
+        </p>
+      </div>
+      <img src="https://img.freepik.com/fotos-premium/aviao-pousando-exatamente-no-aeroporto-da-pista_165577-193.jpg">
+    </div>
+
+
+    <div class="cad_espaco"></div>
+
+    <div class="sobre_Lateral">
+      <img src="https://www.designi.com.br/images/preview/10081601-m.jpg">
+      <div class="txt">
+        <p class="texto_princ">A confiança de grandes companhias como a Azul Linhas Aéreas reforça nossa credibilidade.
+          Investimos em pesquisa e desenvolvimento para criar soluções inovadoras que atendem às necessidades dos nossos
+          clientes. Como parceiro estratégico, a GateWatch ajuda as companhias aéreas a operar com excelência,
+          pontualidade e eficiência, mantendo sua liderança no competitivo mercado da aviação.
+        </p>
+      </div>
+    </div>
+
+    <div class="cad_espaco"></div>
+
+    <div class="comoMonitoramos">
+      <h2>COMO MONITORAMOS?</h2>
+      <div class="containerComoMonitoramos">
+        <div class="CardComoMonitoramos">
+          <img class="imgMonitor"
+            src="https://cdn-icons-png.freepik.com/256/17555/17555298.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid"
+            alt="Italiana">
+          <h4>Análise de Sistemas</h4>
+          <p>Utilizamos tecnologia avançada para monitorar os sistemas críticos da companhia, identificando possíveis
+            falhas antes que afetem o desempenho.</p>
+        </div>
+
+        <div class="CardComoMonitoramos">
+          <img class="imgMonitor"
+            src="https://cdn-icons-png.freepik.com/256/1086/1086581.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid"
+            alt="Manutenção">
+          <h4>Gestão de Manutenção</h4>
+          <p>Nosso sistema antecipa a necessidade de manutenção, permitindo intervenções rápidas e programadas para
+            evitar paradas inesperadas.</p>
+        </div>
+
+        <div class="CardComoMonitoramos">
+          <img class="imgMonitor"
+            src="https://cdn-icons-png.freepik.com/256/689/689401.png?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid"
+            alt="Armazenamento">
+          <h4>Controle de Armazenamento</h4>
+          <p>Monitoramos a capacidade e o uso dos servidores, garantindo que os dados sejam processados e armazenados de
+            forma eficiente e segura.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Nossos Principios</h2>
+    <div class="containerValores">
+      <div class="flip-container">
+        <div class="flipper">
+          <div class="frente">
+            <h3>MISSÃO</h3>
+            <img src="Images/missao.png" alt="">
+          </div>
+          <div class="verso">
+            <img src="Images/missao.png" alt="">
+            <p>Prover soluções inteligentes de monitoramento de sistemas, assegurando a eficiência operacional e a
+              continuidade
+              dos negócios de nossos clientes, com foco em qualidade e inovação.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-container">
+        <div class="flipper">
+          <div class="frente">
+            <h3>VISÃO</h3>
+            <img src="Images/visao-estrategica.png" alt="">
+          </div>
+          <div class="verso">
+            <img src="Images/visao-estrategica.png" alt="">
+            <p>Ser referência global em monitoramento preventivo de sistemas críticos, transformando o setor de aviação através da tecnologia e contribuindo para operações mais seguras e eficientes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-container">
+        <div class="flipper">
+          <div class="frente">
+            <h3>VALORES</h3>
+            <img src="Images/valores.png" alt="">
+          </div>
+          <div class="verso">
+            <img src="Images/valores.png" alt="">
+            <p>Valorizamos a inovação para melhorar a eficiência operacional dos nossos clientes. Priorizamos transparência e excelência, buscando sempre a satisfação e parcerias duradouras baseadas em confiança e resultados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Start -->
   <section class="foot">
     <div class="footer">
       <div class="container">
@@ -221,7 +157,8 @@
             <div class="footer-about">
               <h3>Sobre nós</h3>
               <p>
-                A GateWatch é uma empresa voltada para soluções de monitoramento de sistemas computacionais no setor de aviação, que tem um grande foco em inovação e eficiência para garantir a satisfação de nossos clientes.
+                A GateWatch é uma empresa voltada para soluções de monitoramento de sistemas computacionais no setor de
+                aviação, que tem um grande foco em inovação e eficiência para garantir a satisfação de nossos clientes.
                 <!-- operem de forma contínua, minimizando qualquer risco de interrupção. Trabalhamos lado a lado com nossos parceiros para oferecer soluções personalizadas e de alto impacto, sempre priorizando a qualidade e a satisfação do cliente.  -->
                 <!-- Nosso time é formado por especialistas altamente capacitados, comprometidos em oferecer o melhor serviço e suporte técnico. -->
               </p>
@@ -248,10 +185,11 @@
     </div>
     <!-- Footer End -->
     <script>
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        }
+      function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+      }
     </script>
 </body>
+
 </html>
