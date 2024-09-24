@@ -6,6 +6,10 @@
   font-family: poppins;
   src: url(../Fonts/Poppins-Regular.ttf);
 }
+@font-face {
+  font-family: aero;
+  src: url(../Fonts/Airport.otf);
+}
 
 * {
   margin: 0;
@@ -173,6 +177,7 @@ body {
   font-weight: bold;
   font-family: monospace;
   letter-spacing: 1px;
+  padding: 0%;
 }
 
 .content h1 {
@@ -250,15 +255,6 @@ body {
   transition: 0.5s;
 }
 
-.content b{
-  font-size: 40px;
-  font-family: poppins-sb;
-  color: #2d3241;
-  position: static;
-  text-align: center;
-  margin-bottom: 1%;
-}
-
 .flex-container {
   display: flex;
   justify-content: center;
@@ -277,6 +273,7 @@ body {
   font-family: poppins-sb;
   font-size: 20px;
   font-weight: 400;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .flex-container > div:hover{
@@ -286,7 +283,7 @@ body {
   color: #5a8fb1;
 }
 
-  .titulo:hover{
+  .flex-container .titulo:hover{
   color: #5A8FB1;  
   transition: 0.5s;
 }
@@ -302,11 +299,11 @@ body {
     /* margin: 2% 7% 5% 7%;
     line-height: 40px;
     text-align: justify; */
-    height: 100vh;
+    height: 140vh;
     width: 100vw;
     padding: 0%;
     margin: 0%;
-    background-color: #f4f4f5;
+    background-color: #dfdfdf;
   }
 
 .containerInformativo .h2-direita{
@@ -804,6 +801,94 @@ a {
 transition: .3s;
 }
 
+.projeto{
+  display: flex;
+  flex-direction: column;
+}
+
+.projeto-text{
+  display: flex;
+  flex-direction: row;
+}
+
+.projeto-text img{
+  margin-right: 17vh;
+  margin-left: 12vh;
+  /* border: 1px solid #000000; */
+  width: 35vw;
+  border-radius: 5%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.projeto h1{
+  font-family: aero;
+  font-size: 8vh;
+  text-align: justify;
+  color: #001219;
+  align-items: center;
+}
+
+.projeto p {
+  text-align: justify;
+  margin-left: 5%;
+  padding-top: 3%;
+  font-size: larger;
+  font-weight: lighter;
+}
+
+.diferencial{
+  display: flex;
+  flex-direction: column;
+}
+
+.diferencial-text{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.diferencial-text img{
+  margin-right: 17vh;
+  margin-left: 12vh;
+  /* border: 1px solid #000000; */
+  width: 35vw;
+  border-radius: 5%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.diferencial h1{
+  font-family: aero;
+  font-size: 8vh;
+  text-align: end;
+  color: #001219;
+  align-items: center;
+}
+
+.diferencial p{
+  text-align: justify;
+  margin-right: 5%;
+  padding-top: 3%;
+  font-size: larger;
+  font-weight: lighter;
+}
+
+.servicos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center ;
+  align-items: center;
+  height: 90vh;
+}
+
+.servicos h1{
+  font-size: xx-large;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 0.50%;
+  width: fit-content;
+  margin-bottom: 5vh;
+  margin-top: 0vh;
+}
+
 
 
 
@@ -1083,7 +1168,6 @@ a {
   align-items: center;
   text-align: center;
   font-size: larger;
-  background-color: pink;
 }
 
 .mediasTotem .metricas .box .tituloBox select {
@@ -1134,3 +1218,80 @@ a {
   font-size: 2.75vh;
 }
  
+
+.conteudoAlertas {
+  width: 78.75vw;
+  height: 87vh;
+}
+
+.conteudoAlertas .tituloOpcoes {
+  width: 78.75vw;
+  height: 36vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.conteudoAlertas .tituloOpcoes .boxTitulo {
+  width: 44vw;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.conteudoAlertas .tituloOpcoes .boxTitulo .titulo {
+  width: 39vw;
+  height: 13vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.conteudoAlertas .tituloOpcoes .boxTitulo .titulo h2 {
+  font-size: 4vh;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+
+.conteudoAlertas .tituloOpcoes .boxTitulo .selectOpcoes {
+  width: 38vw;
+  height: 7vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.conteudoAlertas .tituloOpcoes .boxTitulo .selectOpcoes select {
+  width: 15vw;
+  height: 2.5vw;
+  border: none;
+  background-color: #2c3651;
+  color: white;
+  text-align: center;
+  font-size: large;
+}
+
+
+.conteudoAlertas .tituloOpcoes .boxRanking {
+  width: 34.75vw;
+  height: 34vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  
+}
+
+.conteudoAlertas .tituloOpcoes .boxRanking .ranking {
+  width: 27vw;
+  height: 29vh;
+  background-color: #c9c9c9;
+  border-radius: 10px;
+}
+
+.graficoAlertas {
+  width: 78.75vw;
+  height: 51vh;
+}

@@ -1,0 +1,116 @@
+/* Estilos da Seção Sobre */
+.sobre {
+    font-family: poppins;
+    text-align: center;
+    padding: 3%;
+    padding-top: 1.5%;
+    align-items: center;
+    /* display: flex; */
+}
+
+.sobre h2 {
+    font-family: aero;
+    font-size: 50px;
+    margin-top: 25px;
+    color: #314472;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    width: fit-content;
+    align-items: center;
+    text-align: center;
+}
+
+.sobre h5 {
+    font-family: poppins;
+    font-weight: 500;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.sobre img {
+    width: 35%;
+    height: 45vh;
+}
+
+.sobre_Lateral {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 1%;
+}
+
+.sobre_Lateral img {
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
+.txt {
+    width: 50%;
+    text-align: justify;
+}
+
+
+/* Estilos de "Como Monitoramos" */
+.containerComoMonitoramos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.CardComoMonitoramos {
+    text-align: center;
+    flex: 1 1 250px;
+    margin: 10px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    transition: background-color 0.2s;
+}
+
+.CardComoMonitoramos:hover {
+    background-color: #e0e0e0;
+}
+
+.CardComoMonitoramos .imgMonitor {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.CardComoMonitoramos h4 {
+    font-weight: bold;
+    color: #001219;
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.CardComoMonitoramos p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+
+/* Estilos de "Nossos Valores" */
+.containerValores {
+    margin: 2% 5%;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.h2-valores-esq,
+.h2-valores-dir {
+    color: #314472;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
+
+.h2-valores-esq {
+    text-align: left;
+}
+
+.h2-valores-dir {
+    text-align: right;
+}
