@@ -102,10 +102,10 @@ select * from Totem;
 
 DELIMITER //
 
-CREATE PROCEDURE SimularDesempenho30Minutos()
+CREATE PROCEDURE SimularDesempenho4Horas()
 BEGIN
     DECLARE dia INT DEFAULT 1;
-    DECLARE minuto INT;
+    DECLARE hora INT DEFAULT 0;
     DECLARE ultimo_dia INT;
     DECLARE cpu_usage DOUBLE;
     DECLARE cpu_freq DOUBLE;
@@ -115,8 +115,7 @@ BEGIN
     DECLARE disk_usage DOUBLE;
     DECLARE disk_total DOUBLE;
     DECLARE disk_perc DOUBLE;
-    DECLARE fkTotem INT DEFAULT 1;
-    DECLARE hora INT DEFAULT 0;
+    DECLARE fkTotem INT;
 
     -- Pega o último dia do mês atual
     SET ultimo_dia = DAY(LAST_DAY(CURDATE()));
@@ -124,11 +123,11 @@ BEGIN
     -- Loop para simular inserções para cada dia do mês
     WHILE dia <= ultimo_dia DO
         SET hora = 0;
-        -- Loop para cada hora do dia
+        -- Loop para cada 4 horas do dia
         WHILE hora < 24 DO
-            -- Loop para cada intervalo de 30 minutos
-            SET minuto = 0;
-            WHILE minuto < 60 DO
+            -- Loop para cada fkTotem (1, 2 e 3)
+            SET fkTotem = 1;
+            WHILE fkTotem <= 3 DO
                 -- Gerar valores aleatórios para os dados de desempenho
                 SET cpu_usage = ROUND(RAND() * 100, 1); -- CPU entre 0 e 100%
                 SET cpu_freq = ROUND(RAND() * 3500, 1); -- Frequência entre 0 e 3500 MHz
@@ -139,16 +138,17 @@ BEGIN
                 SET disk_usage = ROUND(RAND() * disk_total, 1); -- Disco usado <= total
                 SET disk_perc = ROUND((disk_usage / disk_total) * 100, 1); -- % de disco usado
 
-                -- Inserir os dados na tabela 'Desempenho' com a data/hora/minuto correspondente
+                -- Inserir os dados na tabela 'Desempenho' com a data/hora correspondente e o fkTotem atual
                 INSERT INTO Desempenho (cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, dtHora, fkTotem)
                 VALUES (cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, 
-                        CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-'), LPAD(dia, 2, '0'), ' ', LPAD(hora, 2, '0'), ':', LPAD(minuto, 2, '0'), ':00'), fkTotem);
+                        CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-'), LPAD(dia, 2, '0'), ' ', LPAD(hora, 2, '0'), ':00:00'), fkTotem);
 
-                -- Incrementar o minuto de 30 em 30
-                SET minuto = minuto + 30;
+                -- Incrementar o fkTotem
+                SET fkTotem = fkTotem + 1;
             END WHILE;
-            -- Incrementar a hora
-            SET hora = hora + 1;
+
+            -- Incrementar a hora de 4 em 4
+            SET hora = hora + 4;
         END WHILE;
         -- Incrementar o dia
         SET dia = dia + 1;
@@ -157,5 +157,53 @@ END //
 
 DELIMITER ;
 
-CALL SimularDesempenho30Minutos();
+CALL SimularDesempenho4Horas();
 
+select * from Desempenho;
+
+SELECT 
+          ROUND(AVG(cpu_usage)) AS cpu_usage,
+          ROUND(AVG(memory_usage)) AS memory_usage,
+          ROUND(AVG(disk_usage)) AS disk_usage
+      FROM Desempenho
+      WHERE DATE(dtHora) = CURDATE();
+      
+SELECT 
+            ROUND(AVG(cpu_usage)) AS cpu_usage,
+            ROUND(AVG(memory_usage)) AS memory_usage,
+            ROUND(AVG(disk_usage)) AS disk_usage
+        FROM Desempenho
+        WHERE WEEK(dtHora) = WEEK(CURDATE()) 
+        AND YEAR(dtHora) = YEAR(CURDATE());
+        
+ SELECT 
+            ROUND(AVG(cpu_usage)) AS cpu_usage,
+            ROUND(AVG(memory_usage)) AS memory_usage,
+            ROUND(AVG(disk_usage)) AS disk_usage
+        FROM Desempenho
+        WHERE MONTH(dtHora) = MONTH(CURDATE()) 
+        AND YEAR(dtHora) = YEAR(CURDATE());    
+        
+SELECT 
+    ROUND(AVG(cpu_usage)) AS cpu_usage,
+    ROUND(AVG(memory_usage)) AS memory_usage,
+    ROUND(AVG(disk_usage)) AS disk_usage
+FROM Desempenho
+WHERE fkTotem = 1
+AND DATE(dtHora) = CURDATE();
+
+SELECT 
+    ROUND(AVG(cpu_usage)) AS cpu_usage,
+    ROUND(AVG(memory_usage)) AS memory_usage,
+    ROUND(AVG(disk_usage)) AS disk_usage
+FROM Desempenho
+WHERE fkTotem = 2
+AND DATE(dtHora) = CURDATE();
+
+SELECT 
+    ROUND(AVG(cpu_usage)) AS cpu_usage,
+    ROUND(AVG(memory_usage)) AS memory_usage,
+    ROUND(AVG(disk_usage)) AS disk_usage
+FROM Desempenho
+WHERE fkTotem = 3
+AND DATE(dtHora) = CURDATE();
