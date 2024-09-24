@@ -1,26 +1,60 @@
 const dashModel = require('../models/dashModel');
 
-const media = {
-    obterMedias: async (req, res) => {
-        console.log("Requisição recebida:", req.params.periodo); // Adicione isso para verificar o que está sendo recebido
-        const { periodo } = req.params;
-        let media;
-
-        try {
-            if (periodo === 'hoje') {
-                media = await dashModel.obterMediasDiarias();
-            } else if (periodo === 'semanal') {
-                media = await dashModel.obterMediasSemanais();
-            } else if (periodo === 'mensal') {
-                media = await dashModel.obterMediasMensais();
+function getMetricasDiaria(req, res) {
+    console.log("Chamando getMetricasDiaria");
+    dashModel.getDiariaMetrics()
+        .then(result => {
+            if (result.length === 0) {
+                return res.status(404).json({ error: 'Nenhuma métrica encontrada.' });
             }
+            res.json(result[0]);
+        })
+        .catch(error => {
+            console.error("Erro ao buscar métricas diárias:", error);
+            res.status(500).json({ error: 'Erro ao buscar métricas diárias.' });
+        });
+}
 
-            res.json(media);
-        } catch (error) {
-            console.error("Erro ao obter médias:", error);
-            res.status(500).json({ error: "Erro ao obter médias" });
-        }
+function getMetricasSemanal(req, res) {
+    dashModel.getSemanalMetrics()
+        .then(result => {
+            if (result.length === 0) {
+                return res.status(404).json({ error: 'Nenhuma métrica encontrada.' });
+            }
+            res.json(result[0]);
+        })
+        .catch(error => res.status(500).json({ error: 'Erro ao buscar métricas semanais.' }));
+}
+
+function getMetricasMensal(req, res) {
+    dashModel.getMensalMetrics()
+        .then(result => {
+            if (result.length === 0) {
+                return res.status(404).json({ error: 'Nenhuma métrica encontrada.' });
+            }
+            res.json(result[0]);
+        })
+        .catch(error => res.status(500).json({ error: 'Erro ao buscar métricas mensais.' }));
+}
+
+function getMetricasTotem(req, res) {
+    const codigoSerie = req.params.codigo_serie;
+
+    if (!codigoSerie) {
+        return res.status(400).json({ error: 'Código do totem não informado.' });
     }
-};
 
-module.exports = media;
+    dashModel.getTotemMetrics(codigoSerie)
+        .then(result => {
+            if (result.length === 0) {
+                return res.status(404).json({ error: 'Nenhuma métrica encontrada para este totem.' });
+            }
+            res.json(result[0]);
+        })
+        .catch(error => {
+            console.error("Erro ao buscar métricas do totem:", error);
+            res.status(500).json({ error: 'Erro ao buscar métricas do totem.' });
+        });
+}
+
+module.exports = { getMetricasDiaria, getMetricasSemanal, getMetricasMensal, getMetricasTotem };

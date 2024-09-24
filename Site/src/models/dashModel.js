@@ -1,42 +1,62 @@
-const db = require('../config/database'); // ajuste para sua configuração do banco
+const db = require('../database/config');
 
-const media = {
+function getDiariaMetrics() {
+    const query = `
+        SELECT 
+            ROUND(AVG(cpu_usage)) AS cpu_usage,
+            ROUND(AVG(memory_usage)) AS memory_usage,
+            ROUND(AVG(disk_usage)) AS disk_usage
+        FROM Desempenho
+        WHERE DATE(dtHora) = CURDATE()
+    `;
+    
+    return db.executar(query); 
+}
 
-    obterMediasDiarias: async () => {
-        const query = `
+function getSemanalMetrics() {
+    const query = `
+        SELECT 
+            ROUND(AVG(cpu_usage)) AS cpu_usage,
+            ROUND(AVG(memory_usage)) AS memory_usage,
+            ROUND(AVG(disk_usage)) AS disk_usage
+        FROM Desempenho
+        WHERE WEEK(dtHora) = WEEK(CURDATE()) 
+        AND YEAR(dtHora) = YEAR(CURDATE())
+    `;
+    return db.executar(query);
+}
+
+function getMensalMetrics() {
+    const query = `
+        SELECT 
+            ROUND(AVG(cpu_usage)) AS cpu_usage,
+            ROUND(AVG(memory_usage)) AS memory_usage,
+            ROUND(AVG(disk_usage)) AS disk_usage
+        FROM Desempenho
+        WHERE MONTH(dtHora) = MONTH(CURDATE()) 
+        AND YEAR(dtHora) = YEAR(CURDATE())
+    `;
+    return db.executar(query);
+}
+
+function getTotemMetrics(codigoSerie) {
+  const query = `
       SELECT 
-        AVG(cpu_usage) AS media_cpu_usage,
-        AVG(memory_usage) AS media_memory_usage,
-        AVG(disk_usage) AS media_disk_usage
+          ROUND(AVG(cpu_usage)) AS cpu_usage,
+          ROUND(AVG(memory_usage)) AS memory_usage,
+          ROUND(AVG(disk_usage)) AS disk_usage
       FROM Desempenho
-      WHERE DATE(dtHora) = CURDATE()`;
-        const [results] = await db.query(query);
-        return results[0];
-    },
+      WHERE fkTotem = ${codigoSerie}
+      AND DATE(dtHora) = CURDATE()
+  `;
 
-    obterMediasSemanais: async () => {
-        const query = `
-      SELECT 
-        AVG(cpu_usage) AS media_cpu_usage,
-        AVG(memory_usage) AS media_memory_usage,
-        AVG(disk_usage) AS media_disk_usage
-      FROM Desempenho
-      WHERE YEARWEEK(dtHora, 1) = YEARWEEK(CURDATE(), 1)`;
-        const [results] = await db.query(query);
-        return results[0];
-    },
+  return db.executar(query);
+}
 
-    obterMediasMensais: async () => {
-        const query = `
-      SELECT 
-        AVG(cpu_usage) AS media_cpu_usage,
-        AVG(memory_usage) AS media_memory_usage,
-        AVG(disk_usage) AS media_disk_usage
-      FROM Desempenho
-      WHERE MONTH(dtHora) = MONTH(CURDATE()) AND YEAR(dtHora) = YEAR(CURDATE())`;
-        const [results] = await db.query(query);
-        return results[0];
-    }
+
+module.exports = {
+    getDiariaMetrics,
+    getSemanalMetrics,
+    getMensalMetrics,
+    getTotemMetrics
 };
-
-module.exports = media;
