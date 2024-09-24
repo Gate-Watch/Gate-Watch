@@ -4,8 +4,8 @@ function getDiariaMetrics() {
     const query = `
         SELECT 
             ROUND(AVG(cpu_usage)) AS cpu_usage,
-            ROUND(AVG(memory_usage)) AS memory_usage,
-            ROUND(AVG(disk_usage)) AS disk_usage
+            ROUND(AVG(memory_perc)) AS memory_perc,
+            ROUND(AVG(disk_perc)) AS disk_perc
         FROM Desempenho
         WHERE DATE(dtHora) = CURDATE()
     `;
@@ -17,8 +17,8 @@ function getSemanalMetrics() {
     const query = `
         SELECT 
             ROUND(AVG(cpu_usage)) AS cpu_usage,
-            ROUND(AVG(memory_usage)) AS memory_usage,
-            ROUND(AVG(disk_usage)) AS disk_usage
+            ROUND(AVG(memory_perc)) AS memory_perc,
+            ROUND(AVG(disk_perc)) AS disk_perc
         FROM Desempenho
         WHERE WEEK(dtHora) = WEEK(CURDATE()) 
         AND YEAR(dtHora) = YEAR(CURDATE())
@@ -30,8 +30,8 @@ function getMensalMetrics() {
     const query = `
         SELECT 
             ROUND(AVG(cpu_usage)) AS cpu_usage,
-            ROUND(AVG(memory_usage)) AS memory_usage,
-            ROUND(AVG(disk_usage)) AS disk_usage
+            ROUND(AVG(memory_perc)) AS memory_perc,
+            ROUND(AVG(disk_perc)) AS disk_perc
         FROM Desempenho
         WHERE MONTH(dtHora) = MONTH(CURDATE()) 
         AND YEAR(dtHora) = YEAR(CURDATE())
@@ -43,8 +43,8 @@ function getTotemMetrics(codigoSerie) {
   const query = `
       SELECT 
           ROUND(AVG(cpu_usage)) AS cpu_usage,
-          ROUND(AVG(memory_usage)) AS memory_usage,
-          ROUND(AVG(disk_usage)) AS disk_usage
+          ROUND(AVG(memory_perc)) AS memory_perc,
+          ROUND(AVG(disk_perc)) AS disk_perc
       FROM Desempenho
       WHERE fkTotem = ${codigoSerie}
       AND DATE(dtHora) = CURDATE()

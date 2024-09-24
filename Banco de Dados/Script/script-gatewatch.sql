@@ -1,69 +1,77 @@
+-- Apagar o banco de dados se já existir e criar um novo
 DROP DATABASE IF EXISTS GateWatch;
 CREATE DATABASE GateWatch;
 USE GateWatch;
 
+-- Criação da tabela Aeroporto
 CREATE TABLE Aeroporto(
-	idAeroporto INT PRIMARY KEY AUTO_INCREMENT,
-	nome_aero VARCHAR(45) NOT NULL,
-	codigo_icao VARCHAR(4) NOT NULL,
-	codigo_iata VARCHAR(3)
+    idAeroporto INT PRIMARY KEY AUTO_INCREMENT,
+    nome_aero VARCHAR(45) NOT NULL,
+    codigo_icao VARCHAR(4) NOT NULL,
+    codigo_iata VARCHAR(3)
 );
 
+-- Criação da tabela Companhia
 CREATE TABLE Companhia(
-	idCompanhia INT PRIMARY KEY AUTO_INCREMENT,
-	nome_fantasia VARCHAR(45) NOT NULL,
-	razao_social VARCHAR(45) NOT NULL,
-	cnpj VARCHAR(14) NOT NULL,
-	codigo_icao VARCHAR(4) NOT NULL,
-	codigo_iata VARCHAR(3),
-	email_comp VARCHAR(45) NOT NULL,
-	telefone_comp VARCHAR(11) NOT NULL,
+    idCompanhia INT PRIMARY KEY AUTO_INCREMENT,
+    nome_fantasia VARCHAR(45) NOT NULL,
+    razao_social VARCHAR(45) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL,
+    codigo_icao VARCHAR(4) NOT NULL,
+    codigo_iata VARCHAR(3),
+    email_comp VARCHAR(45) NOT NULL,
+    telefone_comp VARCHAR(11) NOT NULL,
     chave_seguranca_analista VARCHAR(45) NOT NULL,
-	chave_seguranca_gerente VARCHAR(45) NOT NULL
+    chave_seguranca_gerente VARCHAR(45) NOT NULL
 );
 
-Create Table Operacao (
-	idOperacao INT AUTO_INCREMENT,
+-- Criação da tabela Operacao
+CREATE TABLE Operacao (
+    idOperacao INT AUTO_INCREMENT,
     fkAeroporto INT,
     fkCompanhia INT,
     PRIMARY KEY(idOperacao, fkAeroporto, fkCompanhia),
-	FOREIGN KEY(fkAeroporto) REFERENCES Aeroporto(idAeroporto),
-	FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
+    FOREIGN KEY(fkAeroporto) REFERENCES Aeroporto(idAeroporto),
+    FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
 );
 
+-- Criação da tabela Funcionario
 CREATE TABLE Funcionario(
-	idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50) NOT NULL,
-	cargo VARCHAR(45) NOT NULL,
-	email VARCHAR(45) NOT NULL,
-	senha VARCHAR(45) NOT NULL,
+    idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    cargo VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    senha VARCHAR(45) NOT NULL,
     fkCompanhia INT,
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia),
     CONSTRAINT chkCargo CHECK(cargo IN('Gerente', 'Analista'))
 );
 
+-- Criação da tabela Totem
 CREATE TABLE Totem(
-	codigo_serie INT PRIMARY KEY,
-	status_totem TINYINT NOT NULL,
-	modelo_totem VARCHAR(45),
+    codigo_serie INT PRIMARY KEY,
+    status_totem TINYINT NOT NULL,
+    modelo_totem VARCHAR(45),
     fkCompanhia INT,
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia),
     CONSTRAINT chkStatus CHECK(status_totem IN(0, 1))
 );
 
+-- Criação da tabela Monitoramento
 CREATE TABLE Monitoramento(
-	idMonitoramento INT AUTO_INCREMENT, 
-	fkFuncionario INT,
+    idMonitoramento INT AUTO_INCREMENT, 
+    fkFuncionario INT,
     fkTotem INT,
     PRIMARY KEY(idMonitoramento, fkFuncionario, fkTotem),
     dtHora_inicio DATETIME,
-	dtHora_fim DATETIME,
+    dtHora_fim DATETIME,
     FOREIGN KEY(fkFuncionario) REFERENCES Funcionario(idFuncionario),
     FOREIGN KEY(fkTotem) REFERENCES Totem(codigo_serie)
 );
 
+-- Criação da tabela Desempenho
 CREATE TABLE Desempenho(
-	idDesempenho INT AUTO_INCREMENT,
+    idDesempenho INT AUTO_INCREMENT,
     cpu_usage DOUBLE,
     cpu_freq DOUBLE,
     memory_usage DOUBLE,
@@ -78,28 +86,34 @@ CREATE TABLE Desempenho(
     FOREIGN KEY (fkTotem) REFERENCES Totem(codigo_serie)
 );
 
+-- Criação da tabela alertas
+CREATE TABLE alertas (
+    idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    componente VARCHAR(45),
+    fkDesempenho INT,
+    FOREIGN KEY (fkDesempenho) REFERENCES Desempenho(idDesempenho),
+    CONSTRAINT chkComponente CHECK(componente IN('cpu', 'memoria', 'disco'))
+);
+
+-- Inserção de dados na tabela Companhia
 INSERT INTO Companhia VALUES (DEFAULT, 'Azul', 'AZUL LINHAS AEREAS BRASILEIRAS S.A.', '12345678910111', 'AZU', 'AD', 'azul@azulairlines.com', '11989898989', '1A2B3C4D5E', 'A1B2C3D4E5');
 
+-- Inserção de dados na tabela Aeroporto
 INSERT INTO Aeroporto VALUES 
-	(DEFAULT, 'Aeroporto Internacional de Guarulhos', 'SBGR', 'GRU'),
+    (DEFAULT, 'Aeroporto Internacional de Guarulhos', 'SBGR', 'GRU'),
     (DEFAULT, 'Aeroporto de São Paulo/Congonhas', 'SBSP', 'CGH');
-    
+
+-- Inserção de dados na tabela Operacao
 INSERT INTO Operacao VALUES(DEFAULT, 1, 1), (DEFAULT, 2, 1);
 
-SELECT * FROM Aeroporto;
-SELECT * FROM Companhia;
-select * from Funcionario;
-SELECT * FROM Operacao;
-SELECT * FROM Companhia Where nome_fantasia LIKE '%Azul%';
-select * from Desempenho;
-
+-- Inserção de dados na tabela Totem
 INSERT INTO Totem VALUES
-	(1, true, 'Modelo A', 1),
-	(2, true, 'Modelo B', 1),
-	(3, true, 'Modelo C', 1);
-    
-select * from Totem;
+    (1, true, 'Modelo A', 1),
+    (2, true, 'Modelo B', 1),
+    (3, true, 'Modelo C', 1);
 
+-- Procedure para simular dados de desempenho
 DELIMITER //
 
 CREATE PROCEDURE SimularDesempenho4Horas()
@@ -159,51 +173,144 @@ DELIMITER ;
 
 CALL SimularDesempenho4Horas();
 
-select * from Desempenho;
+select * from Desempenho;	
 
 SELECT 
-          ROUND(AVG(cpu_usage)) AS cpu_usage,
-          ROUND(AVG(memory_usage)) AS memory_usage,
-          ROUND(AVG(disk_usage)) AS disk_usage
-      FROM Desempenho
-      WHERE DATE(dtHora) = CURDATE();
+    ROUND(AVG(cpu_usage)) AS cpu_usage,
+    ROUND(AVG(memory_perc)) AS memory_perc,
+    ROUND(AVG(disk_perc)) AS disk_perc
+FROM Desempenho
+WHERE DATE(dtHora) = CURDATE();
+
       
 SELECT 
-            ROUND(AVG(cpu_usage)) AS cpu_usage,
-            ROUND(AVG(memory_usage)) AS memory_usage,
-            ROUND(AVG(disk_usage)) AS disk_usage
-        FROM Desempenho
-        WHERE WEEK(dtHora) = WEEK(CURDATE()) 
-        AND YEAR(dtHora) = YEAR(CURDATE());
-        
- SELECT 
-            ROUND(AVG(cpu_usage)) AS cpu_usage,
-            ROUND(AVG(memory_usage)) AS memory_usage,
-            ROUND(AVG(disk_usage)) AS disk_usage
-        FROM Desempenho
-        WHERE MONTH(dtHora) = MONTH(CURDATE()) 
-        AND YEAR(dtHora) = YEAR(CURDATE());    
+    ROUND(AVG(cpu_usage)) AS cpu_usage,
+    ROUND(AVG(memory_perc)) AS memory_perc,
+    ROUND(AVG(disk_perc)) AS disk_perc
+FROM Desempenho
+WHERE WEEK(dtHora) = WEEK(CURDATE()) 
+AND YEAR(dtHora) = YEAR(CURDATE());
+
         
 SELECT 
     ROUND(AVG(cpu_usage)) AS cpu_usage,
-    ROUND(AVG(memory_usage)) AS memory_usage,
-    ROUND(AVG(disk_usage)) AS disk_usage
+    ROUND(AVG(memory_perc)) AS memory_perc,
+    ROUND(AVG(disk_perc)) AS disk_perc
+FROM Desempenho
+WHERE MONTH(dtHora) = MONTH(CURDATE()) 
+AND YEAR(dtHora) = YEAR(CURDATE());
+  
+        
+SELECT 
+    ROUND(AVG(cpu_usage)) AS cpu_usage,
+    ROUND(AVG(memory_perc)) AS memory_perc,
+    ROUND(AVG(disk_perc)) AS disk_perc
 FROM Desempenho
 WHERE fkTotem = 1
 AND DATE(dtHora) = CURDATE();
 
 SELECT 
     ROUND(AVG(cpu_usage)) AS cpu_usage,
-    ROUND(AVG(memory_usage)) AS memory_usage,
-    ROUND(AVG(disk_usage)) AS disk_usage
+    ROUND(AVG(memory_perc)) AS memory_perc,
+    ROUND(AVG(disk_perc)) AS disk_perc
 FROM Desempenho
 WHERE fkTotem = 2
 AND DATE(dtHora) = CURDATE();
 
 SELECT 
     ROUND(AVG(cpu_usage)) AS cpu_usage,
-    ROUND(AVG(memory_usage)) AS memory_usage,
-    ROUND(AVG(disk_usage)) AS disk_usage
+    ROUND(AVG(memory_perc)) AS memory_perc,
+    ROUND(AVG(disk_perc)) AS disk_perc
 FROM Desempenho
 WHERE fkTotem = 3
 AND DATE(dtHora) = CURDATE();
+
+-- Procedure para gerar alertas
+DELIMITER //
+
+CREATE PROCEDURE GerarAlertas()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+
+    -- Declaração das variáveis
+    DECLARE v_idDesempenho INT;
+    DECLARE v_cpu_usage DOUBLE;
+    DECLARE v_memory_perc DOUBLE;
+    DECLARE v_disk_perc DOUBLE;
+    DECLARE v_dtHora DATETIME;
+    DECLARE v_fkTotem INT;
+
+    -- Declaração do cursor
+    DECLARE desempenho_cursor CURSOR FOR 
+        SELECT idDesempenho, cpu_usage, memory_perc, disk_perc, dtHora, fkTotem 
+        FROM Desempenho;
+
+    -- Handler para capturar quando o cursor chega ao final
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Abre o cursor
+    OPEN desempenho_cursor;
+
+    -- Loop de leitura
+    read_loop: LOOP
+        -- Busca os valores no cursor e armazena nas variáveis
+        FETCH desempenho_cursor INTO v_idDesempenho, v_cpu_usage, v_memory_perc, v_disk_perc, v_dtHora, v_fkTotem;
+
+        -- Verifica se atingiu o final do cursor
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Verifica se os valores excedem os limites e insere na tabela de alertas
+        IF v_cpu_usage > 60 THEN
+            INSERT INTO alertas (dtAlerta, componente, fkDesempenho)
+            VALUES (v_dtHora, 'cpu', v_idDesempenho);
+        END IF;
+
+        IF v_memory_perc > 70 THEN
+            INSERT INTO alertas (dtAlerta, componente, fkDesempenho)
+            VALUES (v_dtHora, 'memoria', v_idDesempenho);
+        END IF;
+
+        IF v_disk_perc > 80 THEN
+            INSERT INTO alertas (dtAlerta, componente, fkDesempenho)
+            VALUES (v_dtHora, 'disco', v_idDesempenho);
+        END IF;
+    END LOOP;
+
+    -- Fecha o cursor
+    CLOSE desempenho_cursor;
+END //
+
+DELIMITER ;
+
+CALL GerarAlertas();
+
+SELECT * FROM alertas;
+
+SELECT 
+    a.idAlerta,
+    a.dtAlerta,
+    a.componente,
+    a.fkDesempenho,
+    CASE 
+        WHEN a.componente = 'cpu' THEN d.cpu_usage
+        ELSE NULL 
+    END AS cpu_usage,
+    CASE 
+        WHEN a.componente = 'memoria' THEN d.memory_perc
+        ELSE NULL 
+    END AS memory_perc,
+    CASE 
+        WHEN a.componente = 'disco' THEN d.disk_perc
+        ELSE NULL 
+    END AS disk_perc,
+    d.fkTotem
+FROM 
+    alertas a
+JOIN 
+    Desempenho d ON a.fkDesempenho = d.idDesempenho
+ORDER BY 
+    a.dtAlerta;
+
+
