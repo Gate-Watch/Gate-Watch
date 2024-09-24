@@ -168,8 +168,8 @@
         .then(data => {
           // Atualizando os valores nas divs 'dados' usando IDs
           document.getElementById('dados_cpu').textContent = `${data.cpu_usage}%`;
-          document.getElementById('dados_memoria').textContent = `${data.memory_usage}%`;
-          document.getElementById('dados_disco').textContent = `${data.disk_usage}%`;
+          document.getElementById('dados_memoria').textContent = `${data.memory_perc}%`;
+          document.getElementById('dados_disco').textContent = `${data.disk_perc}%`;
 
           // Atualizando os títulos de acordo com o período
           const tituloCpu = document.getElementById('titulo_cpu');
@@ -210,8 +210,8 @@
     })
     .then(data => {
       document.getElementById(`dados_cpu_totem_${totemNumber}`).textContent = `${data.cpu_usage}%`;
-      document.getElementById(`dados_memoria_totem_${totemNumber}`).textContent = `${data.memory_usage}%`;
-      document.getElementById(`dados_disco_totem_${totemNumber}`).textContent = `${data.disk_usage}%`;
+      document.getElementById(`dados_memoria_totem_${totemNumber}`).textContent = `${data.memory_perc}%`;
+      document.getElementById(`dados_disco_totem_${totemNumber}`).textContent = `${data.disk_perc}%`;
     })
     .catch(error => {
       console.error("Erro ao buscar métricas do totem:", error);
