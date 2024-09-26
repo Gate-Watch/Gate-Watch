@@ -57,4 +57,21 @@ function getMetricasTotem(req, res) {
         });
 }
 
-module.exports = { getMetricasDiaria, getMetricasSemanal, getMetricasMensal, getMetricasTotem };
+async function getAlertas(req, res) {
+    const componente = req.query.componente;
+    const periodo = req.query.periodo;
+  
+    if (!componente || !periodo) {
+      return res.status(400).json({ error: 'Componente ou período inválido.' });
+    }
+  
+    try {
+      const alertas = await dashModel.getAlertas(componente, periodo);
+      res.json(alertas);
+    } catch (error) {
+      console.error('Erro ao buscar alertas:', error);
+      res.status(500).json({ error: 'Erro ao buscar alertas.' });
+    }
+  }
+
+module.exports = { getMetricasDiaria, getMetricasSemanal, getMetricasMensal, getMetricasTotem, getAlertas};

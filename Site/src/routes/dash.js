@@ -8,4 +8,6 @@ router.get('/mensal', dashController.getMetricasMensal);
 
 router.get('/totem/:codigo_serie', dashController.getMetricasTotem);
 
+router.get('/alertas', dashController.getAlertas);
+
 module.exports = router;

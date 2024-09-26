@@ -53,10 +53,72 @@ function getTotemMetrics(codigoSerie) {
   return db.executar(query);
 }
 
+function getAlertas(componente, periodo) {
+    let query = '';
+  
+    switch (periodo) {
+      case 'hora':
+        query = `
+          SELECT 
+              HOUR(dtAlerta) AS label, 
+              COUNT(*) AS total_alertas
+          FROM 
+              alertas 
+          WHERE 
+              componente = '${componente}' 
+              AND DATE(dtAlerta) = CURDATE()
+          GROUP BY 
+              HOUR(dtAlerta)
+          ORDER BY 
+              label;
+        `;
+        break;
+      case 'dia_semana':
+        query = `
+          SELECT 
+              DAYNAME(dtAlerta) AS label, 
+              COUNT(*) AS total_alertas
+          FROM 
+              alertas 
+          WHERE 
+              componente = '${componente}'
+              AND WEEK(dtAlerta) = WEEK(CURDATE()) 
+              AND YEAR(dtAlerta) = YEAR(CURDATE())
+          GROUP BY 
+              DAYNAME(dtAlerta)
+          ORDER BY 
+              FIELD(DAYNAME(dtAlerta), 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        `;
+        break;
+      case 'semana_mes':
+        query = `
+          SELECT 
+              WEEK(dtAlerta) AS label, 
+              COUNT(*) AS total_alertas
+          FROM 
+              alertas 
+          WHERE 
+              componente = '${componente}'
+              AND MONTH(dtAlerta) = MONTH(CURDATE()) 
+              AND YEAR(dtAlerta) = YEAR(CURDATE())
+          GROUP BY 
+              WEEK(dtAlerta)
+          ORDER BY 
+              label;
+        `;
+        break;
+      default:
+        throw new Error('Período inválido');
+    }
+  
+    return db.executar(query);
+}
+
 
 module.exports = {
     getDiariaMetrics,
     getSemanalMetrics,
     getMensalMetrics,
-    getTotemMetrics
+    getTotemMetrics,
+    getAlertas
 };

@@ -14,11 +14,6 @@
     rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
-  <!-- <meta http-equiv="refresh" content="3" /> -->
-  <meta name="keywords" content="navbar, responsive, HTML, CSS, JavaScript, nav" />
-  <meta name="author" content="Manikanta Vedula" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -40,7 +35,6 @@
     </ul>
   </nav>
   <!-- NavBar -->
-
 
   <!-- Side Bar -->
   <div class="conteudo">
@@ -64,17 +58,22 @@
             <h2>Total de Alertas</h2>
           </div>
           <div class="selectOpcoes">
-            <select id="select_ComponentesAlerta">
-              <option value="0" selected disabled>Componentes</option>
+            <select id="componenteSelect" onchange="fetchAlertas()">
+              <option value="0" selected disabled>Componente</option>
               <option value="cpu">CPU</option>
               <option value="memoria">Memória</option>
               <option value="disco">Disco</option>
             </select>
-            <select id="select_PeriodoAlerta">
-              <option value="0" selected disabled>Perído</option>
-              <option value="cpu">Diária</option>
-              <option value="memoria">Semanal</option>
-              <option value="disco">Mensal</option>
+            <select id="select_TipoGrafico">
+              <option value="0" selected disabled>Gráfico</option>
+              <option value="linha">Linha</option>
+              <option value="barra">Barra</option>
+            </select>
+            <select id="periodoSelect" onchange="fetchAlertas()">
+              <option value="0" selected disabled>Período</option>
+              <option value="hora">Horas do Dia Atual</option>
+              <option value="dia_semana">Dias da Semana Atual</option>
+              <option value="semana_mes">Semanas do Mês Atual</option>
             </select>
           </div>
         </div>
@@ -86,52 +85,109 @@
 
       <div class="graficoAlertas">
         <div>
-          <canvas id="myChart" width="300px" height="70px"></canvas>
+          <canvas id="alertasChart" width="300" height="80" style="display: block; margin: 20px; background-color: #2c3651bd; padding: 5px; border-radius: 3px;">
+          </canvas>
         </div>
       </div>
     </div>
+  </div>
+
+  <script>
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+
+    if (nomeUsuario) {
+      document.getElementById('nome_perfil').textContent = nomeUsuario;
+    } else {
+      document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+    }
+
+    async function fetchAlertas() {
+      const componente = document.getElementById('componenteSelect').value;
+      const periodo = document.getElementById('periodoSelect').value;
+
+      if (componente === '0' || periodo === '0') {
+        alert("Por favor, selecione um componente e um período válidos.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`/dash/alertas?componente=${componente}&periodo=${periodo}`);
+        if (!response.ok) {
+          throw new Error('Erro ao buscar alertas');
+        }
+        const data = await response.json();
+        updateChart(data, componente, periodo);
+      } catch (error) {
+        console.error('Erro ao buscar alertas:', error);
+      }
+    }
+
+    function updateChart(data, componente, periodo) {
+  const ctx = document.getElementById('alertasChart').getContext('2d');
+  const labels = data.map(item => `${item.label}:00`);
+  const values = data.map(item => item.total_alertas);
 
 
-    <!-- Side Bar -->
-
-
-
-
-</body>
-
-</html>
-
-<script>
-
-  const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
-
-  if (nomeUsuario) {
-    document.getElementById('nome_perfil').textContent = nomeUsuario;
-  } else {
-    document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+  if (window.alertasChart instanceof Chart) {
+    window.alertasChart.destroy();
   }
 
-
-  // ChartJs para plotar gráfico
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
+  window.alertasChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      labels: labels,
       datasets: [{
-        label: 'Quantidade total de Alertas',
-        data: [12, 19, 3, 5, 2, 3, 8],
+        label: `Alertas de ${componente} (${periodo})`,
+        data: values,
+        backgroundColor: '#656c99',
+        borderColor: '#ffffff',
         borderWidth: 1
       }]
     },
     options: {
       scales: {
-        y: {
-          beginAtZero: true
+        x: { 
+          grid: {
+            color: '#ffffff'
+          },
+          ticks: {
+            color: '#ffffff'
+          },
+          title: {
+            display: true,
+            text: 'Horário',
+            color: '#ffffff'
+          }
+        },
+        y: { 
+          beginAtZero: true,
+          grid: {
+            color: '#ffffff'
+          },
+          ticks: {
+            color: '#ffffff'
+          },
+          title: {
+            display: true,
+            text: 'Quantidade de Alertas',
+            color: '#ffffff'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          labels: {
+            color: '#ffffff'
+          }
         }
       }
     }
   });
+}
 
-</script>
+  </script>
+
+</body>
+
+</html>
