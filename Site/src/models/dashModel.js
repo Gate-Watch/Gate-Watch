@@ -9,8 +9,8 @@ function getDiariaMetrics() {
         FROM Desempenho
         WHERE DATE(dtHora) = CURDATE()
     `;
-    
-    return db.executar(query); 
+
+    return db.executar(query);
 }
 
 function getSemanalMetrics() {
@@ -40,7 +40,7 @@ function getMensalMetrics() {
 }
 
 function getTotemMetrics(codigoSerie) {
-  const query = `
+    const query = `
       SELECT 
           ROUND(AVG(cpu_usage)) AS cpu_usage,
           ROUND(AVG(memory_perc)) AS memory_perc,
@@ -50,67 +50,66 @@ function getTotemMetrics(codigoSerie) {
       AND DATE(dtHora) = CURDATE()
   `;
 
-  return db.executar(query);
+    return db.executar(query);
 }
 
 function getAlertas(componente, periodo) {
     let query = '';
-  
+
     switch (periodo) {
-      case 'hora':
-        query = `
-          SELECT 
-              HOUR(dtAlerta) AS label, 
-              COUNT(*) AS total_alertas
-          FROM 
-              alertas 
-          WHERE 
-              componente = '${componente}' 
-              AND DATE(dtAlerta) = CURDATE()
-          GROUP BY 
-              HOUR(dtAlerta)
-          ORDER BY 
-              label;
-        `;
-        break;
-      case 'dia_semana':
-        query = `
-          SELECT 
-              DAYNAME(dtAlerta) AS label, 
-              COUNT(*) AS total_alertas
-          FROM 
-              alertas 
-          WHERE 
-              componente = '${componente}'
-              AND WEEK(dtAlerta) = WEEK(CURDATE()) 
-              AND YEAR(dtAlerta) = YEAR(CURDATE())
-          GROUP BY 
-              DAYNAME(dtAlerta)
-          ORDER BY 
-              FIELD(DAYNAME(dtAlerta), 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-        `;
-        break;
-      case 'semana_mes':
-        query = `
-          SELECT 
-              WEEK(dtAlerta) AS label, 
-              COUNT(*) AS total_alertas
-          FROM 
-              alertas 
-          WHERE 
-              componente = '${componente}'
-              AND MONTH(dtAlerta) = MONTH(CURDATE()) 
-              AND YEAR(dtAlerta) = YEAR(CURDATE())
-          GROUP BY 
-              WEEK(dtAlerta)
-          ORDER BY 
-              label;
-        `;
-        break;
-      default:
-        throw new Error('Período inválido');
+        case 'hora':
+            query = `
+                SELECT 
+                    HOUR(dtAlerta) AS label, 
+                    COUNT(*) AS total_alertas
+                FROM 
+                    alertas 
+                WHERE 
+                    componente = '${componente}' 
+                    AND DATE(dtAlerta) = CURDATE()
+                GROUP BY 
+                    label
+                ORDER BY 
+                    label;
+            `;
+            break;
+        case 'dia_semana':
+            query = `
+                SELECT 
+                    DAYNAME(dtAlerta) AS label, 
+                    COUNT(*) AS total_alertas
+                FROM alertas 
+                    WHERE 
+                        componente = '${componente}'
+                        AND WEEK(dtAlerta) = WEEK(CURDATE()) 
+                        AND YEAR(dtAlerta) = YEAR(CURDATE())
+                    GROUP BY 
+                        label
+                    ORDER BY 
+                        FIELD(label, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+            `;
+            break;
+        case 'semana_mes':
+            query = `
+                SELECT 
+                    WEEK(dtAlerta) AS label, 
+                    COUNT(*) AS total_alertas
+                FROM 
+                    alertas 
+                WHERE 
+                    componente = '${componente}'
+                    AND MONTH(dtAlerta) = MONTH(CURDATE()) 
+                    AND YEAR(dtAlerta) = YEAR(CURDATE())
+                GROUP BY 
+                    label
+                ORDER BY 
+                    label;
+            `;
+            break;
+        default:
+            throw new Error('Período inválido');
     }
-  
+
     return db.executar(query);
 }
 
