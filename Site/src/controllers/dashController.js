@@ -1,6 +1,6 @@
 const dashModel = require('../models/dashModel');
 
-function getMetricasDiaria(res) {
+function getMetricasDiaria(req, res) {
     console.log("Chamando getMetricasDiaria");
     dashModel.getDiariaMetrics()
         .then(result => {
@@ -15,7 +15,7 @@ function getMetricasDiaria(res) {
         });
 }
 
-function getMetricasSemanal(res) {
+function getMetricasSemanal(req, res) {
     dashModel.getSemanalMetrics()
         .then(result => {
             if (result.length === 0) {
@@ -29,7 +29,7 @@ function getMetricasSemanal(res) {
         });
 }
 
-function getMetricasMensal(res) {
+function getMetricasMensal(req, res) {
     dashModel.getMensalMetrics()
         .then(result => {
             if (result.length === 0) {
