@@ -1,6 +1,6 @@
 const dashModel = require('../models/dashModel');
 
-function getMetricasDiaria(req, res) {
+function getMetricasDiaria(res) {
     console.log("Chamando getMetricasDiaria");
     dashModel.getDiariaMetrics()
         .then(result => {
@@ -15,7 +15,7 @@ function getMetricasDiaria(req, res) {
         });
 }
 
-function getMetricasSemanal(req, res) {
+function getMetricasSemanal(res) {
     dashModel.getSemanalMetrics()
         .then(result => {
             if (result.length === 0) {
@@ -23,10 +23,13 @@ function getMetricasSemanal(req, res) {
             }
             res.json(result[0]);
         })
-        .catch(error => res.status(500).json({ error: 'Erro ao buscar métricas semanais.' }));
+        .catch(error => {
+            console.error("Erro ao buscar métricas semanais:", error);
+            res.status(500).json({ error: 'Erro ao buscar métricas semanais.' });
+        });
 }
 
-function getMetricasMensal(req, res) {
+function getMetricasMensal(res) {
     dashModel.getMensalMetrics()
         .then(result => {
             if (result.length === 0) {
@@ -74,4 +77,16 @@ async function getAlertas(req, res) {
     }
   }
 
-module.exports = { getMetricasDiaria, getMetricasSemanal, getMetricasMensal, getMetricasTotem, getAlertas};
+  async function getRanking(req, res) {
+    const periodo = req.query.periodo;
+
+    try {
+        const rankingData = await dashModel.getRanking(periodo);
+        res.json(rankingData);
+    } catch (error) {
+        console.error('Erro ao buscar ranking:', error);
+        res.status(500).json({ error: 'Erro ao buscar ranking.' });
+    }
+}
+
+module.exports = { getRanking, getMetricasDiaria, getMetricasSemanal, getMetricasMensal, getMetricasTotem, getAlertas};

@@ -113,11 +113,58 @@ function getAlertas(componente, periodo) {
     return db.executar(query);
 }
 
+function getRanking(periodo) {
+    let query = '';
+
+    switch (periodo) {
+        case 'hora':
+            query = `
+                SELECT 
+                    componente,
+                    COUNT(*) AS total_alertas
+                FROM alertas
+                    WHERE 
+                        DATE(dtAlerta) = CURDATE()
+                    GROUP BY componente;
+            `;
+            break;
+        case 'dia_semana':
+            query = `
+                SELECT 
+                    componente,
+                    COUNT(*) AS total_alertas
+                FROM alertas
+                    WHERE 
+                        WEEK(dtAlerta) = WEEK(CURDATE()) 
+                        AND YEAR(dtAlerta) = YEAR(CURDATE())
+                    GROUP BY componente;
+            `;
+            break;
+        case 'semana_mes':  
+            query = `
+                SELECT 
+                    componente,
+                    COUNT(*) AS total_alertas
+                FROM alertas
+                    WHERE 
+                        MONTH(dtAlerta) = MONTH(CURDATE()) 
+                        AND YEAR(dtAlerta) = YEAR(CURDATE())
+                    GROUP BY componente;
+            `;
+            break;
+        default:
+            throw new Error('Período inválido');
+    }
+
+    return db.executar(query);
+}
+
 
 module.exports = {
     getDiariaMetrics,
     getSemanalMetrics,
     getMensalMetrics,
     getTotemMetrics,
-    getAlertas
+    getAlertas,
+    getRanking
 };

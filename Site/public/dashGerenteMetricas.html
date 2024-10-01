@@ -47,7 +47,8 @@
       </div>
       <div class="opcoesDashboard">
         <button class="boxOpcoes">MÉTRICAS</button>
-        <a href="dashGerenteAlertas.html"><button class="boxOpcoes" style="background-color: #656c99;">ALERTAS</button></a>
+        <a href="dashGerenteAlertas.html"><button class="boxOpcoes"
+            style="background-color: #656c99;">ALERTAS</button></a>
       </div>
     </div>
 
@@ -166,7 +167,7 @@
           return response.json();
         })
         .then(data => {
-          
+
           document.getElementById('dados_cpu').textContent = `${data.cpu_usage}%`;
           document.getElementById('dados_memoria').textContent = `${data.memory_perc}%`;
           document.getElementById('dados_disco').textContent = `${data.disk_perc}%`;
@@ -195,26 +196,26 @@
     }
 
     function carregarMetricasTotem(totemNumber) {
-  const totemId = document.getElementById(`select_totem_${totemNumber}`).value;
+      const totemId = document.getElementById(`select_totem_${totemNumber}`).value;
 
-  if (totemId === "0") return;
+      if (totemId === "0") return;
 
-  fetch(`/dash/totem/${totemId}`, { method: "GET" })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      document.getElementById(`dados_cpu_totem_${totemNumber}`).textContent = `${data.cpu_usage}%`;
-      document.getElementById(`dados_memoria_totem_${totemNumber}`).textContent = `${data.memory_perc}%`;
-      document.getElementById(`dados_disco_totem_${totemNumber}`).textContent = `${data.disk_perc}%`;
-    })
-    .catch(error => {
-      console.error("Erro ao buscar métricas do totem:", error);
-    });
-}
+      fetch(`/dash/totem/${totemId}`, { method: "GET" })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById(`dados_cpu_totem_${totemNumber}`).textContent = `${data.cpu_usage}%`;
+          document.getElementById(`dados_memoria_totem_${totemNumber}`).textContent = `${data.memory_perc}%`;
+          document.getElementById(`dados_disco_totem_${totemNumber}`).textContent = `${data.disk_perc}%`;
+        })
+        .catch(error => {
+          console.error("Erro ao buscar métricas do totem:", error);
+        });
+    }
   </script>
 </body>
 

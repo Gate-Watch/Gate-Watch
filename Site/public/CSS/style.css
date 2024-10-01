@@ -1290,20 +1290,27 @@ a {
 }
 
 .conteudoAlertas .tituloOpcoes .boxRanking {
-  width: 34.75vw;
-  height: 34vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: center;
-  
+    margin-top: 20px;
+    margin-left: 5vw;
+    background-color: #2c3651;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
 }
 
-.conteudoAlertas .tituloOpcoes .boxRanking .ranking {
-  width: 27vw;
-  height: 29vh;
-  background-color: #c9c9c9;
-  border-radius: 10px;
+.conteudoAlertas .tituloOpcoes .boxRanking .ranking h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.conteudoAlertas .tituloOpcoes .boxRanking .ranking ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.conteudoAlertas .tituloOpcoes .boxRanking .ranking li {
+  font-size: 1.2em;
+  padding: 5px 0;
 }
 
 .graficoAlertas {

@@ -69,7 +69,7 @@
               <option value="line">Linha</option>
               <option value="bar">Barra</option>
             </select>
-            <select id="periodoSelect" >  
+            <select id="periodoSelect">
               <option value="0" selected disabled>Período</option>
               <option value="hora">Horas do Dia Atual</option>
               <option value="dia_semana">Dias da Semana Atual</option>
@@ -80,13 +80,16 @@
         </div>
         <div class="boxRanking">
           <div class="ranking">
+            <h3>Ranking de Componentes</h3>
+            <ul id="rankingList"></ul>
           </div>
         </div>
       </div>
 
       <div class="graficoAlertas" style="display: none;">
         <div>
-          <canvas id="alertasChart" width="300" height="80" style=" margin: 10px; background-color: #2c3651bd; padding: 5px; border-radius: 3px;">
+          <canvas id="alertasChart" width="300" height="80"
+            style=" margin: 10px; background-color: #2c3651bd; padding: 5px; border-radius: 3px;">
           </canvas>
         </div>
       </div>
@@ -118,90 +121,123 @@
         }
         const data = await response.json();
         updateChart(data, componente, periodo);
+        getRanking();
       } catch (error) {
         console.error('Erro ao buscar alertas:', error);
       }
     }
 
-  function updateChart(data, componente, periodo) {
-  let graphic = document.getElementById('tipoGrafico').value;
+    function updateChart(data, componente, periodo) {
+      let graphic = document.getElementById('tipoGrafico').value;
 
-  document.querySelector('.graficoAlertas').style.display = 'block';
+      document.querySelector('.graficoAlertas').style.display = 'block';
 
-  const ctx = document.getElementById('alertasChart').getContext('2d');
-  
-  let labels;
-  
-  if (periodo === 'dia_semana') {
-    
-    labels = data.map(item => item.label);
-  } else if (periodo === 'semana_mes') {
-    
-    labels = data.map((item, index) => (index + 1).toString());
-  } else {
-    
-    labels = data.map(item => `${item.label}:00`);
-  }
+      const ctx = document.getElementById('alertasChart').getContext('2d');
 
-  const values = data.map(item => item.total_alertas);
+      let labels;
 
-  if (window.alertasChart instanceof Chart) {
-    window.alertasChart.destroy();
-  }
+      if (periodo === 'dia_semana') {
 
-  window.alertasChart = new Chart(ctx, {
-    type: graphic,
-    data: {
-      labels: labels,
-      datasets: [{
-        label: `Alertas de ${componente} (${periodo})`,
-        data: values,
-        backgroundColor: '#656c99',
-        borderColor: '#ffffff',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        x: { 
-          grid: {
-            color: '#ffffff'
-          },
-          ticks: {
-            color: '#ffffff'
-          },
-          title: {
-            display: true,
-            text: periodo === 'dia_semana' ? 'Dias' : periodo === 'semana_mes' ? 'Semanas' : 'Horário',
-            color: '#ffffff'
-          }
+        labels = data.map(item => item.label);
+      } else if (periodo === 'semana_mes') {
+
+        labels = data.map((item, index) => (index + 1).toString());
+      } else {
+
+        labels = data.map(item => `${item.label}:00`);
+      }
+
+      const values = data.map(item => item.total_alertas);
+
+      if (window.alertasChart instanceof Chart) {
+        window.alertasChart.destroy();
+      }
+
+      window.alertasChart = new Chart(ctx, {
+        type: graphic,
+        data: {
+          labels: labels,
+          datasets: [{
+            label: `Alertas de ${componente} (${periodo})`,
+            data: values,
+            backgroundColor: '#656c99',
+            borderColor: '#121518f4',
+            borderWidth: 1
+          }]
         },
-        y: { 
-          beginAtZero: true,
-          grid: {
-            color: '#ffffff'
+        options: {
+          scales: {
+            x: {
+              grid: {
+                color: '#ffffff'
+              },
+              ticks: {
+                color: '#ffffff'
+              },
+              title: {
+                display: true,
+                text: periodo === 'dia_semana' ? 'Dias' : periodo === 'semana_mes' ? 'Semanas' : 'Horário',
+                color: '#ffffff'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#ffffff'
+              },
+              ticks: {
+                color: '#ffffff'
+              },
+              title: {
+                display: true,
+                text: 'Quantidade de Alertas',
+                color: '#ffffff'
+              }
+            }
           },
-          ticks: {
-            color: '#ffffff'
-          },
-          title: {
-            display: true,
-            text: 'Quantidade de Alertas',
-            color: '#ffffff'
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: '#ffffff'
+              }
+            }
           }
         }
-      },
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            color: '#ffffff'
-          }
+      });
+    }
+
+    async function getRanking() {
+      const periodo = document.getElementById('periodoSelect').value;
+
+      try {
+        const response = await fetch(`/dash/ranking?periodo=${periodo}`);
+        if (!response.ok) {
+          throw new Error('Erro ao buscar ranking');
         }
+        const rankingData = await response.json();
+        console.log(rankingData);
+        updateRanking(rankingData);
+      } catch (error) {
+        console.error('Erro ao buscar ranking:', error);
       }
     }
-  });
-}
+
+    function capitalizeFirstLetter(first) {
+      return first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
+    }
+
+    function updateRanking(data) {
+      const rankingList = document.getElementById('rankingList');
+      rankingList.innerHTML = '';
+
+      data.forEach((item, index) => {
+        const componente = capitalizeFirstLetter(item.componente);
+        const listItem = document.createElement('li');
+        listItem.textContent = `${index + 1}º ${componente}: ${item.total_alertas} alertas`;
+        rankingList.appendChild(listItem);
+      });
+    }
 
 
   </script>
