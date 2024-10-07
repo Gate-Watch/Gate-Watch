@@ -96,6 +96,24 @@ CREATE TABLE alertas (
     CONSTRAINT chkComponente CHECK(componente IN('cpu', 'memoria', 'disco'))
 );
 
+CREATE TABLE Processos (
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    pId INT,                            
+    nomeProcesso VARCHAR(45),
+    cpu_percent DECIMAL(5,2),
+    memory_mb DECIMAL(10,2),
+    disk_mb DECIMAL(10,2),
+    dataProcesso DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+    fkTotem INT,
+    FOREIGN KEY (fkTotem) REFERENCES Totem(codigo_serie)
+);
+
+select * from Processos where cpu_percent > 0;
+
+select * from Processos;
+
+truncate table Processos;
+
 -- Inserção de dados na tabela Companhia
 INSERT INTO Companhia VALUES (DEFAULT, 'Azul', 'AZUL LINHAS AEREAS BRASILEIRAS S.A.', '12345678910111', 'AZU', 'AD', 'azul@azulairlines.com', '11989898989', '1A2B3C4D5E', 'A1B2C3D4E5');
 
