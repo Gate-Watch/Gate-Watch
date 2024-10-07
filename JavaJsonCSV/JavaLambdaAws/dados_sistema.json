@@ -1,0 +1,57 @@
+[
+  {
+    "idMaquina": 1,
+    "cpu_usage": 23.4,
+    "cpu_freq": 2793.43,
+    "memory_usage": 45.6,
+    "memory_total": 8192.0,
+    "disk_usage": 500000000.0,
+    "disk_total": 8589934592.0,
+    "date": "2024-10-01",
+    "hour": "08:30:00"
+  },
+  {
+    "idMaquina": 2,
+    "cpu_usage": 15.2,
+    "cpu_freq": 2800.12,
+    "memory_usage": 30.1,
+    "memory_total": 8192.0,
+    "disk_usage": 3000000000.0,
+    "disk_total": 8589934592.0,
+    "date": "2020-10-10",
+    "hour": "10:20:20"
+  },
+  {
+    "idMaquina": 3,
+    "cpu_usage": 78.9,
+    "cpu_freq": 2700.56,
+    "memory_usage": 65.2,
+    "memory_total": 16384.0,
+    "disk_usage": 7500000000.0,
+    "disk_total": 17179869184.0,
+    "date": "2024-10-01",
+    "hour": "09:00:00"
+  },
+  {
+    "idMaquina": 4,
+    "cpu_usage": 10.0,
+    "cpu_freq": 3000.00,
+    "memory_usage": 20.5,
+    "memory_total": 4096.0,
+    "disk_usage": 1000000000.0,
+    "disk_total": 4294967296.0,
+    "date": "2024-10-01",
+    "hour": "09:30:00"
+  },
+  {
+    "idMaquina": 5,
+    "cpu_usage": 90.0,
+    "cpu_freq": 2500.00,
+    "memory_usage": 75.0,
+    "memory_total": 8192.0,
+    "disk_usage": 8589934592.0,
+    "disk_total": 8589934592.0,
+    "date": "2024-10-01",
+    "hour": "10:00:00"
+  }
+]
