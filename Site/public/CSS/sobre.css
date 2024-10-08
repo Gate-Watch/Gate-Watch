@@ -283,17 +283,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10vh;
+  justify-content: center;
+  background-color: rgb(250, 250, 250);
+  width: 100vw;
+  height: 80vh;
 }
 
+.sobre-valores h2{
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px;
+}
 .containerValores {
+  display: flex;
     line-height: 1.8;
     text-align: justify;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
-    padding: 20px 0;
+    
 }
 
 .title-img{
@@ -353,9 +362,10 @@
 
 .frente, .verso{
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 25vw;
+  height: 48vh;
   backface-visibility: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .frente{
@@ -385,6 +395,8 @@
   background-color: #e0e0e0;
   color: #5A8FB1;
   padding: 5%;
+  border-radius: 3.5%;
+
 }
 
 .verso img{
@@ -396,4 +408,5 @@
 
 .verso p {
   font-weight: bold;
+  font-size: small;
 }
