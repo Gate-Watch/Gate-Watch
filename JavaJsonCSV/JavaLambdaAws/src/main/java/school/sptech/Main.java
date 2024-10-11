@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.S3Object;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,11 +31,22 @@ public class Main implements RequestHandler<S3Event, String> {
             List<Dado> dados = mapper.map(s3InputStream);
 
             CsvWriter csvWriter = new CsvWriter();
-            ByteArrayOutputStream csvOutputStream = csvWriter.writeCsv(dados);
+            ByteArrayOutputStream csvOutputStream;
+
+            if (s3Client.doesObjectExist(DESTINATION_BUCKET, "dados_sistema.csv")) {
+                S3Object consolidatedCsv = s3Client.getObject(DESTINATION_BUCKET, "dados_sistema.csv");
+                InputStream existingCsvStream = consolidatedCsv.getObjectContent();
+
+                csvOutputStream = csvWriter.appendCsv(existingCsvStream, dados);  // Método novo para anexo
+
+            } else {
+
+                csvOutputStream = csvWriter.writeCsv(dados);
+            }
 
             InputStream csvInputStream = new ByteArrayInputStream(csvOutputStream.toByteArray());
 
-            s3Client.putObject(DESTINATION_BUCKET, sourceKey.replace(".json", ".csv"), csvInputStream, null);
+            s3Client.putObject(DESTINATION_BUCKET, "dados_sistema.csv", csvInputStream, null);
 
             return "Sucesso no processamento";
         } catch (Exception e) {
