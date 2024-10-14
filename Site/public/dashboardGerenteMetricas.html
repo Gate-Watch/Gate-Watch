@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Métricas Gerente - GateWatch</title>
     <link rel="stylesheet" href="./CSS/styleDashboards.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
     <div class="conteudoPagina">
@@ -16,15 +19,19 @@
             </div>
             <div class="boxOpcoes">
                 <div class="box" style="background-color: #41446877;">TENDÊNCIAS</div>
-                <a href="cadastroTotens.html"><div class="box">TOTENS</div></a>
+                <a href="cadastroTotens.html">
+                    <div class="box">TOTENS</div>
+                </a>
             </div>
-            <div class="boxSair">SAIR</div>
+            <a href="cadastro.html">
+                <div class="boxSair">SAIR</div>
+            </a>
         </div>
         <div class="conteudoMetricas">
             <div class="boxTitulo">
-                <div class="titulo">ANÁLISE DE TOTENS</div>
+                <div class="titulo">RELATÓRIO SEMANAL DE TOTENS</div>
                 <div class="selecionarTotem">
-                    <select  id="select_Totem">
+                    <select id="selectTotem">
                         <option selected disabled>Selecione um Totem</option>
                         <option>TOTEM 1</option>
                         <option>TOTEM 2</option>
@@ -38,16 +45,62 @@
             <div class="boxConteudo">
                 <div class="boxComponentes">
                     <div class="boxMedias">
-                        <div class="box"></div>
-                        <div class="box"></div>
-                        <div class="box"></div>
+                        <div class="box">
+                            <div class="boxIntTitulo">MÉDIA SEMANAL DA CPU</div>
+                            <div class="boxIntMedia">70%</div>
+                        </div>
+                        <div class="box">
+                            <div class="boxIntTitulo">MÉDIA SEMANAL DE RAM</div>
+                            <div class="boxIntMedia">70%</div>
+                        </div>
+                        <div class="box">
+                            <div class="boxIntTitulo">MÉDIA SEMANAL DE DISCO</div>
+                            <div class="boxIntMedia">70%</div>
+                        </div>
                     </div>
                     <div class="boxGrafico">
-                        <div class="grafico"></div>
+                        <div class="grafico">
+                            <div class="tituloGrafico">
+                                <h2>PERCENTUAL MÉDIO DE USO DOS COMPONENTES POR TOTEM</h2>
+                                <select id="selectTotemGrafico">
+                                    <option>Selecione um Totem</option>
+                                    <option>TOTEM 1</option>
+                                    <option>TOTEM 2</option>
+                                    <option>TOTEM 3</option>
+                                </select>
+                            </div>
+                            <div class="boxIntGrafico">
+                                <canvas id="myChart" width="1200" height="400"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="boxAlertas">
-                    <div class="boxRankingAlertas"></div>
+                    <div class="boxRankingAlertas">
+                        <div class="boxTitulo">ALERTAS POR TOTEM</div>
+                        <div class="boxQtd">
+                            <h3>IDENTIFICAÇÃO</h3>
+                            <h3>|</h3>
+                            <h3>QUANTIDADE</h3>
+                        </div>
+                        <div class="boxRankingTotens">
+                            <div class="boxTotem">
+                                <h3>TOTEM 3</h3>
+                                <h3>20</h3>
+                            </div>
+                            <div class="boxTotem">
+                                <h3>TOTEM 1</h3>
+                                <h3>20</h3>
+                            </div>
+                            <div class="boxTotem">
+                                <h3>TOTEM 2</h3>
+                                <h3>20</h3>
+                            </div>
+                        </div>
+                        <div class="boxSaibaMais">
+                            <button>SAIBA MAIS</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,16 +109,55 @@
 
 
 </body>
+
 </html>
 
 <script>
 
     const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
-    
-        if (nomeUsuario) {
-          document.getElementById('nome_perfil').textContent = nomeUsuario;
-        } else {
-          document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+
+    if (nomeUsuario) {
+        document.getElementById('nome_perfil').textContent = nomeUsuario.toUpperCase;
+    } else {
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+    }
+
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['06/10', '07/10', '08/10', '09/10', '10/10', '11/10', '12/10'],
+            datasets: [
+                {
+                    label: 'CPU',
+                    data: [12, 19, 3, 5, 2, 3, 21],
+                    backgroundColor: '#18204b',
+                    borderWidth: 1
+                },
+                {
+                    label: 'RAM',
+                    data: [8, 15, 6, 4, 5, 7, 12],
+                    backgroundColor: '#41b8d5',
+                    borderWidth: 1
+                },
+                {
+                    label: 'DISCO',
+                    data: [8, 15, 6, 4, 5, 7, 10],
+                    backgroundColor: '#8eeff1',
+                    borderWidth: 1
+                }
+            ]
+
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-    
+    });
+
 </script>
