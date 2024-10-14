@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas Gerente - GateWatch</title>
+    <link rel="stylesheet" href="./CSS/styleDashboards.css">
+</head>
+<body>
+
+    <div class="conteudoPagina">
+        <div class="boxLateral">
+            <div class="boxIdentificacao">
+                <h1 class="fonte_perfil" id="nome_perfil"></h1>
+                <h3>GERENTE DE DADOS</h3>
+            </div>
+            <div class="boxOpcoes">
+                <div class="box" style="background-color: #41446877;">TENDÊNCIAS</div>
+                <a href="cadastroTotens.html"><div class="box">TOTENS</div></a>
+            </div>
+            <div class="boxSair">SAIR</div>
+        </div>
+        <div class="conteudoMetricas">
+            <div class="boxTitulo">
+                <div class="titulo">ANÁLISE DE TOTENS</div>
+                <div class="selecionarTotem">
+                    <select  id="select_Totem">
+                        <option selected disabled>Selecione um Totem</option>
+                        <option>TOTEM 1</option>
+                        <option>TOTEM 2</option>
+                        <option>TOTEM 3</option>
+                    </select>
+                    <div class="boxLogo">
+                        <img src="Images/gwLogo_black.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="boxConteudo">
+                <div class="boxComponentes">
+                    <div class="boxMedias">
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                    </div>
+                    <div class="boxGrafico">
+                        <div class="grafico"></div>
+                    </div>
+                </div>
+                <div class="boxAlertas">
+                    <div class="boxRankingAlertas"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+
+<script>
+
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+    
+        if (nomeUsuario) {
+          document.getElementById('nome_perfil').textContent = nomeUsuario;
+        } else {
+          document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+        }
+    
+</script>

@@ -1,0 +1,207 @@
+@font-face {
+    font-family: montSerrat;
+    src: url(../Fonts/Montserrat-VariableFont_wght.ttf);
+  }
+
+
+body {
+    padding: 0;
+    margin: 0;
+}
+.conteudoPagina {
+    display: flex;
+    background-color: #d9d9d9;
+    width: 100vw;
+    height: 100vh;
+}
+
+.conteudoPagina .boxLateral {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #000000;
+    height: 100vh;
+    width: 15vw;
+}
+
+.conteudoPagina .boxLateral .boxIdentificacao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 24vh;
+    width: 15vw;
+    font-family: "montSerrat";
+    
+}
+
+.conteudoPagina .boxLateral .boxIdentificacao h1 {
+    font-size: 21px;
+    margin: 0%;
+    color: #ffffff;
+    text-align: center;
+    padding-bottom: 5%;
+}
+
+.conteudoPagina .boxLateral .boxIdentificacao h3 {
+    margin: 0%;
+    color: #d9d9d9;
+    font-size: 11px;
+   text-decoration: underline;
+}
+
+.conteudoPagina .boxLateral .boxOpcoes {
+    width: 15vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+}
+
+.conteudoPagina .boxLateral .boxOpcoes .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "montSerrat";
+    font-weight: 700;
+    width: 15vw;
+    height: 5vw;
+    
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.conteudoPagina .boxLateral .boxSair {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 15vw;
+    height: 7vh;
+    color: #ffffff;
+    font-family: "montSerrat";
+    font-weight: 700;
+
+}
+
+.conteudoPagina .conteudoMetricas {
+    height: 100vh;
+    width: 85vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo {
+    height: 10vh;
+    width: 85vw;
+    display: flex;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .titulo {
+    height: 10vh;
+    width: 50vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-family: "montSerrat";
+    font-weight: 700;
+    font-size: 25px;
+    padding-left: 4%;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem {
+    height: 10vh;
+    width: 35vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #18204b;
+    color: #ffffff;
+    height: 4.7vh;
+    width: 15vw;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem .boxLogo{
+    height: 10vh;
+    width: 17vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem .boxLogo img{
+    width: 27%;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo{
+    height: 90vh;
+    width: 85vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes {
+    height: 90vh;
+    width: 63vw;
+    
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias{
+    width: 63vw;
+    height: 35vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box {
+    width: 17vw;
+    height: 30vh;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico {
+    width: 63vw;
+    height: 55vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico {
+    height: 45vh;
+    width: 59vw;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+}
+
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas {
+    height: 90vh;
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas {
+    height: 80vh;
+    width: 18vw;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+}
