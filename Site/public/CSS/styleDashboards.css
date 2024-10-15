@@ -345,3 +345,263 @@ a {
     font-family: "montSerrat";
     font-weight: 700;
 }
+
+
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 {
+    height: 10vh;
+    width: 41vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #18204b;
+    color: #ffffff;
+    height: 4.7vh;
+    width: 15vw;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-family: "montSerrat";
+
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 .boxLogo{
+    height: 10vh;
+    width: 17vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-right: 2%;
+}
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 .boxLogo img{
+    width: 26%;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal {
+    height: 90vh;
+    width: 85vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual {
+    height: 40vh;
+    width: 85vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam {
+    height: 38vh;
+    width: 58vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam .box {
+    height: 34vh;
+    width: 27vw;
+    background-color: #f8f8f8;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam .box select {
+    height: 5vh;
+    width: 27vw;
+    background-color: #18204b;
+    color: #ffffff;
+    font-family: "montSerrat";
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-size: 16px;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam .box .tituloComponentesAtual{
+    height: 4vh;
+    width: 27vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "montSerrat";
+    font-weight: 700;
+    font-size: 17px;
+    color: #0e132c;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam .box .graficoComponenteAtual {
+    height: 25vh;
+    width: 27vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxQtdTotal {
+    height: 38vh;
+    width: 27vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxQtdTotal .box {
+    height: 34vh;
+    width: 22vw;
+    background-color: #f8f8f8;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxQtdTotal .box .boxTitulo {
+    height: 15vh;
+    width: 18vw;
+    font-family: "montSerrat";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: #0e132c;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxQtdTotal .box .boxQtd {
+    height: 19vh;
+    width: 18vw;
+    font-family: "openSans";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 50px;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas {
+    height: 50vh;
+    width: 85vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual{
+    height: 47vh;
+    width: 49vw;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxTitulo{
+    height: 8vh;
+    width: 45vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxTitulo h2 {
+    color: #0e132c;
+    font-family: "montSerrat";
+    font-weight: 800;
+    font-size: 17px;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxTitulo select {
+    color: #ffffff;
+    background-color: #18204b;
+    font-family: "montSerrat";
+    font-weight: 400;
+    font-size: 12px;
+    height: 4vh;
+    width: 13vw;
+    border: none;
+    border-radius: 20px;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxGrafico {
+    height: 39vh;
+    width: 47vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas{
+    height: 47vh;
+    width: 31vw;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas .boxTitulo {
+    height: 10vh;
+    width: 29vw;
+    font-size: 22px;
+    font-family: 'montSerrat';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas .boxAlertasGeral {
+    height: 33vh;
+    width: 29vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas .boxAlertasGeral .box {
+    height: 5vh;
+    width: 29vw;
+    background-color: rgb(136, 14, 14);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-family: "openSans";
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-bottom: 2%;
+}
+
+
