@@ -213,15 +213,15 @@
     var confirmacaoSenhaVar = document.getElementById('confirmaSenhaCadastro_input').value;
 
     // 
-    var temCharEspecial;
+    var temCharEspecial = false;
 
-    for (var i = 0; i < senhaVar.length; i++) {
-      if (senhaVar[i] == "$" || "@" || "#" || "%" || "*" || "&") {
+    var caracteresEspeciais = ["$", "@", "#", "%", "*", "&"];
+
+    for (var index = 0; index < senhaVar.length; index++) {
+      if (caracteresEspeciais.includes(senhaVar[index])) {
         temCharEspecial = true;
-      } else {
-        temCharEspecial = false;
+        break;
       }
-
     }
 
     if (
@@ -230,7 +230,7 @@
     ) {
       mostrarErro("Todos os campos devem ser preenchidos.");
       return false;
-    } else if (nomeVar.length <= 10) {
+    } else if (nomeVar.length <= 1) {
       mostrarErro("O nome é muito curto.");
       return false;
     } else if (emailVar.indexOf("@") < 0 || emailVar.indexOf(".") < 0) {
