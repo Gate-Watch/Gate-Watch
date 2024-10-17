@@ -1306,9 +1306,9 @@
         sessionStorage.CARGO_USUARIO = json.cargo;
 
         if (json.cargo === "analista") {
-          window.location = "./dashboard1.html";
+          window.location = "./dashboardAnalistaMetricas.html";
         } else if (json.cargo === "gerente") {
-          window.location = "./dashGerenteMetricas.html";
+          window.location = "./dashboardGerenteMetricas.html";
         }
       } else {
         const erroTexto = await response.text();

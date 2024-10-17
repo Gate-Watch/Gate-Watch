@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Métricas Gerente - GateWatch</title>
     <link rel="stylesheet" href="./CSS/styleDashboards.css">
 </head>
+
 <body>
 
     <div class="conteudoPagina">
@@ -15,27 +17,40 @@
                 <h3>GERENTE DE DADOS</h3>
             </div>
             <div class="boxOpcoes">
-                <a href="dashboardGerenteMetricas.html"><div class="box">TENDÊNCIAS</div></a>
+                <a href="dashboardGerenteMetricas.html">
+                    <div class="box">TENDÊNCIAS</div>
+                </a>
                 <div class="box">RELATÓRIO</div>
                 <div class="box" style="background-color: #41446877;">TOTENS</div>
             </div>
             <div class="boxSair">SAIR</div>
+        </div>
+
+        <div class="conteudoCadastro">
+            <div class="boxCadastro">
+                <div class="boxFundoFosco">
+                    <div class="boxImg">
+                    </div>
+                </div>
+                <div class="boxFormulario"></div>
+            </div>
         </div>
     </div>
 
 
 
 </body>
+
 </html>
 
 <script>
 
-const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
 
     if (nomeUsuario) {
-      document.getElementById('nome_perfil').textContent = nomeUsuario;
+        document.getElementById('nome_perfil').textContent = nomeUsuario;
     } else {
-      document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
     }
 
 </script>

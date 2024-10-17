@@ -605,3 +605,56 @@ a {
 }
 
 
+
+/* Cadastro de Máquina (Totem) */
+
+.conteudoPagina .conteudoCadastro {
+    height: 100vh;
+    width: 85vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.conteudoPagina .conteudoCadastro .boxCadastro{
+    height: 85vh;
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+
+}
+
+.conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco {
+    height: 85vh;
+    width: 34vw;
+    background-image: url(../Images/imgCheckInTotem.jpg);
+    background-size: cover;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+
+}
+
+.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg {
+    height: 85vh;
+    width: 34vw;
+    background-color: #000000a6;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+
+}
+
+/* .conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco .boxImg img {
+    width: 169%;
+} */
+
+.conteudoPagina .conteudoCadastro .boxCadastro .boxFormulario {
+    height: 85vh;
+    width: 36vw;
+    background-color: var(--white);;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+}
