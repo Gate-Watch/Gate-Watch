@@ -10,7 +10,7 @@ library(RColorBrewer)
 library(readr)
 
 # Carregar o arquivo CSV
-dados_processos <- read_csv("C:/Users/Aluno/Documents/Gate-Watch/R-Sprint/tasks3.csv")
+dados_processos <- read_csv("C:/Users/Glauro/Documents/Gate-Watch/R-Sprint/tasks3.csv")
 
 # Visualizar as primeiras linhas do arquivo
 head(dados_processos)
