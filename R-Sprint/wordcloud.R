@@ -10,11 +10,20 @@ library(RColorBrewer)
 library(readr)
 
 #### carregar arquivo csv
-dadosProcessos <- read_csv("C:/Users/Aluno/Documents/Gate-Watch/R-Sprint/tasks3.csv")
-head(dadosProcessos)
+dadosProcessosT1 <- read_csv("C:/Users/Aluno/Documents/Gate-Watch/R-Sprint/tasksT1.csv")
+head(dadosProcessosT1)
+
+dadosProcessosT2 <- read_csv("C:/Users/Aluno/Documents/Gate-Watch/R-Sprint/tasksT2.csv")
+head(dadosProcessosT2)
+
+dadosProcessosT3 <- read_csv("C:/Users/Aluno/Documents/Gate-Watch/R-Sprint/tasksT3.csv")
+head(dadosProcessosT3)
+
+#### juntar os dados dos processos
+dadosProcessos <- rbind(dadosProcessosT1, dadosProcessosT2, dadosProcessosT3)
 
 #### remover processos de sistema
-processosSistema <- c("System", "Idle", "Registry", "smss.exe", "csrss.exe", "wininit.exe", "services.exe", "lsass.exe")
+processosSistema <- c("System", "Idle", "Registry", "smss.exe", "csrss.exe", "wininit.exe", "services.exe", "lsass.exe", "svchost.exe")
 
 ##### filtrar os processos que não são do sistema
 dadosFiltrados <- dadosProcessos[!dadosProcessos$Nome_da_Imagem %in% processosSistema,]
@@ -41,11 +50,17 @@ frequenciaPalavras <- sort(rowSums(m), decreasing = TRUE)
 dados_frequenciaPalavras <- data.frame(word = names(frequenciaPalavras), freq = frequenciaPalavras)
 
 # plotar a wordcloud
+num_cores <- min(8, nrow(dados_frequenciaPalavras))  # Ajusta o número de cores para o menor entre 8 ou o número de palavras
+cores <- brewer.pal(num_cores, "Dark2")
+
 wordcloud(words = dados_frequenciaPalavras$word, 
           freq = dados_frequenciaPalavras$freq, 
-          min.freq = 0, 
-          max.words = 20, 
+          min.freq = 1,  # ajuste conforme necessário
+          max.words = 15,  # mais palavras para dar um efeito mais denso
           random.order = FALSE, 
-          rot.per = 0.2, 
-          scale = c(5, 0.5), 
-          colors = brewer.pal(8, "Dark2"))
+          rot.per = 0.2,  # mais inclinação nas palavras
+          scale = c(3, 0.5),  # escala de tamanhos
+          colors = rep(cores, length.out = nrow(dados_frequenciaPalavras)),  # Garante que tenhamos cores suficientes
+          family = "mono",  # tipo de fonte
+          ordered.colors = TRUE,  # para que as cores sejam ordenadas pela frequência
+          use.r.layout = FALSE)  # estilo de layout
