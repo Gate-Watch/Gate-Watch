@@ -39,7 +39,7 @@ public class CsvWriter {
         }
 
         for (Dado dado : newDados) {
-            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.getCpuFreq(), dado.getMemTotal(), dado.getMemUso(), dado.getDiscoTotal(), dado.getDiscoLivre(), dado.getData(), dado.getHora());
+            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.getCpuFreq(), dado.converterByteParaGB(dado.getMemTotal()) , dado.getMemUso(), dado.converterByteParaGB(dado.getDiscoTotal()) , dado.getDiscoLivre(), dado.getData(), dado.getHora());
         }
 
         csvPrinter.flush();
