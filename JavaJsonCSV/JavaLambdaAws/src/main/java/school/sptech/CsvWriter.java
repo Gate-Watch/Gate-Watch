@@ -16,7 +16,7 @@ public class CsvWriter {
         CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("ID da Máquina", "Uso de CPU (%)", "Frequência de CPU", "Memoria RAM Total", "Uso de Memória RAM", "Total de Disco", "Uso de Disco", "Data do Registro", "Horário do Registro"));
 
         for (Dado dado : dados) {
-            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.getCpuFreq(), dado.getMemTotal(), dado.getMemUso(), dado.getDiscoTotal(), dado.getDiscoLivre(), dado.getData(), dado.getHora());
+            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.getCpuFreq(), dado.converterByteParaGB(dado.getMemTotal()), dado.getMemUso(), dado.converterByteParaGB(dado.getDiscoTotal()), dado.getDiscoLivre(), dado.getData(), dado.getHora());
         }
 
         csvPrinter.flush();

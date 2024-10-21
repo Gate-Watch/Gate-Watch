@@ -25,6 +25,8 @@ CREATE TABLE Companhia(
     chave_seguranca_gerente VARCHAR(45) NOT NULL
 );
 
+select * from Companhia;
+
 -- Criação da tabela Operacao
 CREATE TABLE Operacao (
     idOperacao INT AUTO_INCREMENT,
@@ -40,12 +42,14 @@ CREATE TABLE Funcionario(
     idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
     cargo VARCHAR(45) NOT NULL,
-    email VARCHAR(45) NOT NULL,
-    senha VARCHAR(45) NOT NULL,
+    email VARCHAR(200) NOT NULL,
+    senha VARCHAR(100) NOT NULL,
     fkCompanhia INT,
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia),
     CONSTRAINT chkCargo CHECK(cargo IN('Gerente', 'Analista'))
 );
+
+select * from Funcionario;
 
 -- Criação da tabela Totem
 CREATE TABLE Totem(
