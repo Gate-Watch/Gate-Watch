@@ -42,7 +42,7 @@
     <div class="sidebar">
       <div class="menu-perfil">
         <div class="menu-perfil-foto"></div>
-        <h2 class="fonte_perfil" id="nome_perfil"></h2>
+        <h1 class="fonte_perfil" id="nome_perfil"></h1>
         <p>Gerente</p>
       </div>
       <div class="opcoesDashboard">
@@ -152,9 +152,9 @@
     const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
 
     if (nomeUsuario) {
-      document.getElementById('nome_perfil').textContent = nomeUsuario;
+        document.getElementById('nome_perfil').textContent = nomeUsuario;
     } else {
-      document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
     }
 
     function carregarMetricas() {

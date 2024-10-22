@@ -13,7 +13,7 @@ print(result)
 lines = result.stdout.splitlines()[2:]
 
 # Abrir um arquivo CSV para escrita com codificação UTF-8  na mesma pasta deste projeto 
-with open('tasks3.csv', 'w', newline='', encoding='utf-8') as csvfile:
+with open('C:\Users\jgzry\OneDrive\Área de Trabalho\cinto de Utilidades\facul\pesquisa e inovação\Gate-Watch\R-Sprint\tasksT3.csv', 'w', newline='', encoding='utf-8') as csvfile:
     
     # Criar um objeto escritor CSV para importar
     csv_writer = csv.writer(csvfile)

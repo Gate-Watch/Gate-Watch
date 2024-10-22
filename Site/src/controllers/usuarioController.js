@@ -25,6 +25,26 @@ async function autenticar(req, res) {
     }
 }
 
+async function cadastroTotemControler(req, res) {
+    const { nomeServer: nomeTotem, numSerieServer: numSerie, fabricanteServer: fabricante, anoServer: ano, companhiaServer: companhia} = req.body;
+   
+    usuarioModel.cadastroTotem(nomeTotem, numSerie, fabricante, ano, companhia)
+        .then(
+            function(resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function(erro) {
+                console.log(erro);
+                console.log(
+                    "\n Erro ao cadastrar totem! Erro:",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        )
+}
+
 async function verificarCodigoSeguranca(req, res) {
     const { codSeg } = req.body;
 
@@ -72,5 +92,6 @@ async function cadastrar(req, res) {
 module.exports = {
     autenticar,
     verificarCodigoSeguranca,
-    cadastrar
+    cadastrar,
+    cadastroTotemControler
 };

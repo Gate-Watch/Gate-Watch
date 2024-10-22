@@ -334,5 +334,5 @@ JOIN
     Desempenho d ON a.fkDesempenho = d.idDesempenho
 ORDER BY 
     a.dtAlerta;
-
-
+    
+    select * from totem;

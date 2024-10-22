@@ -813,8 +813,6 @@
       return false;
     }
 
-    try {
-
       const senhaAntiga = [];
       const senhaCriptografada = [];
       const emailAntigo = [];
@@ -1286,7 +1284,7 @@
       var senhaCripto = senhaCriptografada[0];
 
 
-      const response = await fetch("/usuario/autenticar", {
+      fetch("/usuario/autenticar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1295,31 +1293,43 @@
           emailServer: emailCripto,
           senhaServer: senhaCripto,
         }),
-      });
+      }).then(function (resposta) {
 
-      if (response.ok) {
-        const json = await response.json();
+        if (resposta.ok) {
+          console.log(resposta);
 
-        sessionStorage.ID_USUARIO = json.idFuncionario;
-        sessionStorage.EMAIL_USUARIO = json.email;
-        sessionStorage.NOME_USUARIO = json.nome;
-        sessionStorage.CARGO_USUARIO = json.cargo;
+          resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            sessionStorage.ID_USUARIO = json.idFuncionario;
+            sessionStorage.EMAIL_USUARIO = json.email;
+            sessionStorage.NOME_USUARIO = json.nome;
+            sessionStorage.CARGO_USUARIO = json.cargo;
+            sessionStorage.FK_COMPANHIA = json.fkCompanhia;
 
-        if (json.cargo === "analista") {
-          window.location = "./dashboardAnalistaMetricas.html";
-        } else if (json.cargo === "gerente") {
-          window.location = "./dashboardGerenteMetricas.html";
+            setTimeout(function () {
+              if (json.cargo === "analista") {
+                window.location = "./dashboardAnalistaMetricas.html";
+              } else if (json.cargo === "gerente") {
+                window.location = "./dashboardGerenteMetricas.html";
+              }
+            }, 1000);
+          });
+
+        } else {
+          console.log("Houve um erro ao tentar realizar o login!");
+
+          resposta.text().then(texto => {
+            console.error(texto);
+          });
         }
-      } else {
-        const erroTexto = await response.text();
-        throw new Error(erroTexto);
-      }
-    } catch (erro) {
-      console.log(`Erro no login: ${erro.message}`);
-      mostrarErro("Credenciais inválidas. Tente novamente.");
-      finalizarAguardar();
-    }
+      }).catch(function (erro) {
+        console.log(erro);
+      })
+
+      return false;
   }
+  
 
 
 </script>

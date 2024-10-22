@@ -43,7 +43,7 @@
                         <input id="ano" type="text" placeholder="Ano">
                     </div>
                     <div class="divCadastrar">
-                        <button>CADASTRAR</button>
+                        <button onClick="cadastrarTotem()" >CADASTRAR</button>
                         <div class="divMensagemErro"></div>
                     </div>
                 </div>
@@ -61,10 +61,43 @@
 
     const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
 
+    const companhia = sessionStorage.getItem('FK_COMPANHIA');
+
     if (nomeUsuario) {
         document.getElementById('nome_perfil').textContent = nomeUsuario;
     } else {
         document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
     }
 
+
+    async function cadastrarTotem () {
+        var nome =  document.getElementById('nomeTotem').value;
+        var numSerie =  document.getElementById('numSerie').value;
+        var fabricante =  document.getElementById('fabricante').value;
+        var ano =  document.getElementById('ano').value;
+
+        const response = await fetch(`/usuario/cadastroTotem`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                numSerieServer: numSerie,
+                fabricanteServer: fabricante,
+                anoServer: ano,
+                companhiaServer: companhia
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Pontuação Ranqueada Com Sucesso', data);
+            alert('Pontuação Ranqueada com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao Raquear seus Pontos', error);
+        });  
+
+
+}
 </script>

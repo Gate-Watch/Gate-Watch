@@ -9,4 +9,8 @@ router.post("/autenticar", usuarioController.autenticar);
 
 router.post("/verificarCodigoSeguranca", usuarioController.verificarCodigoSeguranca);
 
+router.post("/cadastroTotem", function (req, res) {
+    usuarioController.cadastroTotemControler(req, res);
+}); 
+
 module.exports = router;

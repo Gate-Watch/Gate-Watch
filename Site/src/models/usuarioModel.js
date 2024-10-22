@@ -16,6 +16,16 @@ function autenticar(email, senha) {
     return database.executar(instrucaoSql);
 }
 
+function cadastroTotem (nomeTotem, numSerie, fabricante, ano, companhia) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadatroTotem():", );
+
+
+
+    var instrucaoSql = `INSERT INTO Totem (nome_totem, codigo_serie, fabricante, ano_totem, fkCompanhia) Values ('${nomeTotem}','${numSerie}','${fabricante}','${ano}','${companhia}')`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function verificarCodigoSeguranca(codSeg) {
     const instrucaoSql = `
         SELECT idCompanhia, 
@@ -41,5 +51,6 @@ function cadastrar(idCompanhia, cargo, nome, email, senha) {
 module.exports = {
     autenticar,
     verificarCodigoSeguranca,
-    cadastrar
+    cadastrar,
+    cadastroTotem
 };
