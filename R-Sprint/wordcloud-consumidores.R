@@ -10,7 +10,7 @@ library(RColorBrewer)
 library(readr)
 
 #### carregar arquivo csv
-dadosConsumidores <- read_csv("C:/Users/Aluno/Documents/Gate-Watch/R-Sprint/DadosConsumidoresClient.csv")
+dadosConsumidores <- read_csv("C:\\Users\\Samsung\\Downloads\\Gate-Watch\\R-Sprint\\DadosConsumidoresClient.csv")
 head(dadosConsumidores)
 
 #### exibir dados filtrados

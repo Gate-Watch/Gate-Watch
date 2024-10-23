@@ -13,10 +13,10 @@ public class CsvWriter {
     public ByteArrayOutputStream writeCsv(List<Dado> dados) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("ID da Máquina", "Uso de CPU (%)", "Frequência de CPU", "Memoria RAM Total", "Uso de Memória RAM", "Total de Disco", "Uso de Disco", "Data do Registro", "Horário do Registro"));
+        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("ID da Máquina", "Uso de CPU (%)", "Frequência de CPU (GHz)", "Memoria RAM Total(GB)", "Uso de Memória RAM(%)", "Total de Disco(GB)", "Uso de Disco(%)", "Data do Registro", "Horário do Registro"));
 
         for (Dado dado : dados) {
-            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.getCpuFreq(), dado.converterByteParaGB(dado.getMemTotal()), dado.getMemUso(), dado.converterByteParaGB(dado.getDiscoTotal()), dado.getDiscoLivre(), dado.getData(), dado.getHora());
+            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.converterMhzParaGhz(dado.getCpuFreq()), dado.converterByteParaGB(dado.getMemTotal()), dado.getMemUso(), dado.converterByteParaGB(dado.getDiscoTotal()), dado.getDiscoLivre(), dado.getData(), dado.getHora());
         }
 
         csvPrinter.flush();
@@ -39,7 +39,7 @@ public class CsvWriter {
         }
 
         for (Dado dado : newDados) {
-            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.getCpuFreq(), dado.converterByteParaGB(dado.getMemTotal()) , dado.getMemUso(), dado.converterByteParaGB(dado.getDiscoTotal()) , dado.getDiscoLivre(), dado.getData(), dado.getHora());
+            csvPrinter.printRecord(dado.getId(), dado.getCpuUso(), dado.converterMhzParaGhz(dado.getCpuFreq()), dado.converterByteParaGB(dado.getMemTotal()) , dado.getMemUso(), dado.converterByteParaGB(dado.getDiscoTotal()) , dado.getDiscoLivre(), dado.getData(), dado.getHora());
         }
 
         csvPrinter.flush();

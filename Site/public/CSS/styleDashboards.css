@@ -504,13 +504,22 @@ a {
     width: 85vw;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
 
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGeralCpu {
+    height: 50vh;
+    width: 58vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual{
     height: 47vh;
-    width: 49vw;
+    width: 56vw;
     background-color: #f8f8f8;
     border-radius: 20px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
@@ -522,7 +531,7 @@ a {
 
 .conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxTitulo{
     height: 8vh;
-    width: 45vw;
+    width: 50vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -551,15 +560,26 @@ a {
 
 .conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxGrafico {
     height: 39vh;
-    width: 47vw;
+    width: 52vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGeralAlertas{
+    height: 47vh;
+    width: 27vw;
+    /* background-color: #f8f8f8; */
+    /* box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
 .conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas{
     height: 47vh;
-    width: 31vw;
+    width: 27vw;
     /* background-color: #f8f8f8; */
     border-radius: 20px;
     /* box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4); */
@@ -571,7 +591,7 @@ a {
 
 .conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas .boxTitulo {
     height: 10vh;
-    width: 29vw;
+    width: 27vw;
     font-size: 22px;
     font-family: 'montSerrat';
     display: flex;
@@ -582,7 +602,7 @@ a {
 
 .conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas .boxAlertasGeral {
     height: 33vh;
-    width: 29vw;
+    width: 27vw;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -162,4 +162,14 @@ public class Dado {
             return Double.valueOf(String.format("%.2f", formatadoEmGB));
         }
     }
+
+    public Double converterMhzParaGhz(Double medidaComponente) {
+        if (medidaComponente == null) {
+            return null;
+        } else {
+            Double formatadoEmGhz = medidaComponente / 1000;
+
+            return Double.valueOf(String.format("%.2f", formatadoEmGhz));
+        }
+    }
 }

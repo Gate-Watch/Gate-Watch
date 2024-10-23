@@ -53,12 +53,13 @@ select * from Funcionario;
 
 -- Criação da tabela Totem
 CREATE TABLE Totem(
-    codigo_serie INT PRIMARY KEY,
-    status_totem TINYINT NOT NULL,
-    modelo_totem VARCHAR(45),
+	idTotem int primary key auto_increment,
+    nome_totem varchar(100),
+    codigo_serie varchar(100),
+    fabricante varchar(100),
+    ano_totem varchar(100),
     fkCompanhia INT,
-    FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia),
-    CONSTRAINT chkStatus CHECK(status_totem IN(0, 1))
+    FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
 );
 
 -- Criação da tabela Monitoramento
@@ -91,16 +92,18 @@ CREATE TABLE Desempenho(
 );
 
 -- Criação da tabela alertas
-CREATE TABLE alertas (
+CREATE TABLE Alerta (
     idAlerta INT PRIMARY KEY AUTO_INCREMENT,
     dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     componente VARCHAR(45),
-    fkDesempenho INT,
-    FOREIGN KEY (fkDesempenho) REFERENCES Desempenho(idDesempenho),
+    medida DOUBLE,
+    unidadeMedida VARCHAR(45),
+    fkTotem int,
+    FOREIGN KEY (fkTotem) REFERENCES Totem(idTotem),
     CONSTRAINT chkComponente CHECK(componente IN('cpu', 'memoria', 'disco'))
 );
 
-CREATE TABLE Processos (
+CREATE TABLE processo (
     id INT AUTO_INCREMENT PRIMARY KEY, 
     pId INT,                            
     nomeProcesso VARCHAR(45),
