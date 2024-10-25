@@ -60,7 +60,9 @@
                                 <option>TOTEM 3</option>
                             </select>
                             <div class="tituloComponentesAtual">DISCO POR TOTEM</div>
-                            <div class="graficoComponenteAtual"></div>
+                            <div class="graficoComponenteAtual">
+                                <canvas id="myChartDisco" width="500" height="500"></canvas>
+                            </div>
                         </div>
                     </div>
                     <div class="boxQtdTotal">
@@ -126,26 +128,84 @@
         data: {
             labels: [
                 'Uso',
-                'Free'
+                'Disponível'
             ],
             datasets: [{
-                data: [300, 50],
+                data: [54, 46],
                 backgroundColor: [
                     '#0e132c',
-                    '#49c3fb'
+                    '#006494'
                 ],
             }]
         },
         options: {
+            responsive: true,
+            aspectRatio: 2,
             plugins: {
                 legend: {
                     position: 'right',
+                    labels: {
+                        font: {
+                            size: 20  // Define o tamanho da fonte da legenda (em pixels)
+                        }
+                    }
                 },
                 datalabels: {
                     color: '#fff',
+                    font: {
+                        size: 17
+                    },
                     formatter: (value, ctx) => {
-                        let label = ctx.chart.data.labels[ctx.dataIndex];
-                        return label + ': ' + value;
+                    let total = ctx.dataset.data.reduce((acc, curr) => acc + curr, 0);
+                    let percentage = (value / total * 100).toFixed(2) + '%'; 
+                    let label = ctx.chart.data.labels[ctx.dataIndex];
+                    return percentage; 
+                    }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+
+    const ctxDisco = document.getElementById('myChartDisco');
+
+    new Chart(ctxDisco, {
+        type: 'pie',
+        data: {
+            labels: [
+                'Uso',
+                'Disponível'
+            ],
+            datasets: [{
+                data: [88, 12],
+                backgroundColor: [
+                    '#0e132c',
+                    '#006494'
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 2,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        font: {
+                            size: 20  // Define o tamanho da fonte da legenda (em pixels)
+                        }
+                    }
+                },
+                datalabels: {
+                    color: '#fff',
+                    font: {
+                        size: 17
+                    },
+                    formatter: (value, ctx) => {
+                    let total = ctx.dataset.data.reduce((acc, curr) => acc + curr, 0);
+                    let percentage = (value / total * 100).toFixed(2) + '%'; 
+                    let label = ctx.chart.data.labels[ctx.dataIndex];
+                    return percentage;
                     }
                 }
             }

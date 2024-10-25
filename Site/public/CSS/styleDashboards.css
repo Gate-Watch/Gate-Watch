@@ -177,7 +177,7 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box {
-    width: 17vw;
+    width: 18.5vw;
     height: 27vh;
     background-color: #f8f8f8;
     border-radius: 20px;
@@ -185,7 +185,7 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box .boxIntTitulo {
-    width: 17vw;
+    width: 18.5vw;
     height: 12vh;
     font-family: "montSerrat";
     display: flex;
@@ -198,7 +198,7 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box .boxIntMedia {
-    width: 17vw;
+    width: 18.5vw;
     height: 15vh;
     font-family: "openSans";
     display: flex;
@@ -220,7 +220,7 @@ a {
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico {
     height: 47vh;
-    width: 59vw;
+    width: 60vw;
     background-color: #f8f8f8;
     border-radius: 20px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
@@ -454,6 +454,11 @@ a {
     align-items: center;
 }
 
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam .box .graficoComponenteAtual canvas {
+    height: 75% !important;
+    width: 65% !important;
+}
+
 .conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxQtdTotal {
     height: 38vh;
     width: 27vw;
@@ -666,8 +671,43 @@ a {
     background-color: #000000a6;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
 }
+
+.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg {
+    height: 85vh;
+    width: 34vw;
+    background-color: #000000da;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg h1 {
+    color: #f8f8f8;
+    font-family: "montSerrat";
+    margin-bottom: 2%;
+
+}
+
+.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg span {
+    width: 25vw;
+    text-align: center;
+    color: #ffffff;
+    font-family: "montSerrat";
+    font-size: 15px;
+    font-weight: 500;
+    
+}
+ 
+
 
 /* .conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco .boxImg img {
     width: 169%;
@@ -692,6 +732,7 @@ a {
     width: 32vw;
     display: flex;
     justify-content: center;
+    align-items: flex-end;
     
 }
 

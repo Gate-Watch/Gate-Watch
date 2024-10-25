@@ -128,16 +128,6 @@ public class Dado {
         this.discoTotal = discoTotal;
     }
 
-    public LocalDate getData () {
-        LocalDateTime fusoAjustado = dataHora.minusHours(3);
-        return fusoAjustado.toLocalDate();
-    }
-
-    public LocalTime getHora() {
-        LocalDateTime fusoAjustado = dataHora.minusHours(3);
-        return fusoAjustado.toLocalTime();
-    }
-
     @Override
     public String toString() {
         return "MachineStatus{" +
@@ -151,6 +141,16 @@ public class Dado {
                 ", discoLivre=" + discoLivre +
                 ", discoTotal=" + discoTotal +
                 '}';
+    }
+
+    public LocalDate getData () {
+        LocalDateTime fusoAjustado = dataHora.minusHours(3);
+        return fusoAjustado.toLocalDate();
+    }
+
+    public LocalTime getHora() {
+        LocalDateTime fusoAjustado = dataHora.minusHours(3);
+        return fusoAjustado.toLocalTime();
     }
 
     public Double converterByteParaGB(Double medidaComponente){
