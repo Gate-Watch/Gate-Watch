@@ -23,7 +23,7 @@ head(dadosProcessosT3)
 dadosProcessos <- rbind(dadosProcessosT1, dadosProcessosT2, dadosProcessosT3)
 
 #### remover processos de sistema
-processosSistema <- c("System", "Idle", "Registry", "smss.exe", "csrss.exe", "wininit.exe", "services.exe", "lsass.exe", "svchost.exe")
+processosSistema <- c("System", "Idle", "Registry", "smss.exe", "csrss.exe", "wininit.exe", "services.exe", "lsass.exe", "svchost.exe", "chrome.exe")
 
 ##### filtrar os processos que não são do sistema
 dadosFiltrados <- dadosProcessos[!dadosProcessos$Nome_da_Imagem %in% processosSistema,]
