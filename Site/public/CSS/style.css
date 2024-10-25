@@ -930,6 +930,7 @@ transition: .3s;
   width: 60vw;
   height: 90vh;
   flex-direction: column;
+  margin-right: 3%;
 }
 
 .textoMonitoramento .titulo h1{

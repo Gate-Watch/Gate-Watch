@@ -20,7 +20,7 @@
                 <a href="dashboardGerenteMetricas.html">
                     <div class="box">TENDÊNCIAS</div>
                 </a>
-                <div class="box">RELATÓRIO</div>
+                <a href="https://docs.google.com/spreadsheets/d/1B82655KRgpUoX_9AH-9rYaNKjyUik15wYJpGH6qrKFY/edit?usp=sharing"><div class="box">RELATÓRIO</div></a>
                 <div class="box" style="background-color: #41446877;">TOTENS</div>
             </div>
             <div class="boxSair">SAIR</div>
@@ -30,11 +30,13 @@
             <div class="boxCadastro">
                 <div class="boxFundoFosco">
                     <div class="boxImg">
+                        <h1 class="tituloSobreImagem">Cadastre os Totens</h1>
+                        <span>Para um monitoramento mais eficiente e personalizado de seus totens de check-in, realize o cadastro ao lado.</span>
                     </div>
                 </div>
                 <div class="boxFormulario">
                     <div class="tituloFormulario">
-                        <h1>Cadastro de Totens</h1>
+                        <h1>Cadastrar</h1>
                     </div>
                     <div class="divFormulario">
                         <input id="nomeTotem" type="text" placeholder="Nome">
@@ -91,11 +93,11 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Pontuação Ranqueada Com Sucesso', data);
-            alert('Pontuação Ranqueada com sucesso!');
+            console.log('Totem cadastrado com sucesso!', data);
+            alert('Totem cadastrado com sucesso!');
         })
         .catch(error => {
-            console.error('Erro ao Raquear seus Pontos', error);
+            console.error('Erro ao cadastrar o totem!', error);
         });  
 
 

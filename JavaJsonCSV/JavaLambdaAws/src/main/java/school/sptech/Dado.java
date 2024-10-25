@@ -128,16 +128,6 @@ public class Dado {
         this.discoTotal = discoTotal;
     }
 
-    public LocalDate getData () {
-        LocalDateTime fusoAjustado = dataHora.minusHours(3);
-        return fusoAjustado.toLocalDate();
-    }
-
-    public LocalTime getHora() {
-        LocalDateTime fusoAjustado = dataHora.minusHours(3);
-        return fusoAjustado.toLocalTime();
-    }
-
     @Override
     public String toString() {
         return "MachineStatus{" +
@@ -153,6 +143,16 @@ public class Dado {
                 '}';
     }
 
+    public LocalDate getData () {
+        LocalDateTime fusoAjustado = dataHora.minusHours(3);
+        return fusoAjustado.toLocalDate();
+    }
+
+    public LocalTime getHora() {
+        LocalDateTime fusoAjustado = dataHora.minusHours(3);
+        return fusoAjustado.toLocalTime();
+    }
+
     public Double converterByteParaGB(Double medidaComponente){
         if (medidaComponente == null) {
             return null;
@@ -160,6 +160,16 @@ public class Dado {
             Double formatadoEmGB = medidaComponente / 1024.0 / 1024.0 / 1024.0;
 
             return Double.valueOf(String.format("%.2f", formatadoEmGB));
+        }
+    }
+
+    public Double converterMhzParaGhz(Double medidaComponente) {
+        if (medidaComponente == null) {
+            return null;
+        } else {
+            Double formatadoEmGhz = medidaComponente / 1000;
+
+            return Double.valueOf(String.format("%.2f", formatadoEmGhz));
         }
     }
 }

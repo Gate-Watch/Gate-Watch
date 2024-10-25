@@ -60,7 +60,9 @@
                                 <option>TOTEM 3</option>
                             </select>
                             <div class="tituloComponentesAtual">DISCO POR TOTEM</div>
-                            <div class="graficoComponenteAtual"></div>
+                            <div class="graficoComponenteAtual">
+                                <canvas id="myChartDisco" width="500" height="500"></canvas>
+                            </div>
                         </div>
                     </div>
                     <div class="boxQtdTotal">
@@ -71,27 +73,31 @@
                     </div>
                 </div>
                 <div class="boxTempoRealAlertas">
-                    <div class="boxGraficoCpuAtual">
-                        <div class="boxTitulo">
-                            <h2>PERCENTUAL DE CPU POR TOTEM</h2>
-                            <select id="selectCpuTotem">
-                                <option selected disabled>Selecione um Totem</option>
-                                <option>TOTEM 1</option>
-                                <option>TOTEM 2</option>
-                                <option>TOTEM 3</option>
-                            </select>
-                        </div>
-                        <div class="boxGrafico">
-                            <canvas id="myChartCpu" width="1200" height="400"></canvas>
+                    <div class="boxGeralCpu">
+                        <div class="boxGraficoCpuAtual">
+                            <div class="boxTitulo">
+                                <h2>PERCENTUAL DE CPU POR TOTEM</h2>
+                                <select id="selectCpuTotem">
+                                    <option selected disabled>Selecione um Totem</option>
+                                    <option>TOTEM 1</option>
+                                    <option>TOTEM 2</option>
+                                    <option>TOTEM 3</option>
+                                </select>
+                            </div>
+                            <div class="boxGrafico">
+                                <canvas id="myChartCpu" width="1400" height="400"></canvas>
 
+                            </div>
                         </div>
                     </div>
-                    <div class="boxAlertas">
-                        <div class="boxTitulo">ALERTAS DOS TOTENS</div>
-                        <div class="boxAlertasGeral">
-                            <div class="box">ALERTA: CPU ATINGIU 90% - TOTEM 1</div>
-                            <div class="box">ALERTA: CPU ATINGIU 80% - TOTEM 3</div>
-                            <div class="box">ALERTA: RAM ATINGIU 60% - TOTEM 1</div>
+                    <div class="boxGeralAlertas">
+                        <div class="boxAlertas">
+                            <div class="boxTitulo">ALERTAS DOS TOTENS</div>
+                            <div class="boxAlertasGeral">
+                                <div class="box">ALERTA: CPU ATINGIU 90% - TOTEM 1</div>
+                                <div class="box">ALERTA: CPU ATINGIU 80% - TOTEM 3</div>
+                                <div class="box">ALERTA: RAM ATINGIU 60% - TOTEM 1</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,30 +124,88 @@
     const ctxRam = document.getElementById('myChartRam');
 
     new Chart(ctxRam, {
-        type: 'doughnut',
+        type: 'pie',
         data: {
             labels: [
-                'Red',
-                'Blue'
+                'Uso',
+                'Disponível'
             ],
             datasets: [{
-                data: [300, 50],
+                data: [54, 46],
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)'
+                    '#0e132c',
+                    '#006494'
                 ],
             }]
         },
         options: {
+            responsive: true,
+            aspectRatio: 2,
             plugins: {
                 legend: {
                     position: 'right',
+                    labels: {
+                        font: {
+                            size: 20  // Define o tamanho da fonte da legenda (em pixels)
+                        }
+                    }
                 },
                 datalabels: {
                     color: '#fff',
+                    font: {
+                        size: 17
+                    },
                     formatter: (value, ctx) => {
-                        let label = ctx.chart.data.labels[ctx.dataIndex];
-                        return label + ': ' + value;
+                    let total = ctx.dataset.data.reduce((acc, curr) => acc + curr, 0);
+                    let percentage = (value / total * 100).toFixed(2) + '%'; 
+                    let label = ctx.chart.data.labels[ctx.dataIndex];
+                    return percentage; 
+                    }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+
+    const ctxDisco = document.getElementById('myChartDisco');
+
+    new Chart(ctxDisco, {
+        type: 'pie',
+        data: {
+            labels: [
+                'Uso',
+                'Disponível'
+            ],
+            datasets: [{
+                data: [88, 12],
+                backgroundColor: [
+                    '#0e132c',
+                    '#006494'
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 2,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        font: {
+                            size: 20  // Define o tamanho da fonte da legenda (em pixels)
+                        }
+                    }
+                },
+                datalabels: {
+                    color: '#fff',
+                    font: {
+                        size: 17
+                    },
+                    formatter: (value, ctx) => {
+                    let total = ctx.dataset.data.reduce((acc, curr) => acc + curr, 0);
+                    let percentage = (value / total * 100).toFixed(2) + '%'; 
+                    let label = ctx.chart.data.labels[ctx.dataIndex];
+                    return percentage;
                     }
                 }
             }

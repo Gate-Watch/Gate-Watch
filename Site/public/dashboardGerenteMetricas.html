@@ -19,7 +19,7 @@
             </div>
             <div class="boxOpcoes">
                 <div class="box" style="background-color: #41446877;">TENDÊNCIAS</div>
-                <div class="box">RELATÓRIO</div>
+                <a href="https://docs.google.com/spreadsheets/d/1B82655KRgpUoX_9AH-9rYaNKjyUik15wYJpGH6qrKFY/edit?usp=sharing"><div class="box">RELATÓRIO</div></a>
                 <a href="cadastroTotens.html">
                     <div class="box">TOTENS</div>
                 </a>
@@ -32,7 +32,7 @@
             <div class="boxTitulo">
                 <div class="titulo">TENDÊNCIA SEMANAL DE TOTENS</div>
                 <div class="selecionarTotem">
-                    <select id="selectTotem">
+                    <select id="selectTotem" onchange="exibir()">
                         <option selected disabled>Selecione um Totem</option>
                         <option>TOTEM 1</option>
                         <option>TOTEM 2</option>
@@ -47,16 +47,16 @@
                 <div class="boxComponentes">
                     <div class="boxMedias">
                         <div class="box">
-                            <div class="boxIntTitulo">MÉDIA SEMANAL DA CPU</div>
-                            <div class="boxIntMedia">70%</div>
+                            <div class="boxIntTitulo">MÉDIA FREQUÊNCIA DA CPU</div>
+                            <div class="boxIntMedia" id="mediaCpu">70%</div>
                         </div>
                         <div class="box">
-                            <div class="boxIntTitulo">MÉDIA SEMANAL DE RAM</div>
-                            <div class="boxIntMedia">70%</div>
+                            <div class="boxIntTitulo">MÉDIA DE USO DE RAM</div>
+                            <div class="boxIntMedia" id="mediaRam">70%</div>
                         </div>
                         <div class="box">
-                            <div class="boxIntTitulo">MÉDIA SEMANAL DE DISCO</div>
-                            <div class="boxIntMedia">70%</div>
+                            <div class="boxIntTitulo">MÉDIA DE USO DE DISCO</div>
+                            <div class="boxIntMedia" id="mediaDisco">70%</div>
                         </div>
                     </div>
                     <div class="boxGrafico">
@@ -71,7 +71,7 @@
                                 </select>
                             </div>
                             <div class="boxIntGrafico">
-                                <canvas id="myChart" width="1200" height="400"></canvas>
+                                <canvas id="myChart" width="1220" height="400"></canvas>
                             </div>
                         </div>
                     </div>
@@ -122,6 +122,30 @@
     } else {
         document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
     }
+
+    function exibir() {
+        var selectTotem = document.getElementById("selectTotem");
+        var mediaCpu = document.getElementById("mediaCpu");
+        var mediaRam = document.getElementById("mediaRam");
+        var mediaDisco = document.getElementById("mediaDisco");
+        var totemSelecionadoMedia = selectTotem.value;  
+
+        if (totemSelecionadoMedia == "TOTEM 1") {
+            mediaCpu.innerHTML = "20%";
+            mediaRam.innerHTML = "45%";
+            mediaDisco.innerHTML = "30%"; 
+        } else if (totemSelecionadoMedia == "TOTEM 2") {
+            mediaCpu.innerHTML = "55%";  
+            mediaRam.innerHTML = "60%";  
+            mediaDisco.innerHTML = "50%"; 
+        } else if (totemSelecionadoMedia == "TOTEM 3") {
+            mediaCpu.innerHTML = "70%";  
+            mediaRam.innerHTML = "75%";  
+            mediaDisco.innerHTML = "65%"; 
+        }
+}
+
+    
 
 
     const ctx = document.getElementById('myChart');
