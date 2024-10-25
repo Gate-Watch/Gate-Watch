@@ -334,5 +334,6 @@ JOIN
     Desempenho d ON a.fkDesempenho = d.idDesempenho
 ORDER BY 
     a.dtAlerta;
-    
+    use gatewatch;
     select * from totem;
+    select * from companhia;
