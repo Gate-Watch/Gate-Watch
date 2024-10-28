@@ -1,6 +1,6 @@
 # Tratamento do raw pro trusted dos dados de movimentacao
 
-caminho_arquivo <- "C:/Users/knogu/Downloads/DadosCompletosMovimentacao.csv"
+caminho_arquivo <- "C:/Users/Admin/Downloads/DadosCompletosMovimentacao.csv"
 
 dados1 <- read.csv(caminho_arquivo, stringsAsFactors = FALSE, sep = ";", fileEncoding = "UTF-8")
 
@@ -18,7 +18,7 @@ dados_movimentacao <- rename(dados_movimentacao, `Tipo de Voo` = `Tipo.de.voo`)
 
 dados_movimentacao <- rename(dados_movimentacao, `Passageiro (un)` = `Passageiro..un.`)
 
-caminho_novo_arquivo <- "C:/Users/knogu/Downloads/DadosCompletosMovimentacaoTrusted.csv"
+caminho_novo_arquivo <- "C:/Users/Admin/Downloads/DadosCompletosMovimentacaoTrusted.csv"
 
 write.csv(dados_movimentacao, caminho_novo_arquivo, row.names = FALSE, fileEncoding = "UTF-8")
 
@@ -77,8 +77,6 @@ write.csv(dados_consumidores, "C:/Users/Admin/Downloads/DadosConsumidoresClient.
 
 # Gráfico de evolução de 2004 à 2024
 
-install.packages("ggplot2")
-
 library(dplyr)
 library(ggplot2)
 
@@ -101,7 +99,6 @@ ggplot(dados_anuais, aes(x = Ano, y = Total_Passageiros)) +
 library(ggplot2)
 library(dplyr)
 library(scales)
-
 
 # Filtrar dados para o ano de 2024
 dados_2024 <- dados_movimentacao %>%
