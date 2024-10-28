@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" modified="2024-10-28T02:20:36.867Z" version="23.0.2" etag="DAg2VvdBR0hz5DndW9-G" type="device">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.2">
   <diagram id="prtHgNgQTEPvFCAcTncT" name="Page-1">
-    <mxGraphModel dx="1179" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1674" dy="756" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -18,14 +18,14 @@
         <mxCell id="dNxyNK7c78bLwvsdeMH5-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="dNxyNK7c78bLwvsdeMH5-20" source="dNxyNK7c78bLwvsdeMH5-23" target="dNxyNK7c78bLwvsdeMH5-24" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="dNxyNK7c78bLwvsdeMH5-23" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
-          <mxGeometry x="50" y="45" width="30" height="30" as="geometry" />
+        <mxCell id="dNxyNK7c78bLwvsdeMH5-23" value="" style="ellipse;whiteSpace=wrap;html=1;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
+          <mxGeometry x="50" y="50" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="dNxyNK7c78bLwvsdeMH5-24" value="Solicitar&lt;div&gt;&lt;div&gt;Monitoramento&lt;/div&gt;&lt;div&gt;Gate-Watch&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fontColor=#000000;align=center;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
           <mxGeometry x="130" y="30" width="100" height="60" as="geometry" />
         </mxCell>
         <mxCell id="vf32CHCk-WmKHkxcL7nt-1" value="&lt;p style=&quot;line-height: 130%;&quot;&gt;Solicitou o Serviço&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
-          <mxGeometry x="30" y="10" width="70" height="30" as="geometry" />
+          <mxGeometry x="25" y="20" width="70" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vf32CHCk-WmKHkxcL7nt-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="dNxyNK7c78bLwvsdeMH5-20" source="vf32CHCk-WmKHkxcL7nt-12" target="vf32CHCk-WmKHkxcL7nt-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -48,11 +48,11 @@
         <mxCell id="vf32CHCk-WmKHkxcL7nt-17" value="Acesso a Plataforma." style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fontColor=#000000;align=center;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
           <mxGeometry x="750" y="40" width="120" height="65" as="geometry" />
         </mxCell>
-        <mxCell id="vf32CHCk-WmKHkxcL7nt-19" value="" style="ellipse;whiteSpace=wrap;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
-          <mxGeometry x="960" y="54.07" width="40" height="35.93" as="geometry" />
+        <mxCell id="vf32CHCk-WmKHkxcL7nt-19" value="" style="ellipse;whiteSpace=wrap;html=1;fontColor=#000000;rounded=0;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
+          <mxGeometry x="970" y="63.13" width="20" height="18.75" as="geometry" />
         </mxCell>
         <mxCell id="vf32CHCk-WmKHkxcL7nt-21" value="Cliente membro da Gate-Watch" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="dNxyNK7c78bLwvsdeMH5-20" vertex="1">
-          <mxGeometry x="945" y="15" width="70" height="30" as="geometry" />
+          <mxGeometry x="945" y="20" width="70" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dNxyNK7c78bLwvsdeMH5-21" value="Gate-Watch" style="swimlane;html=1;startSize=20;horizontal=0;" parent="dNxyNK7c78bLwvsdeMH5-19" vertex="1">
           <mxGeometry x="20" y="230" width="1040" height="210" as="geometry" />

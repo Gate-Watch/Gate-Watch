@@ -665,7 +665,7 @@ transform: translateX(-100%);
 
 .cad_sobreposicao {
 background-color: var(--lightblue);
-background: url("https://images7.alphacoders.com/987/thumb-1920-987916.jpg");
+background: url("../Images/imgCadastroAviao.jpg");
 background-attachment: fixed;
 background-position: center;
 background-repeat: no-repeat;
