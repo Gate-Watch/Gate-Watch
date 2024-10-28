@@ -177,7 +177,7 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box {
-    width: 18.5vw;
+    width: 17vw;
     height: 27vh;
     background-color: #f8f8f8;
     border-radius: 20px;
@@ -185,7 +185,7 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box .boxIntTitulo {
-    width: 18.5vw;
+    width: 17vw;
     height: 12vh;
     font-family: "montSerrat";
     display: flex;
@@ -198,14 +198,20 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box .boxIntMedia {
-    width: 18.5vw;
+    width: 17vw;
     height: 15vh;
     font-family: "openSans";
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 32px;
+    font-weight: 675;
+
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box .boxIntMedia span {
+    font-size: 28px;
+    font-weight: 500;
 
 }
 
@@ -763,11 +769,11 @@ a {
 }
 
 .conteudoPagina .conteudoCadastro .boxCadastro .boxFormulario .divCadastrar {
-    height: 27vh;
+    height: 20vh;
     width: 32vw;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .conteudoPagina .conteudoCadastro .boxCadastro .boxFormulario .divCadastrar button {

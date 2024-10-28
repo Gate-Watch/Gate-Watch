@@ -19,7 +19,7 @@
             </div>
             <div class="boxOpcoes">
                 <div class="box" style="background-color: #41446877;">TENDÊNCIAS</div>
-                <a href="https://docs.google.com/spreadsheets/d/1B82655KRgpUoX_9AH-9rYaNKjyUik15wYJpGH6qrKFY/edit?usp=sharing"><div class="box">RELATÓRIO</div></a>
+                <a href="https://docs.google.com/spreadsheets/d/1B82655KRgpUoX_9AH-9rYaNKjyUik15wYJpGH6qrKFY/edit?gid=0#gid=0"><div class="box">RELATÓRIO</div></a>
                 <a href="cadastroTotens.html">
                     <div class="box">TOTENS</div>
                 </a>
@@ -47,23 +47,23 @@
                 <div class="boxComponentes">
                     <div class="boxMedias">
                         <div class="box">
-                            <div class="boxIntTitulo">MÉDIA FREQUÊNCIA DA CPU</div>
-                            <div class="boxIntMedia" id="mediaCpu">70%</div>
+                            <div class="boxIntTitulo">FAIXA DE USO DA CPU (%)</div>
+                            <div class="boxIntMedia" id="mediaCpu">5% - 25%</div>
                         </div>
                         <div class="box">
-                            <div class="boxIntTitulo">MÉDIA DE USO DE RAM</div>
-                            <div class="boxIntMedia" id="mediaRam">70%</div>
+                            <div class="boxIntTitulo">FAIXA DE USO DE RAM (%)</div>
+                            <div class="boxIntMedia" id="mediaRam">20% - 40%</div>
                         </div>
                         <div class="box">
-                            <div class="boxIntTitulo">MÉDIA DE USO DE DISCO</div>
-                            <div class="boxIntMedia" id="mediaDisco">70%</div>
+                            <div class="boxIntTitulo">FAIXA DE USO DE DISCO (%)</div>
+                            <div class="boxIntMedia" id="mediaDisco">15% - 35%</div>
                         </div>
                     </div>
                     <div class="boxGrafico">
                         <div class="grafico">
                             <div class="tituloGrafico">
                                 <h2>PERCENTUAL MÉDIO DE USO DOS COMPONENTES POR TOTEM</h2>
-                                <select id="selectTotemGrafico">
+                                <select id="selectTotemGrafico" onchange="atualizarGrafico()">
                                     <option>Selecione um Totem</option>
                                     <option>TOTEM 1</option>
                                     <option>TOTEM 2</option>
@@ -87,15 +87,15 @@
                         <div class="boxRankingTotens">
                             <div class="boxTotem">
                                 <h3>TOTEM 3</h3>
-                                <h3>20</h3>
+                                <h3>30</h3>
                             </div>
                             <div class="boxTotem">
                                 <h3>TOTEM 1</h3>
-                                <h3>20</h3>
+                                <h3>18</h3>
                             </div>
                             <div class="boxTotem">
                                 <h3>TOTEM 2</h3>
-                                <h3>20</h3>
+                                <h3>6</h3>
                             </div>
                         </div>
                         <div class="boxSaibaMais">
@@ -131,58 +131,76 @@
         var totemSelecionadoMedia = selectTotem.value;  
 
         if (totemSelecionadoMedia == "TOTEM 1") {
-            mediaCpu.innerHTML = "20%";
-            mediaRam.innerHTML = "45%";
-            mediaDisco.innerHTML = "30%"; 
+            mediaCpu.innerHTML = "5% - 25%";    
+            mediaRam.innerHTML = "20% - 40%";   
+            mediaDisco.innerHTML = "15% - 35%"; 
         } else if (totemSelecionadoMedia == "TOTEM 2") {
-            mediaCpu.innerHTML = "55%";  
-            mediaRam.innerHTML = "60%";  
-            mediaDisco.innerHTML = "50%"; 
+            mediaCpu.innerHTML = "30% - 55%";   
+            mediaRam.innerHTML = "45% - 65%";   
+            mediaDisco.innerHTML = "30% - 50%"; 
         } else if (totemSelecionadoMedia == "TOTEM 3") {
-            mediaCpu.innerHTML = "70%";  
-            mediaRam.innerHTML = "75%";  
-            mediaDisco.innerHTML = "65%"; 
+            mediaCpu.innerHTML = "60% - 85%";   
+            mediaRam.innerHTML = "70% - 90%";   
+            mediaDisco.innerHTML = "55% - 75%"; 
         }
 }
 
     
 
 
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['06/10', '07/10', '08/10', '09/10', '10/10', '11/10', '12/10'],
-            datasets: [
-                {
-                    label: 'CPU',
-                    data: [12, 19, 3, 5, 2, 3, 21],
-                    backgroundColor: '#18204b',
-                    borderWidth: 1
-                },
-                {
-                    label: 'RAM',
-                    data: [8, 15, 6, 4, 5, 7, 12],
-                    backgroundColor: '#41b8d5',
-                    borderWidth: 1
-                },
-                {
-                    label: 'DISCO',
-                    data: [8, 15, 6, 4, 5, 7, 10],
-                    backgroundColor: '#8eeff1',
-                    borderWidth: 1
-                }
-            ]
-
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+const ctx = document.getElementById('myChart');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['06/10', '07/10', '08/10', '09/10', '10/10', '11/10', '12/10'],
+        datasets: [
+            {
+                label: 'CPU',
+                data: [35, 45, 30, 50, 55, 40, 60],
+                backgroundColor: '#18204b',
+                borderWidth: 1
+            },
+            {
+                label: 'RAM',
+                data: [65, 70, 55, 75, 60, 65, 80],
+                backgroundColor: '#41b8d5',
+                borderWidth: 1
+            },
+            {
+                label: 'DISCO',
+                data: [45, 50, 35, 60, 55, 40, 55],
+                backgroundColor: '#8eeff1',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 
+function atualizarGrafico() {
+    const totemSelecionado = document.getElementById('selectTotemGrafico').value;
+
+    if (totemSelecionado === "TOTEM 1") {
+        myChart.data.datasets[0].data = [35, 45, 30, 50, 55, 40, 60];
+        myChart.data.datasets[1].data = [65, 70, 55, 75, 60, 65, 80];
+        myChart.data.datasets[2].data = [45, 50, 35, 60, 55, 40, 55];
+    } else if (totemSelecionado === "TOTEM 2") {
+        myChart.data.datasets[0].data = [25, 30, 40, 35, 45, 55, 50];
+        myChart.data.datasets[1].data = [70, 75, 65, 60, 80, 85, 78];
+        myChart.data.datasets[2].data = [50, 55, 40, 45, 60, 58, 65];
+    } else if (totemSelecionado === "TOTEM 3") {
+        myChart.data.datasets[0].data = [40, 60, 55, 65, 70, 50, 75];
+        myChart.data.datasets[1].data = [85, 80, 78, 88, 90, 70, 75];
+        myChart.data.datasets[2].data = [55, 60, 65, 68, 70, 75, 80];
+    }
+
+    // Atualiza o gráfico para refletir os novos dados
+    myChart.update();
+}
 </script>

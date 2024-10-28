@@ -62,6 +62,7 @@ CREATE TABLE Totem(
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
 );
 
+
 -- Criação da tabela Monitoramento
 CREATE TABLE Monitoramento(
     idMonitoramento INT AUTO_INCREMENT, 
@@ -97,11 +98,13 @@ CREATE TABLE Alerta (
     dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     componente VARCHAR(45),
     medida DOUBLE,
-    unidadeMedida VARCHAR(45),
+    statusTotem varchar(45),
     fkTotem int,
     FOREIGN KEY (fkTotem) REFERENCES Totem(idTotem),
     CONSTRAINT chkComponente CHECK(componente IN('cpu', 'memoria', 'disco'))
 );
+
+select * from Alerta;
 
 CREATE TABLE processo (
     id INT AUTO_INCREMENT PRIMARY KEY, 
