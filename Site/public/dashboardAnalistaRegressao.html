@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas Gerente - GateWatch</title>
+    <link rel="stylesheet" href="./CSS/styleRegressao.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="conteudoPagina">
+        <div class="boxLateral">
+            <div class="boxIdentificacao">
+                <h1 class="fonte_perfil" id="nome_perfil"></h1>
+                <h3>ANALISTA DE DADOS</h3>
+            </div>
+            <div class="boxOpcoes">
+                <a href="index.html">
+                    <div class="box">HOME</div>
+                </a>
+                <a href="dashboardAnalistaMetricas.html">
+                    <div class="box">DASHBOARD</div>
+                </a>
+                <a href="dashboardAnalistaRegressao.html">
+                    <div class="box" style="background-color: #41446877;">PREVISÕES</div>
+                </a>
+            </div>
+            <a href="cadastro.html">
+                <div class="boxSair">SAIR</div>
+            </a>
+        </div>
+        <div class="conteudoMetricas">
+            <div class="boxTitulo">
+                <div class="selecionarTotem">
+                    <select id="selectTotem" onchange="exibir()">
+                        <option selected disabled>Selecione um Totem</option>
+                        <option>TOTEM 1</option>
+                        <option>TOTEM 2</option>
+                        <option>TOTEM 3</option>
+                    </select>
+                    <select id="selectSemana">
+                        <option selected disabled>Selecione a Semana</option>
+                        <option>SEMANA 1</option>
+                        <option>SEMANA 2</option>
+                        <option>SEMANA 3</option>
+                        <option>SEMANA 4</option>
+                        <option>SEMANA 5</option>
+                    </select>
+                    <select id="selectComp">
+                        <option selected disabled>Selecione um Componente</option>
+                        <option>CPU</option>
+                        <option>RAM</option>
+                        <option>DISCO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="boxConteudo">
+                <div class="boxComponentes">
+                    <div class="ranking">
+                    </div>
+                    <div class="boxMedias">
+                        <div class="box1">
+                            
+                        </div>
+                        <div class="box2">
+                            
+                        </div>
+                    </div>
+                    <div class="boxGrafico">
+                        <div class="grafico">
+                            <div class="tituloGrafico">
+                                <h2>Previsão do Percentual Maximo e Minimo de CPU</h2>
+                            </div>
+                            <canvas id="myChart" style="width: 250px; height: 100px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="boxAlertas">
+                    <div class="boxRankingAlertas">
+    
+                    </div>
+                    <div class="boxRankingAlertass">
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+
+    if (nomeUsuario) {
+        document.getElementById('nome_perfil').textContent = nomeUsuario;
+    } else {
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+    }
+
+    function exibir() {
+        var selectTotem = document.getElementById("selectTotem");
+        var mediaCpu = document.getElementById("mediaCpu");
+        var mediaRam = document.getElementById("mediaRam");
+        var mediaDisco = document.getElementById("mediaDisco");
+        var totemSelecionadoMedia = selectTotem.value;  
+
+        if (totemSelecionadoMedia == "TOTEM 1") {
+            mediaCpu.innerHTML = "5% - 25%";    
+            mediaRam.innerHTML = "20% - 40%";   
+            mediaDisco.innerHTML = "15% - 35%"; 
+        } else if (totemSelecionadoMedia == "TOTEM 2") {
+            mediaCpu.innerHTML = "30% - 55%";   
+            mediaRam.innerHTML = "45% - 65%";   
+            mediaDisco.innerHTML = "30% - 50%"; 
+        } else if (totemSelecionadoMedia == "TOTEM 3") {
+            mediaCpu.innerHTML = "60% - 85%";   
+            mediaRam.innerHTML = "70% - 90%";   
+            mediaDisco.innerHTML = "55% - 75%"; 
+        }
+}
+
+    
+
+
+const ctx = document.getElementById('myChart');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['06/10', '07/10', '08/10', '09/10', '10/10', '11/10', '12/10'],
+        datasets: [
+            {
+                label: 'CPU',
+                data: [35, 45, 30, 50, 55, 40, 60],
+                backgroundColor: '#18204b',
+                borderWidth: 1
+            },
+            {
+                label: 'RAM',
+                data: [65, 70, 55, 75, 60, 65, 80],
+                backgroundColor: '#41b8d5',
+                borderWidth: 1
+            },
+            {
+                label: 'DISCO',
+                data: [45, 50, 35, 60, 55, 40, 55],
+                backgroundColor: '#8eeff1',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+function atualizarGrafico() {
+    const totemSelecionado = document.getElementById('selectTotemGrafico').value;
+
+    if (totemSelecionado === "TOTEM 1") {
+        myChart.data.datasets[0].data = [35, 45, 30, 50, 55, 40, 60];
+        myChart.data.datasets[1].data = [65, 70, 55, 75, 60, 65, 80];
+        myChart.data.datasets[2].data = [45, 50, 35, 60, 55, 40, 55];
+    } else if (totemSelecionado === "TOTEM 2") {
+        myChart.data.datasets[0].data = [25, 30, 40, 35, 45, 55, 50];
+        myChart.data.datasets[1].data = [70, 75, 65, 60, 80, 85, 78];
+        myChart.data.datasets[2].data = [50, 55, 40, 45, 60, 58, 65];
+    } else if (totemSelecionado === "TOTEM 3") {
+        myChart.data.datasets[0].data = [40, 60, 55, 65, 70, 50, 75];
+        myChart.data.datasets[1].data = [85, 80, 78, 88, 90, 70, 75];
+        myChart.data.datasets[2].data = [55, 60, 65, 68, 70, 75, 80];
+    }
+
+    // Atualiza o gráfico para refletir os novos dados
+    myChart.update();
+}
+</script>

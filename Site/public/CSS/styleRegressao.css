@@ -1,0 +1,251 @@
+@font-face {
+    font-family: montSerrat;
+    src: url(../Fonts/MontSerrat-Regular.ttf);
+  }
+
+  @font-face {
+    font-family: openSans;
+    src: url(../Fonts/OpenSans-Regular.ttf);
+  }
+
+
+body {
+    padding: 0;
+    margin: 0;
+}
+.conteudoPagina {
+    display: flex;
+    background-color: #d9d9d9;
+    width: 100vw;
+    height: 100vh;
+}
+
+.conteudoPagina .boxLateral {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+    height: 100vh;
+    width: 15vw;
+}
+
+.conteudoPagina .boxLateral .boxIdentificacao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 24vh;
+    width: 13vw;
+    font-family: "montSerrat";
+}
+
+.conteudoPagina .boxLateral .boxIdentificacao h1 {
+    font-size: 21px;
+    margin: 0%;
+    color: #ffffff;
+    text-align: center;
+    padding-bottom: 5%;
+}
+
+.conteudoPagina .boxLateral .boxIdentificacao h3 {
+    margin: 0%;
+    color: #d9d9d9;
+    font-size: 11px;
+    text-decoration: underline;
+}
+
+.conteudoPagina .boxLateral .boxOpcoes {
+    width: 15vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+}
+
+.conteudoPagina .boxLateral .boxOpcoes .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "montSerrat";
+    font-weight: 700;
+    width: 15vw;
+    height: 5vw;   
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.conteudoPagina .boxLateral .boxSair {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 15vw;
+    height: 7vh;
+    color: #ffffff;
+    font-family: "montSerrat";
+    font-weight: 700;
+}
+
+.conteudoPagina .conteudoMetricas {
+    height: 100vh;
+    width: 85vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo {
+    height: 9vh;
+    width: 85vw;
+    display: flex;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem {
+    height: 10vh;   
+    width: 30vw;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 1.5vw;
+    margin-top: -3.5vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #18204b;
+    color: #ffffff;
+    height: 4.7vh;
+    width: 17vw;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-family: "montSerrat";
+    margin-left: 9px;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo{
+    height: 90vh;
+    width: 85vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes {
+    height: 90vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias{
+    display: block;
+    margin-left: 35vw;
+    margin-top: -36vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box1 {
+    width: 12.7vw;
+    height: 16.5vh;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box2 {
+    width: 12.7vw;
+    height: 16.5vh;
+    margin-top: 3vh;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking {
+    width: 32vw;
+    height: 36vh;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    margin-left: 2vw;
+}
+
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico {
+    height: 50vh;
+    display: flex;
+    margin-left: 2vw;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico {
+    height: 49vh;
+    width: 45vw;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin-top: 5vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico{
+    margin-left: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico h2{
+    font-family: "montSerrat";
+    font-size: 18px;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico select{
+    background-color: #18204b;
+    color: #ffffff;
+    border-radius: 20px;
+    font-family: "montSerrat";
+    height: 3.5vh;
+    width: 12vw;
+    text-align: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas {
+    height: 90vh;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas {
+    height: 43.5vh;
+    width: 35vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    margin-top: -7vh;
+    margin-left: 1vw;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertass {
+    height: 50.5vh;
+    width: 35vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    margin-top: 1.7vh;
+    margin-left: 1vw;
+}
+
