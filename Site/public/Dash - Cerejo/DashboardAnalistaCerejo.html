@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas Analista - GateWatch</title>
+    <link rel="stylesheet" href="../CSS/styleDashboards.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+
+<body>
+    <div class="conteudoPagina">
+        <div class="boxLateral">
+            <div class="boxIdentificacao">
+                <h1 class="fonte_perfil" id="nome_perfil"></h1>
+                <h3>ANALISTA DE DADOS</h3>
+            </div>
+            <div class="boxOpcoes">
+                <a href="index.html">
+                    <div class="box">HOME</div>
+                </a>
+                <a href="dashboardAnalistaMetricas.html">
+                    <div class="box" style="background-color: #41446877;">DASHBOARD</div>
+                </a>
+                <a href="dashboardAnalistaRegressao.html">
+                    <div class="box">PREVISÕES</div>
+                </a>
+            </div>
+            <a href="cadastro.html">
+                <div class="boxSair">SAIR</div>
+            </a>
+        </div>
+        <div class="nuvem">
+            <div class="titulo1"><img src="../Images/numero-1.png" alt="">Nuvem de processos</div>
+            <div class="wordcloud">
+                <img src="../Images/WordCloud-Processos.PNG" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+
+    if (nomeUsuario) {
+        document.getElementById('nome_perfil').textContent = nomeUsuario;
+    } else {
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+    }
+</script>

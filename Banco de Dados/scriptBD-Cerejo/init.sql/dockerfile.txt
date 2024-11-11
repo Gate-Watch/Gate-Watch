@@ -1,0 +1,7 @@
+FROM mysql:latest
+
+ENV MYSQL_DATABASE="GateWatch"
+ENV MYSQL_USER="aluno"
+ENV MYSQL_PASSWORD="sptech"
+
+EXPOSE 3306
