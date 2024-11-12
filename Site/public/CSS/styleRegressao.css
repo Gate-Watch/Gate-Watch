@@ -139,39 +139,98 @@ a {
     height: 90vh;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias{
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias {
     display: block;
     margin-left: 35vw;
     margin-top: -36vh;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box1 {
-    width: 12.7vw;
-    height: 16.5vh;
-    background-color: #f8f8f8;
-    border-radius: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
-}
-
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box1,
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box2 {
     width: 12.7vw;
-    height: 16.5vh;
-    margin-top: 3vh;
-    background-color: #f8f8f8;
+    height: 17.5vh;
+    background-color: #0c102492; 
     border-radius: 20px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box1 {
+    margin-bottom: 1vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias h4 {
+    font-family: "montSerrat";
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    margin: 0;
+    margin-bottom: 2vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias p {
+    font-family: "openSans";
+    font-size: 1.1rem;
+    color: white;
+    text-decoration: underline;
+    border-radius: 3px;
+    padding: 0.2rem;
+    margin: 0;
+}
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking {
     width: 32vw;
-    height: 36vh;
-    background-color: #f8f8f8;
+    height: 35vh;
+    background-color: #0c102492; 
     border-radius: 20px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
     margin-left: 2vw;
+    margin-top: -1vh;
+    padding: 0.25rem;
 }
 
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking h3 {
+    font-family: "montSerrat";
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking .ranking-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1vh;
+    padding: 2vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking .ranking-posicao {
+    font-family: "openSans";
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    background-color: #18204b;
+    border-radius: 10px;
+    padding: 1vh;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking .ranking-nome {
+    font-family: "openSans";
+    font-size: 1rem;
+    color: #f0f0f0; 
+    background-color: #26719566;
+    border-radius: 10px;
+    padding: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico {
     height: 50vh;
@@ -183,35 +242,13 @@ a {
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico {
     height: 49vh;
     width: 45vw;
-    background-color: #f8f8f8;
+    background-color: #0c102492; 
     border-radius: 20px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
     padding: 5px;
     margin-top: 5vh;
-}
-
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico{
-    margin-left: 1vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico h2{
-    font-family: "montSerrat";
-    font-size: 18px;
-}
-
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico select{
-    background-color: #18204b;
-    color: #ffffff;
-    border-radius: 20px;
-    font-family: "montSerrat";
-    height: 3.5vh;
-    width: 12vw;
-    text-align: center;
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas {
@@ -235,7 +272,7 @@ a {
     margin-left: 1vw;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertass {
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .grafico2{
     height: 50.5vh;
     width: 35vw;
     display: flex;
