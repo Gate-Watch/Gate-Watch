@@ -8,16 +8,28 @@
     src: url(../Fonts/OpenSans-Regular.ttf);
   }
 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    background-color: #d9d9d9;
+}
 
 body {
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
 }
+
 .conteudoPagina {
-    display: flex;
-    background-color: #d9d9d9;
-    width: 100vw;
-    height: 100vh;
+        display: flex;
+        flex-direction: row;
+        background-color: #d9d9d9;
+        width: 100%;
+        height: 100vh;
 }
 
 .conteudoPagina .boxLateral {
@@ -26,7 +38,6 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #000000;
-    height: 100vh;
     width: 15vw;
 }
 
@@ -805,16 +816,131 @@ a {
     font-weight: 700;
     font-size: 28px;
     padding-left: 3%;
+    text-align: center;
+    align-items: center;
 }
 
 .titulo1 img{
-    width: 6%;
-    margin-right: 1vw;
+    width: 5%;
+    margin-right: 1%;
 }
 
 .wordcloud{
-    background-color: #d9d9d9;
-    height: 50%;
-    width: 50%;
-    border: 5px solid black;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+}
+
+.wordcloud img{
+    width: 49%;
+}
+
+.nuvem {
+    width: 42vw;
+    height: fit-content;
+    background-color: white;
+    margin-left: 1%;
+    margin-top: 0.01%;
+    border-radius: 1%;
+}
+
+.posicao{
+    border: 6px groove aqua;
+    border-radius: 50%;
+    margin-bottom: 6vh;
+}
+
+.rank{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.processos{
+    display: flex;
+    flex-direction: column;
+}
+
+.processo{
+    font-family: "montSerrat";
+    margin-bottom: 6vh;
+    font-size: 3vh;
+    margin-left: 1vw;
+}
+
+.projecao {
+    width: 38vw;
+    height: 50vh;
+    background-color: white;
+    margin-left: 1%;
+    margin-top: 0.01%;
+    border-radius: 1%;
+}
+
+.titulo2{
+    height: 10vh;
+    width: 44vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-family: "montSerrat";
+    font-weight: 700;
+    font-size: 28px;
+    padding-left: 3%;
+    text-align: left;
+    align-items: center;
+}
+
+.titulo2 img{
+    width: 5%;
+    margin-right: 1%;
+}
+
+.regressao {
+    width: 37vw;
+    height: 10vh;
+}
+
+#chart {
+    width: 37vw;
+    height: 10vh;
+}
+
+.blocoTop {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+img, #chart {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.titulo3{
+    /* height: 10vh; */
+    width: 44vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-family: "montSerrat";
+    font-weight: 700;
+    font-size: 28px;
+    padding-left: 3%;
+    text-align: left;
+    align-items: center;
+    margin-top: 1%;
+}
+
+.titulo3 img{
+    width: 5%;
+    margin-right: 1%;
 }
