@@ -91,7 +91,7 @@
     
                     </div>
                     <div class="grafico2">
-    
+                        <div id="chart2" style="margin-top: 0.8vh;"></div>
                     </div>
                 </div>
             </div>
@@ -120,44 +120,117 @@
             {
                 name: 'Componente Escolhido',
                 data: [45, 50, 35, 60, 55, 48, 55]
+            },
+            {
+                name: 'Limite Componente Escolhido',
+                data: [65, 65, 65, 65, 65, 65, 65]
             }
         ],
         xaxis: {
             categories: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
             labels: {
                 style: {
-                    colors: '#ffffff' 
+                    colors: '#ffffff'
                 }
             }
         },
         yaxis: {
             min: 0,
+            max: 100,
             labels: {
                 style: {
-                    colors: '#ffffff' 
+                    colors: '#ffffff'
                 }
             }
         },
         stroke: {
-            curve: 'smooth'
+            curve: 'smooth',
+            width: [4, 4, 4, 3],
+            dashArray: [0, 0, 0, 5]
         },
-        colors: ['#8eeff1', '#18204b', '#1e81b0'],
+        colors: ['#8eeff1', '#18204b', '#1e81b0', '#00FF00'],
         title: {
-            text: 'Previsão do Percentual Máximo e Mínimo de CPU',
+            text: 'Previsão do Percentual de CPU',
             align: 'left',
-        style: {
-            color: '#ffffff', 
-            fontSize: '17px'  
-        }
-},
-
+            style: {
+                color: '#ffffff',
+                fontSize: '17px'
+            }
+        },
         legend: {
             labels: {
-                colors: '#ffffff' 
-            }
+                colors: '#ffffff'
+            },
+            position: 'bottom'
         }
     };
 
     const chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
+
+    const options2 = {
+        chart: {
+            type: 'line',
+            height: 295,
+            width: 470
+        },
+        series: [
+            {
+                name: 'Previsao',
+                data: [40, 60, 45, 50, 60, 65, 68]
+            },
+            {
+                name: 'Componente Escolhido',
+                data: [45, 50, 35, 60, 55, 48, 55]
+            },
+            {
+                name: 'Limite Componente Escolhido',
+                data: [65, 65, 65, 65, 65, 65, 65]
+            }
+        ],
+        xaxis: {
+            categories: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            labels: {
+                style: {
+                    colors: '#ffffff'
+                }
+            }
+        },
+        yaxis: {
+            min: 0,
+            max: 100,
+            labels: {
+                style: {
+                    colors: '#ffffff'
+                }
+            }
+        },
+        stroke: {
+            curve: 'smooth',
+            width: [4, 4, 3],
+            dashArray: [0, 0, 5]
+        },
+        colors: [ '#18204b', '#8eeff1', '#00FF00'],
+        title: {
+            text: 'Previsão do Percentual',
+            align: 'left',
+            style: {
+                color: '#ffffff',
+                fontSize: '17px'
+            }
+        },
+        legend: {
+            labels: {
+                colors: '#ffffff'
+            },
+            position: 'bottom'
+        }
+    };
+
+    const chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+    chart2.render();
 </script>
+
+
+
+

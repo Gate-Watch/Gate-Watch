@@ -248,7 +248,7 @@ a {
     display: flex;
     flex-direction: column;
     padding: 5px;
-    margin-top: 5vh;
+    margin-top: 6vh;
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas {
@@ -259,7 +259,7 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas {
-    height: 43.5vh;
+    height: 42.5vh;
     width: 35vw;
     display: flex;
     flex-direction: column;
@@ -279,10 +279,10 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #f8f8f8;
+    background-color: #0c102492;
     border-radius: 20px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
-    margin-top: 1.7vh;
-    margin-left: 1vw;
+    margin-top: 2.7vh;
+    margin-left: 1vw;   
 }
 
