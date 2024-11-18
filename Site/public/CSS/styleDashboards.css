@@ -26,7 +26,6 @@ body {
 
 .conteudoPagina {
         display: flex;
-        flex-direction: row;
         background-color: #d9d9d9;
         width: 100%;
         height: 100vh;
@@ -820,9 +819,11 @@ a {
     align-items: center;
 }
 
-.titulo1 img{
-    width: 5%;
-    margin-right: 1%;
+.titulo1 .bar{
+    height: 4vh;
+    width: 0.3vw;
+    background-color: #18204b;
+    margin-right: 10px;
 }
 
 .wordcloud{
@@ -841,7 +842,8 @@ a {
     background-color: white;
     margin-left: 1%;
     margin-top: 0.01%;
-    border-radius: 1%;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .posicao{
@@ -874,7 +876,8 @@ a {
     background-color: white;
     margin-left: 1%;
     margin-top: 0.01%;
-    border-radius: 1%;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .titulo2{
@@ -891,9 +894,11 @@ a {
     align-items: center;
 }
 
-.titulo2 img{
-    width: 5%;
-    margin-right: 1%;
+.titulo2 .bar{
+    height: 4vh;
+    width: 0.3vw;
+    background-color: #18204b;
+    margin-right: 10px;
 }
 
 .regressao {
@@ -923,7 +928,20 @@ img, #chart {
     flex-direction: column;
     flex-grow: 1;
     padding: 10px;
+    width: 85vw;
+    overflow: scroll;
+    overflow-x: hidden
 }
+
+.mainContent::-webkit-scrollbar {
+    width: 10px;
+    background: #ddd;
+}
+.mainContent::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 5px;
+}
+
 
 .titulo3{
     /* height: 10vh; */
@@ -940,7 +958,51 @@ img, #chart {
     margin-top: 1%;
 }
 
-.titulo3 img{
-    width: 5%;
-    margin-right: 1%;
+.titulo3 .bar{
+    height: 4vh;
+    width: 0.3vw;
+    background-color: #18204b;
+    margin-right: 10px;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3vh;
+}
+
+.header h1{
+    font-family: 'montSerrat';
+    font-size: 5vh;
+    color: #0e132c;
+}
+
+.header select{
+    width: 12vw;
+    height: 5vh;
+    border-radius: 10px;
+    border: none;
+    background-color: #0e132c;
+    color: white;
+}
+
+.blocoBottom{
+    width: 100%;
+    margin-top: 1%;
+}
+
+#chart2 {
+    margin-top: 10px;
+}
+
+.scatter .canvas {
+    width: 50% !important;
+    height: 30% !important;
+}
+
+.scatter {
+    width: 100%;
+    height: 50vh;
 }
