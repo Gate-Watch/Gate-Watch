@@ -1,6 +1,6 @@
 const db = require('../database/config');
 
-function getSemanalMetrics() {
+function getSemanalMetricas() {
     const query = `
         SELECT 
             ROUND(AVG(cpu_usage)) AS cpu_usage,
@@ -14,5 +14,5 @@ function getSemanalMetrics() {
 }
 
 module.exports = {
-    getSemanalMetrics
+    getSemanalMetricas
 };

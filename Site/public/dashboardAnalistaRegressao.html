@@ -35,13 +35,13 @@
         <div class="conteudoMetricas">
             <div class="boxTitulo">
                 <div class="selecionarTotem">
-                    <select id="selectTotem" onchange="exibir()">
+                    <select id="selectTotem" onchange="filtrarDados()">
                         <option selected disabled>Selecione um Totem</option>
                         <option>TOTEM 1</option>
                         <option>TOTEM 2</option>
                         <option>TOTEM 3</option>
                     </select>
-                    <select id="selectSemana">
+                    <select id="selectSemana" onchange="filtrarDados()">
                         <option selected disabled>Selecione a Semana</option>
                         <option>SEMANA 1</option>
                         <option>SEMANA 2</option>
@@ -49,7 +49,7 @@
                         <option>SEMANA 4</option>
                         <option>SEMANA 5</option>
                     </select>
-                    <select id="selectComp">
+                    <select id="selectComp" onchange="filtrarDados()">
                         <option selected disabled>Selecione um Componente</option>
                         <option>CPU</option>
                         <option>RAM</option>
@@ -229,6 +229,52 @@
 
     const chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
     chart2.render();
+
+async function filtrarDados() {
+    const totem = document.getElementById("selectTotem").value;
+    const semana = document.getElementById("selectSemana").value;
+    const componente = document.getElementById("selectComp").value;
+
+    if (!totem || !semana || !componente) return;
+
+    try {
+        const response = await fetch(`/dashRegressao?totem=${totem}&semana=${semana}&componente=${componente}`);
+        console.log(response);
+        const data = await response.json();
+
+
+        if (response.ok) {
+            atualizarGraficos(data.dias, data.medias, componente);
+        } else {
+            console.error(data.error);
+        }
+    } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+    }
+}
+
+function atualizarGraficos(dias, medias, componente) {
+    chart.updateSeries([
+        { name: 'Média Diária', data: medias },
+        { name: 'Limite Componente Escolhido', data: Array(7).fill(65) }
+    ]);
+
+    chart.updateOptions({
+        xaxis: { categories: dias },
+        title: { text: `Previsão do Percentual de ${componente.toUpperCase()}` }
+    });
+
+    chart2.updateSeries([
+        { name: 'Previsão', data: medias },
+        { name: 'Limite Componente Escolhido', data: Array(7).fill(65) }
+    ]);
+
+    chart2.updateOptions({
+        xaxis: { categories: dias },
+        title: { text: `Previsão do Percentual de ${componente.toUpperCase()}` }
+    });
+}
+
 </script>
 
 

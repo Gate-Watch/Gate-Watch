@@ -1,7 +1,8 @@
 const express = require('express');
-const router = express.Router();
-const regressaoController = require('../controllers/regressaoController');
+const controller = require('../controllers/regressaoController');
 
-router.get('/semanal', regressaoController.getMetricasSemanal);
+const router = express.Router();
+
+router.get('/mediaSemanal', controller.getMetricasSemanal);
 
 module.exports = router;
