@@ -3,6 +3,6 @@ const controller = require('../controllers/regressaoController');
 
 const router = express.Router();
 
-router.get('/mediaSemanal', controller.getMetricasSemanal);
+router.get('/semanal', controller.getMetricasSemanal);
 
 module.exports = router;

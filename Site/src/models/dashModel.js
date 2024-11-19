@@ -1,26 +1,21 @@
-const db = require('../database/connection');
+const db = require('../database/config');
 
-async function calcularMediaSemanal(totem, semana, componente) {
-    const inicioSemana = (semana - 1) * 7 + 1;
-    const fimSemana = inicioSemana + 6;
-
+function getSemanalMetrics() {
     const query = `
         SELECT 
-            DAYNAME(dtHora) AS dia,
-            AVG(${componente}_perc) AS media
+            DAYNAME(dtHora) AS dia_semana,
+            ROUND(AVG(cpu_usage), 2) AS cpu_usage_avg,
+            ROUND(AVG(memory_perc), 2) AS memory_perc_avg,
+            ROUND(AVG(disk_perc), 2) AS disk_perc_avg
         FROM Desempenho
-        WHERE fkTotem = ? 
-          AND DAYOFMONTH(dtHora) BETWEEN ? AND ?
-        GROUP BY DAYOFWEEK(dtHora)
+        WHERE WEEK(dtHora) = WEEK(CURDATE())
+        AND YEAR(dtHora) = YEAR(CURDATE())
+        GROUP BY DAYNAME(dtHora)
         ORDER BY FIELD(DAYNAME(dtHora), 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     `;
-
-    const [result] = await db.execute(query, [totem, inicioSemana, fimSemana]);
-
-    const dias = result.map(row => row.dia);
-    const medias = result.map(row => parseFloat(row.media.toFixed(2)));
-
-    return { dias, medias };
+    return db.executar(query);
 }
 
-module.exports = { calcularMediaSemanal };
+module.exports = {
+    getSemanalMetrics
+};
