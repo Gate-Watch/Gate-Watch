@@ -41,14 +41,6 @@
                         <option>TOTEM 2</option>
                         <option>TOTEM 3</option>
                     </select>
-                    <select id="selectSemana" onchange="fetchMetrics()">
-                        <option selected disabled>Selecione a Semana</option>
-                        <option>SEMANA 1</option>
-                        <option>SEMANA 2</option>
-                        <option>SEMANA 3</option>
-                        <option>SEMANA 4</option>
-                        <option>SEMANA 5</option>
-                    </select>
                     <select id="selectComp" onchange="fetchMetrics()">
                         <option selected disabled>Selecione um Componente</option>
                         <option>CPU</option>
@@ -103,43 +95,42 @@
 </html>
 
 <script>
-    async function fetchMetrics() {
+      async function fetchMetrics() {
         try {
-            const selectedTotem = document.getElementById('selectTotem').value;
-            const selectedSemana = document.getElementById('selectSemana').value;
+            const selectedTotem = document.getElementById('selectTotem').value.replace('TOTEM ', '');
             const selectedComponent = document.getElementById('selectComp').value;
 
-            if (!selectedTotem || !selectedSemana || !selectedComponent) {
-                alert('Por favor, selecione um Totem, Semana e Componente.');
+            if (!selectedTotem || !selectedComponent) {
+                alert('Por favor, selecione todos os campos.');
                 return;
             }
 
-            const response = await fetch(`/dashRegressao/semanal?totem=${selectedTotem}&semana=${selectedSemana}&component=${selectedComponent}`);
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error("Erro do servidor:", errorText);
-                throw new Error('Erro ao buscar dados do servidor.');
-            }
+            const response = await fetch(`/dashRegressao/semanal?totem=${selectedTotem}&componente=${selectedComponent}`);
+            if (!response.ok) throw new Error('Erro ao buscar dados do servidor.');
 
             const data = await response.json();
-            console.log("Dados recebidos do servidor:", data);
 
-            const { dias, previsoesAtuais, previsoesMin, previsoesMax } = data;
-
-            if (!dias || !previsoesAtuais || !previsoesMin || !previsoesMax) {
-                alert('Dados insuficientes recebidos do servidor.');
+            if (!data.metrics || data.metrics.length === 0) {
+                alert('Nenhum dado disponível para o componente e totem selecionados.');
                 return;
             }
 
-            renderChart1(dias, previsoesAtuais, previsoesMin, previsoesMax);
+            if (data.missingDays && data.missingDays.length > 0) {
+                alert(`Dados ausentes para os dias: ${data.missingDays.join(', ')}`);
+            }
 
+            const dias = data.metrics.map(d => d.dia_semana);
+            const componentData = data.metrics.map(d => d.valor);
+
+            renderChart1(dias, componentData);
+            renderChart2(dias, componentData);
         } catch (error) {
             console.error("Erro ao buscar métricas semanais:", error);
-            alert('Erro ao buscar dados do servidor. Verifique os logs para mais detalhes.');
         }
     }
 
-    function renderChart1(dias, previsoesAtuais, previsoesMin, previsoesMax) {
+    function renderChart1(dias, componentData) {
+
         const chartContainer = document.querySelector("#chart");
         if (chartContainer.children.length) {
             chartContainer.innerHTML = '';
@@ -148,28 +139,26 @@
         const options = {
             chart: {
                 type: 'line',
-                height: 290,
+                height: 270
             },
             series: [
-                { name: 'Métrica Atual', data: previsoesAtuais },
-                { name: 'Previsão Máxima', data: previsoesMax },
-                { name: 'Previsão Mínima', data: previsoesMin },
+                { name: 'Componente Escolhido', data: componentData },
+                { name: 'Limite Componente', data: Array(dias.length).fill(65) }
             ],
             xaxis: { categories: dias, labels: { style: { colors: '#ffffff' } } },
             yaxis: { min: 0, max: 100, labels: { style: { colors: '#ffffff' } } },
-            stroke: { curve: 'smooth', width: [4, 3, 3] },
-            colors: ['#1e81b0', '#ff0000', '#00ff00'],
+            stroke: { curve: 'smooth', width: [4, 3], dashArray: [0, 5] },
+            colors: ['#1e81b0', '#00FF00'],
             title: { text: 'Previsão do Percentual', align: 'left', style: { color: '#ffffff', fontSize: '17px' } },
-            legend: { labels: { colors: '#ffffff' }, position: 'bottom' },
+            legend: { labels: { colors: '#ffffff' }, position: 'bottom' }
         };
 
         const chart = new ApexCharts(chartContainer, options);
         chart.render();
     }
 
-
     function renderChart2(dias, componentData) {
-        // Destruir gráfico anterior, se existir
+
         const chartContainer2 = document.querySelector("#chart2");
         if (chartContainer2.children.length) {
             chartContainer2.innerHTML = '';
@@ -178,7 +167,7 @@
         const options = {
             chart: {
                 type: 'line',
-                height: 295,
+                height: 280,
                 width: 470
             },
             series: [
@@ -197,13 +186,10 @@
         chart2.render();
     }
 
-    // Carregar gráficos com valores padrão ao carregar a página
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('selectComp').value = "CPU";
         document.getElementById('selectTotem').value = "TOTEM 1";
-        document.getElementById('selectSemana').value = "SEMANA 2";
         fetchMetrics();
     });
-
 
 </script>

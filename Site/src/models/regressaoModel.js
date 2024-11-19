@@ -1,30 +1,32 @@
 const db = require('../database/config');
 
-function getMetricasSemanal() {
+async function getMetricsSemanal(totem, componente) {
+    const componentMap = {
+        CPU: 'cpu_usage',
+        RAM: 'memory_perc',
+        DISCO: 'disk_perc'
+    };
+
+    const selectedColumn = componentMap[componente];
+    if (!selectedColumn) {
+        throw new Error("Componente inválido.");
+    }
+
     const query = `
         SELECT 
-            dia_semana,
-            cpu_usage_avg,
-            memory_perc_avg,
-            disk_perc_avg
-        FROM (
-            SELECT 
-                DAYNAME(dtHora) AS dia_semana,
-                ROUND(AVG(cpu_usage), 2) AS cpu_usage_avg,
-                ROUND(AVG(memory_perc), 2) AS memory_perc_avg,
-                ROUND(AVG(disk_perc), 2) AS disk_perc_avg
-            FROM Desempenho
-            WHERE WEEK(dtHora) = WEEK(CURDATE())
-            AND YEAR(dtHora) = YEAR(CURDATE())
-            GROUP BY DAYNAME(dtHora)
-        ) AS subquery
+            DAYNAME(dtHora) AS dia_semana,
+            ROUND(AVG(${selectedColumn}), 2) AS valor
+        FROM Desempenho
+        WHERE WEEK(dtHora) = WEEK(CURDATE())
+          AND YEAR(dtHora) = YEAR(CURDATE())
+          AND fkTotem = ${totem}
+        GROUP BY dia_semana
         ORDER BY FIELD(dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     `;
-    console.log("Consulta SQL executada:", query); // Log para debug
-    return db.executar(query);
+
+    const [rows] = await db.executar(query, [totem, selectedColumn]);
+    return rows;
 }
 
+module.exports = { getMetricsSemanal };
 
-module.exports = {
-    getMetricasSemanal
-};

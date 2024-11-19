@@ -56,8 +56,6 @@ CREATE TABLE Totem(
 	idTotem int primary key auto_increment,
     nome_totem varchar(100),
     codigo_serie varchar(100),
-    fabricante varchar(100),
-    ano_totem varchar(100),
     fkCompanhia INT,
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
 );
@@ -72,7 +70,7 @@ CREATE TABLE Monitoramento(
     dtHora_inicio DATETIME,
     dtHora_fim DATETIME,
     FOREIGN KEY(fkFuncionario) REFERENCES Funcionario(idFuncionario),
-    FOREIGN KEY(fkTotem) REFERENCES Totem(codigo_serie)
+    FOREIGN KEY(fkTotem) REFERENCES Totem(idTotem)
 );
 
 -- Criação da tabela Desempenho
@@ -89,7 +87,7 @@ CREATE TABLE Desempenho(
     dtHora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fkTotem INT,
     PRIMARY KEY (idDesempenho, fkTotem),
-    FOREIGN KEY (fkTotem) REFERENCES Totem(codigo_serie)
+    FOREIGN KEY (fkTotem) REFERENCES Totem(idTotem)
 );
 
 -- Criação da tabela alertas
@@ -106,7 +104,7 @@ CREATE TABLE Alerta (
 
 select * from Alerta;
 
-CREATE TABLE processo (
+CREATE TABLE Processos (
     id INT AUTO_INCREMENT PRIMARY KEY, 
     pId INT,                            
     nomeProcesso VARCHAR(45),
@@ -115,7 +113,7 @@ CREATE TABLE processo (
     disk_mb DECIMAL(10,2),
     dataProcesso DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, 
     fkTotem INT,
-    FOREIGN KEY (fkTotem) REFERENCES Totem(codigo_serie)
+    FOREIGN KEY (fkTotem) REFERENCES Totem(idTotem)
 );
 
 select * from Processos where cpu_percent > 0;
@@ -140,3 +138,57 @@ INSERT INTO Totem VALUES
     (1, true, 'Modelo A', 1),
     (2, true, 'Modelo B', 1),
     (3, true, 'Modelo C', 1);
+
+
+DELIMITER //
+CREATE PROCEDURE SimularDesempenho1Hora()
+BEGIN
+    DECLARE dia INT DEFAULT 1;
+    DECLARE hora INT DEFAULT 0;
+    DECLARE ultimo_dia INT;
+    DECLARE cpu_usage DOUBLE;
+    DECLARE cpu_freq DOUBLE;
+    DECLARE memory_usage DOUBLE;
+    DECLARE memory_total DOUBLE;
+    DECLARE memory_perc DOUBLE;
+    DECLARE disk_usage DOUBLE;
+    DECLARE disk_total DOUBLE;
+    DECLARE disk_perc DOUBLE;
+    DECLARE fkTotem INT;
+    -- Pega o último dia do mês atual
+    SET ultimo_dia = DAY(LAST_DAY(CURDATE()));
+    -- Loop para simular inserções para cada dia do mês
+    WHILE dia <= ultimo_dia DO
+        SET hora = 0;
+        -- Loop para cada 1 hora do dia
+        WHILE hora < 24 DO
+            -- Loop para cada fkTotem (1, 2 e 3)
+            SET fkTotem = 1;
+            WHILE fkTotem <= 3 DO
+                -- Gerar valores aleatórios para os dados de desempenho
+                SET cpu_usage = ROUND(RAND() * 100, 1); -- CPU entre 0 e 100%
+                SET cpu_freq = ROUND(RAND() * 3500, 1); -- Frequência entre 0 e 3500 MHz
+                SET memory_total = ROUND(RAND() * 24 + 8, 1); -- Memória total entre 8GB e 24GB
+                SET memory_usage = ROUND(RAND() * memory_total, 1); -- Memória usada <= total
+                SET memory_perc = ROUND((memory_usage / memory_total) * 100, 1); -- % de memória usada
+                SET disk_total = ROUND(RAND() * 200 + 100, 1); -- Disco total entre 100GB e 300GB
+                SET disk_usage = ROUND(RAND() * disk_total, 1); -- Disco usado <= total
+                SET disk_perc = ROUND((disk_usage / disk_total) * 100, 1); -- % de disco usado
+                -- Inserir os dados na tabela 'Desempenho' com a data/hora correspondente e o fkTotem atual
+                INSERT INTO Desempenho (cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, dtHora, fkTotem)
+                VALUES (cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, 
+                        CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-'), LPAD(dia, 2, '0'), ' ', LPAD(hora, 2, '0'), ':00:00'), fkTotem);
+                -- Incrementar o fkTotem
+                SET fkTotem = fkTotem + 1;
+            END WHILE;
+            -- Incrementar a hora de 1 em 1
+            SET hora = hora + 1;
+        END WHILE;
+        -- Incrementar o dia
+        SET dia = dia + 1;
+    END WHILE;
+END //
+DELIMITER ;
+CALL SimularDesempenho1Hora();
+
+select * from Desempenho;
