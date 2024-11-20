@@ -141,7 +141,7 @@ INSERT INTO Totem VALUES
 
 
 DELIMITER //
-CREATE PROCEDURE SimularDesempenho1Hora()
+CREATE PROCEDURE SimularDesempenho2Horas()
 BEGIN
     DECLARE dia INT DEFAULT 1;
     DECLARE hora INT DEFAULT 0;
@@ -156,9 +156,8 @@ BEGIN
     DECLARE disk_perc DOUBLE;
     DECLARE fkTotem INT;
     -- Pega o último dia do mês atual
-    SET ultimo_dia = DAY(LAST_DAY(CURDATE()));
-    -- Loop para simular inserções para cada dia do mês
-    WHILE dia <= ultimo_dia DO
+    
+    WHILE dia <= 21 DO
         SET hora = 0;
         -- Loop para cada 1 hora do dia
         WHILE hora < 24 DO
@@ -181,14 +180,24 @@ BEGIN
                 -- Incrementar o fkTotem
                 SET fkTotem = fkTotem + 1;
             END WHILE;
-            -- Incrementar a hora de 1 em 1
-            SET hora = hora + 1;
+            -- Incrementar a hora de 2 em 2
+            SET hora = hora + 2;
         END WHILE;
         -- Incrementar o dia
         SET dia = dia + 1;
     END WHILE;
 END //
 DELIMITER ;
-CALL SimularDesempenho1Hora();
+CALL SimularDesempenho2Horas();
 
 select * from Desempenho;
+
+SELECT 
+    DAYNAME(dtHora) AS dia_semana,
+    ROUND(AVG(cpu_usage), 2) AS componente_avg
+FROM Desempenho
+WHERE WEEK(dtHora) = WEEK(CURDATE())
+AND YEAR(dtHora) = YEAR(CURDATE())
+AND fkTotem = 1
+GROUP BY dia_semana
+ORDER BY FIELD(dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
