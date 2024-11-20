@@ -1,21 +1,29 @@
-const { getMetricsSemanal } = require('../models/regressaoModel');
+const model = require('../models/regressaoModel');
 
-async function getMetricasSemanal(req, res) {
-    try {
-        const { totem, componente } = req.query;
+function getMetricasPorTotemEComponente(req, res) {
+    const { totem, componente } = req.params;
 
-        if (!totem || !componente) {
-            return res.status(400).json({ error: "Totem e componente são obrigatórios." });
-        }
+    console.log(`Recebendo requisição para totem=${totem}, componente=${componente}`);
 
-        const result = await getMetricsSemanal(totem, componente);
-
-        res.json({ metrics: result });
-        
-    } catch (error) {
-        console.error("Erro ao obter métricas semanais:", error);
-        res.status(500).json({ error: "Erro ao buscar métricas semanais." });
+    if (!totem || !componente) {
+        return res.status(400).json({ error: 'Totem e componente são obrigatórios.' });
     }
+
+    model.getMetricsByTotemAndComponent(totem, componente)
+        .then(result => {
+            console.log('Resultado do banco de dados:', result);
+            if (result.length === 0) {
+                return res.status(404).json({ error: 'Nenhuma métrica encontrada para o totem e componente especificados.' });
+            }
+            res.json(result);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar métricas:', error);
+            res.status(500).json({ error: 'Erro ao buscar métricas para o totem e componente.' });
+        });
 }
 
-module.exports = { getMetricasSemanal };
+
+module.exports = { 
+    getMetricasPorTotemEComponente 
+};

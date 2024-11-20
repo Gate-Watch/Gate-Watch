@@ -14,7 +14,7 @@
     <div class="conteudoPagina">
         <div class="boxLateral">
             <div class="boxIdentificacao">
-                <h1 class="fonte_perfil" id="nome_perfil"></h1>
+                <h1 class="fonte_perfil" id="nome_perfil">Usuário</h1>
                 <h3>ANALISTA DE DADOS</h3>
             </div>
             <div class="boxOpcoes">
@@ -36,54 +36,46 @@
             <div class="boxTitulo">
                 <div class="selecionarTotem">
                     <select id="selectTotem" onchange="fetchMetrics()">
-                        <option selected disabled>Selecione um Totem</option>
-                        <option value="1">TOTEM 1</option>
-                        <option value="2">TOTEM 2</option>
-                        <option value="3" >TOTEM 3</option>
+                        <option value="1" selected>Totem 1</option>
+                        <option value="2">Totem 2</option>
+                        <option value="3">Totem 3</option>
                     </select>
                     <select id="selectComp" onchange="fetchMetrics()">
-                        <option selected disabled>Selecione um Componente</option>
-                        <option>CPU</option>
-                        <option>RAM</option>
-                        <option>DISCO</option>
+                        <option value="Cpu" selected>CPU</option>
+                        <option value="Ram">RAM</option>
+                        <option value="Disco">DISCO</option>
                     </select>
                 </div>
             </div>
             <div class="boxConteudo">
                 <div class="boxComponentes">
                     <div class="ranking">
-                        <h3>Ranking de Semanas com Maiores Previsões</h3>
-                        <div class="ranking-grid">
+                        <h3>Ranking de Totens com Maiores Previsões na Semana Atual</h3>
+                        <div class="ranking-grid" id="ranking">
                             <div class="ranking-posicao">1°</div>
-                            <div class="ranking-nome">Totem 1 - Semana 3</div>
-                            <div class="ranking-posicao">2°</div>
-                            <div class="ranking-nome">Totem 1 - Semana 1</div>
-                            <div class="ranking-posicao">3°</div>
-                            <div class="ranking-nome">Totem 1 - Semana 4</div>
+                            <div class="ranking-nome">Carregando...</div>
                         </div>
                     </div>
                     <div class="boxMedias">
                         <div class="box1">
                             <h4>Dia com maior previsão</h4>
-                            <p>Quarta</p>
+                            <p id="maiorPrevisao">Carregando...</p>
                         </div>
                         <div class="box2">
                             <h4>Dia com menor previsão</h4>
-                            <p>Terça</p>
+                            <p id="menorPrevisao">Carregando...</p>
                         </div>
                     </div>
                     <div class="boxGrafico">
                         <div class="grafico">
-                            <div id="chart"></div>
+                            <div id="chart" style="margin-top: 0.3vh;"></div>
                         </div>
                     </div>
                 </div>
                 <div class="boxAlertas">
-                    <div class="boxRankingAlertas">
-
-                    </div>
+                    <div class="boxRankingAlertas"></div>
                     <div class="grafico2">
-                        <div id="chart2" style="margin-top: 0.8vh;"></div>
+                        <div id="chart2" style="margin-top: 1.3vh;"></div>
                     </div>
                 </div>
             </div>
@@ -92,142 +84,158 @@
 
 </body>
 
-</html>
-
 <script>
     async function fetchMetrics() {
-    try {
-        // Pega os valores selecionados no dropdown
         const selectedTotem = document.getElementById('selectTotem').value;
         const selectedComponent = document.getElementById('selectComp').value;
 
-        if (!selectedTotem || !selectedComponent) {
-            alert('Por favor, selecione todos os campos.');
-            return;
+        try {
+            const response = await fetch(`/dashRegressao/semanal/${selectedTotem}/${selectedComponent}`);
+            if (!response.ok) throw new Error('Erro ao buscar dados do servidor.');
+
+            const data = await response.json();
+
+            const diasSemanaIngles = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const diasSemanaPortugues = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+            // Converte valores para as categorias em português (simplificadas)
+            const valores = diasSemanaIngles.map(dia => data.find(item => item.dia_semana === dia)?.componente_avg || 0);
+
+            // Dia com maior e menor previsão
+            const maiorPrevisao = diasSemanaPortugues[valores.indexOf(Math.max(...valores))];
+            const menorPrevisao = diasSemanaPortugues[valores.indexOf(Math.min(...valores))];
+
+            document.getElementById('maiorPrevisao').textContent = maiorPrevisao;
+            document.getElementById('menorPrevisao').textContent = menorPrevisao;
+
+            renderChart1(diasSemanaPortugues, valores);
+            renderChart2(diasSemanaPortugues, valores);
+
+        } catch (error) {
+            console.error('Erro ao buscar métricas:', error);
         }
-
-        // Faz a requisição para a API
-        const response = await fetch(`/dashRegressao/semanal?totem=${selectedTotem}&componente=${selectedComponent}`);
-        if (!response.ok) throw new Error('Erro ao buscar dados do servidor.');
-
-        const data = await response.json();
-
-        // Processa os dados recebidos
-        const processedData = processMetrics(data.metrics);
-
-        // Renderiza os gráficos com os dados processados
-        renderChart1(processedData.dias, processedData.valores);
-        renderChart2(processedData.dias, processedData.valores);
-    } catch (error) {
-        console.error("Erro ao buscar métricas semanais:", error);
     }
-}
 
-// Função para processar os dados recebidos
-function processMetrics(metrics) {
-    // Lista completa dos dias da semana (em inglês, para coincidir com o banco de dados)
-    const diasSemana = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    function renderChart1(dias, valores) {
+        const selectedComponent = document.getElementById('selectComp').value;
+        const chartContainer = document.querySelector("#chart");
+        chartContainer.innerHTML = ''; 
 
-    // Cria um mapeamento inicial com todos os dias zerados
-    const valoresMap = diasSemana.reduce((acc, dia) => {
-        acc[dia] = 0; // Inicializa todos os dias com valor 0
-        return acc;
-    }, {});
+        const options = {
+            chart: { type: 'line', height: 292 },
+            series: [
+                { name: `Componente: ${selectedComponent}`, data: valores }
+            ],
+            xaxis: {
+                categories: dias,
+                labels: { style: { colors: '#ffffff' } }
+            },
+            yaxis: {
+                min: 0,
+                max: 100,
+                labels: { style: { colors: '#ffffff' } }
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 4
+            },
+            annotations: {
+                yaxis: [
+                    {
+                        y: 65,
+                        borderColor: '#00ff00',
+                        label: {
+                            borderColor: '#00ff00',
+                            style: {
+                                color: '#000000',
+                                background: '#00ff00',
+                                fontSize: '10px'
+                            },
+                            text: 'Limite (65%)'
+                        },
+                        strokeDashArray: 7 
+                    }
+                ]
+            },
+            colors: ['#18204b'],
+            title: {
+                text: `Previsão do Percentual Máximo e Mínimo de ${selectedComponent}`,
+                align: 'left',
+                style: { color: '#ffffff', fontSize: '17px' }
+            },
+            legend: {
+                labels: { colors: '#ffffff' },
+                position: 'bottom'
+            }
+        };
 
-    // Preenche os valores com os dados recebidos da API
-    metrics.forEach(metric => {
-        valoresMap[metric.dia_semana] = metric.valor;
-    });
+        const chart = new ApexCharts(chartContainer, options);
+        chart.render();
+    }
 
-    // Extrai os valores na ordem correta dos dias da semana
-    const valores = diasSemana.map(dia => valoresMap[dia]);
+    function renderChart2(dias, valores) {
+        const selectedComponent = document.getElementById('selectComp').value;
+        const chartContainer2 = document.querySelector("#chart2");
+        chartContainer2.innerHTML = ''; 
 
-    return { dias: diasSemana, valores };
-}
+        const options = {
+            chart: { type: 'line', height: 295, width: 470 },
+            series: [
+                { name: `Componente: ${selectedComponent}`, data: valores }
+            ],
+            xaxis: {
+                categories: dias,
+                labels: {
+                    style: { colors: '#ffffff' },
+                    rotate: -45, // Rotação para evitar sobreposição
+                    hideOverlappingLabels: false // Força mostrar todos os rótulos
+                }
+            },
+            yaxis: {
+                min: 0,
+                max: 100,
+                labels: { style: { colors: '#ffffff' } }
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 4
+            },
+            annotations: {
+                yaxis: [
+                    {
+                        y: 65,
+                        borderColor: '#00ff00',
+                        label: {
+                            borderColor: '#00ff00',
+                            style: {
+                                color: '#000000',
+                                background: '#00ff00',
+                                fontSize: '10px'
+                            },
+                            text: 'Limite (65%)'
+                        },
+                        strokeDashArray: 7 
+                    }
+                ]
+            },
+            colors: ['#18204b'],
+            title: {
+                text: `Previsão do Percentual de ${selectedComponent}`,
+                align: 'left',
+                style: { color: '#ffffff', fontSize: '17px' }
+            },
+            legend: {
+                labels: { colors: '#ffffff' },
+                position: 'bottom'
+            }
+        };
 
-// Função para renderizar o primeiro gráfico
-function renderChart1(dias, valores) {
-    const chartContainer = document.querySelector("#chart");
-    chartContainer.innerHTML = ''; // Limpa gráficos existentes
+        const chart2 = new ApexCharts(chartContainer2, options);
+        chart2.render();
+    }
 
-    const options = {
-        chart: { type: 'line', height: 270 },
-        series: [
-            { name: 'Componente Escolhido', data: valores }
-        ],
-        xaxis: {
-            categories: dias,
-            labels: { style: { colors: '#ffffff' } }
-        },
-        yaxis: {
-            min: 0,
-            max: 100,
-            labels: { style: { colors: '#ffffff' } }
-        },
-        stroke: {
-            curve: 'smooth',
-            width: 4
-        },
-        colors: ['#1e81b0'],
-        title: {
-            text: 'Previsão do Percentual (Gráfico 1)',
-            align: 'left',
-            style: { color: '#ffffff', fontSize: '17px' }
-        },
-        legend: {
-            labels: { colors: '#ffffff' },
-            position: 'bottom'
-        }
-    };
-
-    const chart = new ApexCharts(chartContainer, options);
-    chart.render();
-}
-
-// Função para renderizar o segundo gráfico
-function renderChart2(dias, valores) {
-    const chartContainer2 = document.querySelector("#chart2");
-    chartContainer2.innerHTML = ''; // Limpa gráficos existentes
-
-    const options = {
-        chart: { type: 'bar', height: 280, width: 470 },
-        series: [
-            { name: 'Componente Escolhido', data: valores }
-        ],
-        xaxis: {
-            categories: dias,
-            labels: { style: { colors: '#ffffff' } }
-        },
-        yaxis: {
-            min: 0,
-            max: 100,
-            labels: { style: { colors: '#ffffff' } }
-        },
-        stroke: {
-            curve: 'smooth',
-            width: 4
-        },
-        colors: ['#f4a261'],
-        title: {
-            text: 'Previsão do Percentual (Gráfico 2)',
-            align: 'left',
-            style: { color: '#ffffff', fontSize: '17px' }
-        },
-        legend: {
-            labels: { colors: '#ffffff' },
-            position: 'bottom'
-        }
-    };
-
-    const chart2 = new ApexCharts(chartContainer2, options);
-    chart2.render();
-}
-
-// Evento inicial ao carregar a página
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('selectComp').value = "CPU";
-    document.getElementById('selectTotem').value = "1";
-    fetchMetrics();
-});
-
+    document.addEventListener("DOMContentLoaded", fetchMetrics);
 </script>
+
+
+</html>
