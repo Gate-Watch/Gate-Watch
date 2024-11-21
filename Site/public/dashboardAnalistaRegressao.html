@@ -7,6 +7,7 @@
     <title>Métricas Gerente - GateWatch</title>
     <link rel="stylesheet" href="./CSS/styleRegressao.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/regression"></script>
 </head>
 
 <body>
@@ -68,14 +69,14 @@
                     </div>
                     <div class="boxGrafico">
                         <div class="grafico">
-                            <div id="chart" style="margin-top: 0.3vh;"></div>
+                            <div id="chart" style="margin-top: 0vh;"></div>
                         </div>
                     </div>
                 </div>
                 <div class="boxAlertas">
                     <div class="boxRankingAlertas"></div>
                     <div class="grafico2">
-                        <div id="chart2" style="margin-top: 1.3vh;"></div>
+                        <div id="chart2" style="margin-top: 1vh;"></div>
                     </div>
                 </div>
             </div>
@@ -85,79 +86,101 @@
 </body>
 
 <script>
+    nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
+
     async function fetchMetrics() {
-        const selectedTotem = document.getElementById('selectTotem').value;
-        const selectedComponent = document.getElementById('selectComp').value;
+    const selectedTotem = document.getElementById('selectTotem').value;
+    const selectedComponent = document.getElementById('selectComp').value;
 
-        try {
-            const response = await fetch(`/dashRegressao/semanal/${selectedTotem}/${selectedComponent}`);
-            if (!response.ok) throw new Error('Erro ao buscar dados do servidor.');
+    try {
+        const response = await fetch(`/dashRegressao/semanal/${selectedTotem}/${selectedComponent}`);
+        if (!response.ok) throw new Error('Erro ao buscar dados do servidor.');
 
-            const data = await response.json();
+        const { semanaAtual, semanaPassada } = await response.json();
 
-            const diasSemanaIngles = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const diasSemanaPortugues = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+        const diasSemana = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-            // Converte valores para as categorias em português (simplificadas)
-            const valores = diasSemanaIngles.map(dia => data.find(item => item.dia_semana === dia)?.componente_avg || 0);
+        // Processar dados semanais (primeiro array)
+        const valoresAtuais = diasSemana.map(
+            (dia) => semanaAtual.find((item) => item.dia_semana === dia)?.componente_avg || 0
+        );
 
-            // Dia com maior e menor previsão
-            const maiorPrevisao = diasSemanaPortugues[valores.indexOf(Math.max(...valores))];
-            const menorPrevisao = diasSemanaPortugues[valores.indexOf(Math.min(...valores))];
+        // Processar dados da semana passada (segundo array)
+        const valoresPassados = diasSemana.map(
+            (dia) => semanaPassada.find((item) => item.dia_semana === dia)?.componente_avg || 0
+        );
 
-            document.getElementById('maiorPrevisao').textContent = maiorPrevisao;
-            document.getElementById('menorPrevisao').textContent = menorPrevisao;
+        // Regressão linear para cada dia
+        const previsaoMaxima = [];
+        const previsaoMinima = [];
+        const previsoes = [];
 
-            renderChart1(diasSemanaPortugues, valores);
-            renderChart2(diasSemanaPortugues, valores);
+        for (let i = 0; i < diasSemana.length; i++) {
+            // Calcular regressão para cada dia
+            const y = valoresPassados.slice(0, i + 1);  // Valores da semana passada até o dia 'i'
+            const x = Array.from({ length: i + 1 }, (_, idx) => idx); // Indices 0, 1, 2, ..., i
+            const pontos = x.map((val, idx) => [val, y[idx]]);
+            const modelo = regression.linear(pontos);
 
-        } catch (error) {
-            console.error('Erro ao buscar métricas:', error);
+            // Previsões para cada dia
+            previsaoMaxima.push(modelo.predict(i)[1] + 10); // Previsão máxima com margem de 10
+            previsaoMinima.push(modelo.predict(i)[1] - 10); // Previsão mínima com margem de 10
+            previsoes.push(modelo.predict(i)[1]);          // Previsão central
         }
-    }
 
-    function renderChart1(dias, valores) {
+        // Encontrar o dia com maior e menor previsão
+        const indiceMaior = previsaoMaxima.indexOf(Math.max(...previsaoMaxima));
+        const indiceMenor = previsaoMinima.indexOf(Math.min(...previsaoMinima));
+
+        const diaMaiorPrevisao = traduzirDia(diasSemana[indiceMaior]);
+        const diaMenorPrevisao = traduzirDia(diasSemana[indiceMenor]);
+
+        // Atualizar as divs
+        document.getElementById("maiorPrevisao").textContent = diaMaiorPrevisao;
+        document.getElementById("menorPrevisao").textContent = diaMenorPrevisao;
+
+        // Renderizar os gráficos
+        renderChart1(diasSemana, valoresAtuais, previsaoMaxima, previsaoMinima);
+        renderChart2(diasSemana, valoresAtuais, previsoes);
+    } catch (error) {
+        console.error('Erro ao buscar métricas:', error);
+    }
+}
+
+    function renderChart1(dias, valores, previsaoMaxima, previsaoMinima) {
         const selectedComponent = document.getElementById('selectComp').value;
         const chartContainer = document.querySelector("#chart");
-        chartContainer.innerHTML = ''; 
+        chartContainer.innerHTML = ''; // Limpar o gráfico anterior
 
         const options = {
             chart: { type: 'line', height: 292 },
             series: [
-                { name: `Componente: ${selectedComponent}`, data: valores }
+                { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
+                { name: 'Previsão Máxima', data: previsaoMaxima.map(v => Math.round(v)) },
+                { name: 'Previsão Mínima', data: previsaoMinima.map(v => Math.round(v)) },
+                {
+                    name: 'Limite (65%)',
+                    data: Array(dias.length).fill(65),
+                }
             ],
             xaxis: {
-                categories: dias,
+                categories: dias.map(traduzirDia),
                 labels: { style: { colors: '#ffffff' } }
             },
             yaxis: {
                 min: 0,
                 max: 100,
-                labels: { style: { colors: '#ffffff' } }
+                labels: {
+                    style: { colors: '#ffffff' },
+                    formatter: val => val.toFixed(0)
+                }
             },
             stroke: {
                 curve: 'smooth',
-                width: 4
+                width: [3, 3, 3, 2], // Define espessura para cada linha
+                dashArray: [0, 0, 0, 7] // Define apenas a última série como pontilhada
             },
-            annotations: {
-                yaxis: [
-                    {
-                        y: 65,
-                        borderColor: '#00ff00',
-                        label: {
-                            borderColor: '#00ff00',
-                            style: {
-                                color: '#000000',
-                                background: '#00ff00',
-                                fontSize: '10px'
-                            },
-                            text: 'Limite (65%)'
-                        },
-                        strokeDashArray: 7 
-                    }
-                ]
-            },
-            colors: ['#18204b'],
+            colors: ['#18204b', '#ff0000', '#1E90FF', '#00ff00'], // Cores das séries
             title: {
                 text: `Previsão do Percentual Máximo e Mínimo de ${selectedComponent}`,
                 align: 'left',
@@ -166,6 +189,10 @@
             legend: {
                 labels: { colors: '#ffffff' },
                 position: 'bottom'
+            },
+            grid: {
+                borderColor: '#ffffff',
+                strokeDashArray: 0
             }
         };
 
@@ -173,52 +200,43 @@
         chart.render();
     }
 
-    function renderChart2(dias, valores) {
+    function renderChart2(dias, valores, previsoes) {
         const selectedComponent = document.getElementById('selectComp').value;
         const chartContainer2 = document.querySelector("#chart2");
-        chartContainer2.innerHTML = ''; 
+        chartContainer2.innerHTML = ''; // Limpar o gráfico anterior
 
         const options = {
             chart: { type: 'line', height: 295, width: 470 },
             series: [
-                { name: `Componente: ${selectedComponent}`, data: valores }
+                { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
+                { name: 'Previsão', data: previsoes.map(v => Math.round(v)) },
+                {
+                    name: 'Limite (65%)',
+                    data: Array(dias.length).fill(65),
+                }
             ],
             xaxis: {
-                categories: dias,
+                categories: dias.map(traduzirDia),
                 labels: {
                     style: { colors: '#ffffff' },
-                    rotate: -45, // Rotação para evitar sobreposição
-                    hideOverlappingLabels: false // Força mostrar todos os rótulos
+                    rotate: -45,
+                    hideOverlappingLabels: false
                 }
             },
             yaxis: {
                 min: 0,
                 max: 100,
-                labels: { style: { colors: '#ffffff' } }
+                labels: {
+                    style: { colors: '#ffffff' },
+                    formatter: val => val.toFixed(0)
+                }
             },
             stroke: {
                 curve: 'smooth',
-                width: 4
+                width: [3, 3, 2], // Espessura das linhas
+                dashArray: [0, 0, 7] // Última série pontilhada
             },
-            annotations: {
-                yaxis: [
-                    {
-                        y: 65,
-                        borderColor: '#00ff00',
-                        label: {
-                            borderColor: '#00ff00',
-                            style: {
-                                color: '#000000',
-                                background: '#00ff00',
-                                fontSize: '10px'
-                            },
-                            text: 'Limite (65%)'
-                        },
-                        strokeDashArray: 7 
-                    }
-                ]
-            },
-            colors: ['#18204b'],
+            colors: ['#1E90FF', '#18204b', '#00ff00'], // Cores das séries
             title: {
                 text: `Previsão do Percentual de ${selectedComponent}`,
                 align: 'left',
@@ -227,6 +245,10 @@
             legend: {
                 labels: { colors: '#ffffff' },
                 position: 'bottom'
+            },
+            grid: {
+                borderColor: '#ffffff',
+                strokeDashArray: 0
             }
         };
 
@@ -234,7 +256,24 @@
         chart2.render();
     }
 
+
+
+    function traduzirDia(dia) {
+        const dias = {
+            Sunday: 'Domingo',
+            Monday: 'Segunda',
+            Tuesday: 'Terça',
+            Wednesday: 'Quarta',
+            Thursday: 'Quinta',
+            Friday: 'Sexta',
+            Saturday: 'Sábado'
+        };
+        return dias[dia] || dia;
+    }
+
     document.addEventListener("DOMContentLoaded", fetchMetrics);
+
+
 </script>
 
 

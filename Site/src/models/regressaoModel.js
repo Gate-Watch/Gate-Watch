@@ -1,49 +1,56 @@
 const db = require('../database/config');
 
-function getMetricsByTotemAndComponent(totem, componente) {
-    const componentColumn = getComponentColumn(componente);
+// Mapeia os componentes do frontend para as colunas do banco de dados
+function mapComponentToColumn(component) {
+    const mapping = {
+        Cpu: 'cpu_usage',
+        Ram: 'memory_perc',
+        Disco: 'disk_perc',
+    };
+    return mapping[component] || null;
+}
 
-    if (!componentColumn) {
-        console.error('Componente inválido:', componente);
-        return Promise.reject(new Error('Componente inválido.'));
+function getMetricsForCurrentWeek(totem, component) {
+    const column = mapComponentToColumn(component);
+    if (!column) {
+        throw new Error(`Componente inválido: ${component}`);
     }
 
-    console.log(`Executando consulta SQL para totem=${totem}, coluna=${componentColumn}`);
-    
     const query = `
         SELECT 
             DAYNAME(dtHora) AS dia_semana,
-            ROUND(AVG(${componentColumn}), 2) AS componente_avg
+            ROUND(AVG(${column}), 2) AS componente_avg
         FROM Desempenho
-        WHERE WEEK(dtHora) = WEEK(CURDATE())
+        WHERE fkTotem = ${totem}
+        AND WEEK(dtHora) = WEEK(CURDATE())
         AND YEAR(dtHora) = YEAR(CURDATE())
-        AND fkTotem = ${totem}
-        GROUP BY dia_semana
-        ORDER BY FIELD(dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        GROUP BY DAYNAME(dtHora)
+        ORDER BY FIELD(DAYNAME(dtHora), 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     `;
-
-    console.log('Query gerada:', query);
-
-    return db.executar(query, [totem]).catch(error => {
-        console.error('Erro na execução da query:', error);
-        throw error;
-    });
+    return db.executar(query);
 }
 
-
-function getComponentColumn(componente) {
-    switch (componente.toLowerCase()) {
-        case 'cpu':
-            return 'cpu_usage';
-        case 'ram':
-            return 'memory_perc';
-        case 'disco':
-            return 'disk_perc';
-        default:
-            return null;
+function getMetricsForLastWeek(totem, component) {
+    const column = mapComponentToColumn(component);
+    if (!column) {
+        throw new Error(`Componente inválido: ${component}`);
     }
+
+    const query = `
+        SELECT 
+            DAYNAME(dtHora) AS dia_semana,
+            ROUND(AVG(${column}), 2) AS componente_avg
+        FROM Desempenho
+        WHERE fkTotem = ${totem}
+        AND WEEK(dtHora) = WEEK(CURDATE()) - 1
+        AND YEAR(dtHora) = YEAR(CURDATE())
+        GROUP BY DAYNAME(dtHora)
+        ORDER BY FIELD(DAYNAME(dtHora), 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+    `;
+    return db.executar(query);
 }
 
-module.exports = { 
-    getMetricsByTotemAndComponent 
+module.exports = {
+    getMetricsForCurrentWeek,
+    getMetricsForLastWeek,
 };
