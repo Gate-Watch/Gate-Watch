@@ -10,7 +10,7 @@ function mapComponentToColumn(component) {
     return mapping[component] || null;
 }
 
-function getMetricsForCurrentWeek(totem, component) {
+function    getMetricsForCurrentWeek(totem, component) {
     const column = mapComponentToColumn(component);
     if (!column) {
         throw new Error(`Componente inválido: ${component}`);
@@ -52,7 +52,49 @@ function getMetricsForLastWeek(totem, component) {
 }
 
 
+function getTopMetrics() {
+    const query = `
+        (
+            SELECT 
+                fkTotem AS totem,
+                'CPU' AS componente,
+                MAX(cpu_usage) AS valor
+            FROM Desempenho
+            GROUP BY fkTotem
+            ORDER BY valor DESC
+            LIMIT 1
+        )
+        UNION ALL
+        (
+            SELECT 
+                fkTotem AS totem,
+                'RAM' AS componente,
+                MAX(memory_perc) AS valor
+            FROM Desempenho
+            GROUP BY fkTotem
+            ORDER BY valor DESC
+            LIMIT 1
+        )
+        UNION ALL
+        (
+            SELECT 
+                fkTotem AS totem,
+                'Disco' AS componente,
+                MAX(disk_perc) AS valor
+            FROM Desempenho
+            GROUP BY fkTotem
+            ORDER BY valor DESC
+            LIMIT 1
+        )
+        ORDER BY valor DESC
+        LIMIT 3;
+    `;
+    return db.executar(query);
+}
+
+
 module.exports = {
     getMetricsForCurrentWeek,
     getMetricsForLastWeek,
+    getTopMetrics,
 };

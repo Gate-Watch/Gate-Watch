@@ -15,4 +15,18 @@ async function getMetricasPorTotemEComponente(req, res) {
     }
 }
 
-module.exports = { getMetricasPorTotemEComponente };
+async function getRankingTotens(req, res) {
+    try {
+        const ranking = await model.getTopMetrics();
+        res.json(ranking);
+    } catch (error) {
+        console.error('Erro ao buscar ranking:', error.message);
+        res.status(500).json({ error: 'Erro ao buscar ranking.', details: error.message });
+    }
+}
+
+module.exports = {
+    getMetricasPorTotemEComponente,
+    getRankingTotens,
+};
+

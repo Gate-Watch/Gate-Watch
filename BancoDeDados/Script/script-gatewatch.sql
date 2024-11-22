@@ -145,7 +145,6 @@ CREATE PROCEDURE SimularDesempenho2Horas()
 BEGIN
     DECLARE dia INT DEFAULT 1;
     DECLARE hora INT DEFAULT 0;
-    DECLARE ultimo_dia INT;
     DECLARE cpu_usage DOUBLE;
     DECLARE cpu_freq DOUBLE;
     DECLARE memory_usage DOUBLE;
@@ -155,28 +154,30 @@ BEGIN
     DECLARE disk_total DOUBLE;
     DECLARE disk_perc DOUBLE;
     DECLARE fkTotem INT;
-    -- Pega o último dia do mês atual
-    
+
+
     WHILE dia <= 21 DO
         SET hora = 0;
-        -- Loop para cada 1 hora do dia
+        -- Loop para cada 2 horas do dia
         WHILE hora < 24 DO
             -- Loop para cada fkTotem (1, 2 e 3)
             SET fkTotem = 1;
             WHILE fkTotem <= 3 DO
-                -- Gerar valores aleatórios para os dados de desempenho
-                SET cpu_usage = ROUND(RAND() * 100, 1); -- CPU entre 0 e 100%
-                SET cpu_freq = ROUND(RAND() * 3500, 1); -- Frequência entre 0 e 3500 MHz
-                SET memory_total = ROUND(RAND() * 24 + 8, 1); -- Memória total entre 8GB e 24GB
-                SET memory_usage = ROUND(RAND() * memory_total, 1); -- Memória usada <= total
+                -- Gerar valores aleatórios dentro da faixa desejada (50 a 70 para CPU e memória, por exemplo)
+                SET cpu_usage = ROUND((RAND() * 20) + 50, 1); -- CPU entre 50 e 70%
+                SET cpu_freq = ROUND((RAND() * 1000) + 2500, 1); -- Frequência entre 2500 e 3500 MHz
+                SET memory_total = ROUND((RAND() * 8) + 16, 1); -- Memória total entre 16GB e 24GB
+                SET memory_usage = ROUND((RAND() * 4) + 12, 1); -- Memória usada entre 12GB e 16GB
                 SET memory_perc = ROUND((memory_usage / memory_total) * 100, 1); -- % de memória usada
-                SET disk_total = ROUND(RAND() * 200 + 100, 1); -- Disco total entre 100GB e 300GB
-                SET disk_usage = ROUND(RAND() * disk_total, 1); -- Disco usado <= total
+                SET disk_total = ROUND((RAND() * 100) + 200, 1); -- Disco total entre 200GB e 300GB
+                SET disk_usage = ROUND((RAND() * 50) + 100, 1); -- Disco usado entre 100GB e 150GB
                 SET disk_perc = ROUND((disk_usage / disk_total) * 100, 1); -- % de disco usado
+
                 -- Inserir os dados na tabela 'Desempenho' com a data/hora correspondente e o fkTotem atual
                 INSERT INTO Desempenho (cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, dtHora, fkTotem)
                 VALUES (cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, 
                         CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-'), LPAD(dia, 2, '0'), ' ', LPAD(hora, 2, '0'), ':00:00'), fkTotem);
+
                 -- Incrementar o fkTotem
                 SET fkTotem = fkTotem + 1;
             END WHILE;
@@ -188,6 +189,7 @@ BEGIN
     END WHILE;
 END //
 DELIMITER ;
+
 CALL SimularDesempenho2Horas();
 
 select * from Desempenho;
@@ -200,4 +202,6 @@ WHERE WEEK(dtHora) = WEEK(CURDATE())
 AND YEAR(dtHora) = YEAR(CURDATE())
 AND fkTotem = 1
 GROUP BY dia_semana
-ORDER BY FIELD(dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+ORDER BY FIELD(dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');	
+
+select * from Funcionario;
