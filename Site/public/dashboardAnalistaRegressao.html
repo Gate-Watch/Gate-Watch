@@ -74,7 +74,22 @@
                     </div>
                 </div>
                 <div class="boxAlertas">
-                    <div class="boxRankingAlertas"></div>
+                    <div class="boxRankingAlertas">
+                        <h3 style="text-align: center;">Dias Acima e Abaixo da Previsão</h3>
+                        <div class="linha"></div>
+                        <div class="conteudo-ranking">
+                            <div class="acima">
+                                <h4>Dias Acima:</h4>
+                                <ul id="diasAcima"></ul>
+                            </div>
+                            <div class="abaixo">
+                                <h4>Dias Abaixo:</h4>
+                                <ul id="diasAbaixo"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                     <div class="grafico2">
                         <div id="chart2" style="margin-top: 1vh;"></div>
                     </div>
@@ -86,8 +101,10 @@
 </body>
 
 <script>
+    // Atualiza o nome do usuário no perfil
     nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
 
+    // Função para buscar métricas
     async function fetchMetrics() {
     const selectedTotem = document.getElementById('selectTotem').value;
     const selectedComponent = document.getElementById('selectComp').value;
@@ -111,26 +128,22 @@
         );
 
         // Regressão linear para cada dia
-        const previsaoMaxima = [];
-        const previsaoMinima = [];
         const previsoes = [];
 
         for (let i = 0; i < diasSemana.length; i++) {
-            // Calcular regressão para cada dia
-            const y = valoresPassados.slice(0, i + 1);  // Valores da semana passada até o dia 'i'
+            const y = valoresPassados.slice(0, i + 1); // Valores da semana passada até o dia 'i'
             const x = Array.from({ length: i + 1 }, (_, idx) => idx); // Indices 0, 1, 2, ..., i
             const pontos = x.map((val, idx) => [val, y[idx]]);
             const modelo = regression.linear(pontos);
 
-            // Previsões para cada dia
-            previsaoMaxima.push(modelo.predict(i)[1] + 10); // Previsão máxima com margem de 10
-            previsaoMinima.push(modelo.predict(i)[1] - 10); // Previsão mínima com margem de 10
-            previsoes.push(modelo.predict(i)[1]);          // Previsão central
+            previsoes.push(modelo.predict(i)[1]); // Previsão central
         }
 
         // Encontrar o dia com maior e menor previsão
-        const indiceMaior = previsaoMaxima.indexOf(Math.max(...previsaoMaxima));
-        const indiceMenor = previsaoMinima.indexOf(Math.min(...previsaoMinima));
+        const maiorPrevisao = Math.max(...previsoes);
+        const menorPrevisao = Math.min(...previsoes);
+        const indiceMaior = previsoes.indexOf(maiorPrevisao);
+        const indiceMenor = previsoes.indexOf(menorPrevisao);
 
         const diaMaiorPrevisao = traduzirDia(diasSemana[indiceMaior]);
         const diaMenorPrevisao = traduzirDia(diasSemana[indiceMenor]);
@@ -139,14 +152,41 @@
         document.getElementById("maiorPrevisao").textContent = diaMaiorPrevisao;
         document.getElementById("menorPrevisao").textContent = diaMenorPrevisao;
 
+        // Atualizar a lista de dias acima/abaixo
+        atualizarRanking(diasSemana, valoresAtuais, previsoes);
+
         // Renderizar os gráficos
-        renderChart1(diasSemana, valoresAtuais, previsaoMaxima, previsaoMinima);
+        renderChart1(diasSemana, valoresAtuais, previsoes.map(p => p + 10), previsoes.map(p => p - 10));
         renderChart2(diasSemana, valoresAtuais, previsoes);
     } catch (error) {
         console.error('Erro ao buscar métricas:', error);
     }
 }
 
+
+
+function atualizarRanking(dias, valoresReais, previsoes) {
+    const diasAcima = [];
+    const diasAbaixo = [];
+
+    dias.forEach((dia, index) => {
+        if (valoresReais[index] > previsoes[index]) {
+            diasAcima.push(traduzirDia(dia));
+        } else if (valoresReais[index] < previsoes[index]) {
+            diasAbaixo.push(traduzirDia(dia));
+        }
+    });
+
+    // Atualizar o HTML
+    const listaAcima = document.getElementById('diasAcima');
+    const listaAbaixo = document.getElementById('diasAbaixo');
+
+    listaAcima.innerHTML = diasAcima.map(dia => `<li>${dia}</li>`).join('');
+    listaAbaixo.innerHTML = diasAbaixo.map(dia => `<li>${dia}</li>`).join('');
+}
+
+
+    // Função para renderizar o gráfico 1
     function renderChart1(dias, valores, previsaoMaxima, previsaoMinima) {
         const selectedComponent = document.getElementById('selectComp').value;
         const chartContainer = document.querySelector("#chart");
@@ -200,6 +240,7 @@
         chart.render();
     }
 
+    // Função para renderizar o gráfico 2
     function renderChart2(dias, valores, previsoes) {
         const selectedComponent = document.getElementById('selectComp').value;
         const chartContainer2 = document.querySelector("#chart2");
@@ -256,8 +297,7 @@
         chart2.render();
     }
 
-
-
+    // Função para traduzir os dias da semana
     function traduzirDia(dia) {
         const dias = {
             Sunday: 'Domingo',
@@ -271,10 +311,10 @@
         return dias[dia] || dia;
     }
 
+    // Espera o DOM carregar para executar a função fetchMetrics
     document.addEventListener("DOMContentLoaded", fetchMetrics);
-
-
 </script>
+
 
 
 </html>

@@ -24,11 +24,12 @@ function getMetricsForCurrentWeek(totem, component) {
         WHERE fkTotem = ${totem}
         AND WEEK(dtHora) = WEEK(CURDATE())
         AND YEAR(dtHora) = YEAR(CURDATE())
-        GROUP BY DAYNAME(dtHora)
-        ORDER BY FIELD(DAYNAME(dtHora), 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        GROUP BY dia_semana
+        ORDER BY FIELD(dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     `;
     return db.executar(query);
 }
+
 
 function getMetricsForLastWeek(totem, component) {
     const column = mapComponentToColumn(component);
@@ -44,11 +45,12 @@ function getMetricsForLastWeek(totem, component) {
         WHERE fkTotem = ${totem}
         AND WEEK(dtHora) = WEEK(CURDATE()) - 1
         AND YEAR(dtHora) = YEAR(CURDATE())
-        GROUP BY DAYNAME(dtHora)
-        ORDER BY FIELD(DAYNAME(dtHora), 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        GROUP BY dia_semana
+        ORDER BY FIELD (dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     `;
     return db.executar(query);
 }
+
 
 module.exports = {
     getMetricsForCurrentWeek,

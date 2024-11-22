@@ -259,17 +259,61 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas {
-    height: 42.5vh;
-    width: 35vw;
+    height: 39.5vh; /* Ajusta a altura para o conteúdo */
+    width: 33.5vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    background-color: #f8f8f8;
+    background-color: #0c102492; /* Fundo transparente */
     border-radius: 20px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
     margin-top: -7vh;
     margin-left: 1vw;
+    padding: 10px; /* Espaçamento interno */
+    overflow: hidden; /* Remove o scroll */
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas h3 {
+    font-size: 18px; /* Texto maior */
+    font-weight: bold;
+    color: #ffffff; /* Texto branco */
+    margin-bottom: 10px; /* Espaçamento menor */
+    text-align: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking .acima,
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking .abaixo {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking h4 {
+    font-size: 16px; /* Texto maior */
+    color: #ffffff; /* Títulos em branco */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking .dia {
+    width: 100%;
+    background-color: #0c102492; /* Fundo igual ao principal */
+    color: #ffffff; /* Texto branco */
+    font-size: 14px;
+    padding: 8px 5px; /* Espaçamento interno */
+    text-align: center;
+    margin-bottom: 10px; /* Espaço entre os dias */
+    border-radius: 15px; /* Borda arredondada */
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4); /* Efeito de sombra */
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .grafico2{
