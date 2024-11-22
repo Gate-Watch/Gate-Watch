@@ -149,9 +149,9 @@ a {
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias .box2 {
     width: 12.7vw;
     height: 17.5vh;
-    background-color: #0c102492; 
+    background-color: #ffffff; 
     border-radius: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.756);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -167,15 +167,15 @@ a {
     font-family: "montSerrat";
     font-size: 1rem;
     font-weight: bold;
-    color: rgb(255, 255, 255);
+    color:black;
     margin: 0;
     margin-bottom: 2vh;
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias p {
     font-family: "openSans";
-    font-size: 1.1rem;
-    color: white;
+    font-size: 1.2rem;
+    color: rgb(0, 0, 0);
     text-decoration: underline;
     border-radius: 3px;
     padding: 0.2rem;
@@ -185,9 +185,9 @@ a {
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking {
     width: 32vw;
     height: 35vh;
-    background-color: #0c102492; 
+    background-color: #ffffff; 
     border-radius: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.756);
     margin-left: 2vw;
     margin-top: -1vh;
     padding: 0.25rem;
@@ -196,7 +196,7 @@ a {
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking h3 {
     font-family: "montSerrat";
     font-size: 1.2rem;
-    color: #ffffff;
+    color: black;
     text-align: center;
     margin-top: 1vh;
     margin-bottom: 2vh;
@@ -223,7 +223,7 @@ a {
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .ranking .ranking-nome {
     font-family: "openSans";
     font-size: 1rem;
-    color: #f0f0f0; 
+    color: black; 
     background-color: #26719566;
     border-radius: 10px;
     padding: 1vh;
@@ -242,9 +242,9 @@ a {
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico {
     height: 49vh;
     width: 45vw;
-    background-color: #0c102492; 
+    background-color: #ffffff; 
     border-radius: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.756);
     display: flex;
     flex-direction: column;
     padding: 5px;
@@ -259,34 +259,37 @@ a {
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas {
-    height: 39.5vh; /* Ajusta a altura para o conteúdo */
+    font-family: "openSans";
+    height: 33vh; /* Ajusta a altura para o conteúdo */
     width: 33.5vw;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: #0c102492; /* Fundo transparente */
+    background-color: #ffffff; /* Fundo transparente */
     border-radius: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
-    margin-top: -7vh;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.756);
+    margin-top: -1vh;
     margin-left: 1vw;
     padding: 10px; /* Espaçamento interno */
     overflow: hidden; /* Remove o scroll */
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas h3 {
-    font-size: 18px; /* Texto maior */
+    font-size: 20px; /* Texto maior */
     font-weight: bold;
-    color: #ffffff; /* Texto branco */
+    color: black; /* Texto branco */
     margin-bottom: 10px; /* Espaçamento menor */
     text-align: center;
 }
 
+/* Ajusta o container para o layout flex */
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    position: relative; /* Necessário para alinhar a linha */
     width: 90%;
+    margin-top: 20px;
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking .acima,
@@ -299,21 +302,37 @@ a {
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking h4 {
     font-size: 16px; /* Texto maior */
-    color: #ffffff; /* Títulos em branco */
+    color: white; /* Títulos em branco */
+    background-color: #18204b;
+    border-radius: 5px;
+    padding: 3px;
     margin-bottom: 10px;
     text-align: center;
 }
 
+/* Linha central que divide "Dias Acima" e "Dias Abaixo" */
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .linha-central {
+    margin-top: 5vh;
+    width: 0.2vw; /* Espessura da linha */
+    height: 28vh; /* Altura da linha para cobrir o espaço */
+    background-color: black; /* Cor da linha */
+    position: absolute;
+    z-index: 1; /* Para garantir que a linha não seja sobreposta */
+}
+
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking .dia {
-    width: 100%;
-    background-color: #0c102492; /* Fundo igual ao principal */
-    color: #ffffff; /* Texto branco */
-    font-size: 14px;
-    padding: 8px 5px; /* Espaçamento interno */
-    text-align: center;
-    margin-bottom: 10px; /* Espaço entre os dias */
-    border-radius: 15px; /* Borda arredondada */
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4); /* Efeito de sombra */
+    background-color: #26719566; /* Fundo */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 3px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4); /* Sombra */
+}
+
+#diasAcima, #diasAbaixo {
+    display: grid; /* Define o layout como grid */
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas com largura igual */
+    gap: 1rem; /* Espaçamento entre os itens */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .grafico2{
@@ -323,9 +342,9 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #0c102492;
+    background-color: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.756);
     margin-top: 2.7vh;
     margin-left: 1vw;   
 }

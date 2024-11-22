@@ -51,7 +51,7 @@
             <div class="boxConteudo">
                 <div class="boxComponentes">
                     <div class="ranking">
-                        <h3>Ranking de Totens com Maiores Previsões na Semana Atual</h3>
+                        <h3>Ranking das Maiores Métricas de cada Componente entre os Totens</h3>
                         <div class="ranking-grid" id="ranking">
                             <div id="posicao1" class="ranking-posicao"></div>
                             <div id="nome1" class="ranking-nome"></div>
@@ -80,21 +80,19 @@
                 </div>
                 <div class="boxAlertas">
                     <div class="boxRankingAlertas">
-                        <h3 style="text-align: center;">Dias Acima e Abaixo da Previsão</h3>
-                        <div class="linha"></div>
-                        <div class="conteudo-ranking">
+                        <h3 style="text-align: center; margin-top: -0.8vh;">Dias com Métrica Acima e Abaixo da Previsão</h3>
+                        <div class="linha-central"></div> <!-- Linha centralizada -->
+                        <div class="conteudo-ranking" style="margin-top: -4.5vh;">
                             <div class="acima">
                                 <h4>Dias Acima:</h4>
-                                <ul id="diasAcima"></ul>
+                                <ul id="diasAcima" style="margin-right: 2.5vw; margin-top: 0.5vh"></ul>
                             </div>
                             <div class="abaixo">
                                 <h4>Dias Abaixo:</h4>
-                                <ul id="diasAbaixo"></ul>
+                                <ul id="diasAbaixo" style="margin-right: 2.5vw; margin-top: 0.5vh;"></ul>
                             </div>
                         </div>
-                    </div>
-
-
+                    </div>                                     
                     <div class="grafico2">
                         <div id="chart2" style="margin-top: 1vh;"></div>
                     </div>
@@ -243,28 +241,30 @@
         }
     }
 
-
-
-
-
     function atualizarRanking(dias, valoresReais, previsoes) {
-        const diasAcima = [];
-        const diasAbaixo = [];
+    const diasAcima = [];
+    const diasAbaixo = [];
 
-        dias.forEach((dia, index) => {
-            if (valoresReais[index] > previsoes[index]) {
-                diasAcima.push(traduzirDia(dia));
-            } else if (valoresReais[index] < previsoes[index]) {
-                diasAbaixo.push(traduzirDia(dia));
-            }
-        });
+    dias.forEach((dia, index) => {
+        if (valoresReais[index] > previsoes[index]) {
+            diasAcima.push(traduzirDia(dia));
+        } else if (valoresReais[index] < previsoes[index]) {
+            diasAbaixo.push(traduzirDia(dia));
+        }
+    });
 
-        const listaAcima = document.getElementById('diasAcima');
-        const listaAbaixo = document.getElementById('diasAbaixo');
+    const listaAcima = document.getElementById('diasAcima');
+    const listaAbaixo = document.getElementById('diasAbaixo');
 
-        listaAcima.innerHTML = diasAcima.map(dia => `<li>${dia}</li>`).join('');
-        listaAbaixo.innerHTML = diasAbaixo.map(dia => `<li>${dia}</li>`).join('');
-    }
+    // Atualiza o conteúdo em formato de grade
+    listaAcima.innerHTML = diasAcima
+        .map(dia => `<div class="dia">${dia}</div>`)
+        .join('');
+    listaAbaixo.innerHTML = diasAbaixo
+        .map(dia => `<div class="dia">${dia}</div>`)
+        .join('');
+}
+
 
     function renderChart1(dias, valores, previsaoMaxima, previsaoMinima) {
         const selectedComponent = document.getElementById('selectComp').value;
@@ -272,7 +272,7 @@
         chartContainer.innerHTML = '';
 
         const options = {
-            chart: { type: 'line', height: 292 },
+            chart: { type: 'line', height: 290 },
             series: [
                 { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
                 { name: 'Previsão Máxima', data: previsaoMaxima.map(v => Math.round(v)) },
@@ -284,13 +284,13 @@
             ],
             xaxis: {
                 categories: dias.map(traduzirDia),
-                labels: { style: { colors: '#ffffff' } }
+                labels: { style: { colors: '#000000' } } // Cor para os valores no eixo X
             },
             yaxis: {
                 min: 0,
                 max: 100,
                 labels: {
-                    style: { colors: '#ffffff' },
+                    style: { colors: '#000000' }, // Cor para os valores no eixo Y
                     formatter: val => val.toFixed(0)
                 }
             },
@@ -299,18 +299,18 @@
                 width: [3, 3, 3, 2],
                 dashArray: [0, 0, 0, 7]
             },
-            colors: ['#18204b', '#ff0000', '#1E90FF', '#00ff00'],
+            colors: ['#18204b', '#ff0000', '#1E90FF', '#000000'], // Cores das linhas
             title: {
                 text: `Previsão do Percentual Máximo e Mínimo de ${selectedComponent}`,
                 align: 'left',
-                style: { color: '#ffffff', fontSize: '17px' }
+                style: { color: '#000000', fontSize: '17px' } // Cor para o título do gráfico
             },
             legend: {
-                labels: { colors: '#ffffff' },
+                labels: { colors: '#000000' }, // Cor para as legendas
                 position: 'bottom'
             },
             grid: {
-                borderColor: '#ffffff',
+                borderColor: '#000000', // Cor para a grade
                 strokeDashArray: 0
             }
         };
@@ -325,7 +325,7 @@
         chartContainer2.innerHTML = '';
 
         const options = {
-            chart: { type: 'line', height: 295, width: 470 },
+            chart: { type: 'line', height: 290, width: 470 },
             series: [
                 { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
                 { name: 'Previsão', data: previsoes.map(v => Math.round(v)) },
@@ -337,7 +337,7 @@
             xaxis: {
                 categories: dias.map(traduzirDia),
                 labels: {
-                    style: { colors: '#ffffff' },
+                    style: { colors: '#000000' }, // Cor para os valores no eixo X
                     rotate: -45,
                     hideOverlappingLabels: false
                 }
@@ -346,7 +346,7 @@
                 min: 0,
                 max: 100,
                 labels: {
-                    style: { colors: '#ffffff' },
+                    style: { colors: '#000000' }, // Cor para os valores no eixo Y
                     formatter: val => val.toFixed(0)
                 }
             },
@@ -355,18 +355,18 @@
                 width: [3, 3, 2],
                 dashArray: [0, 0, 7]
             },
-            colors: ['#1E90FF', '#18204b', '#00ff00'],
+            colors: ['#1E90FF', '#18204b', '#000000'], // Cores das linhas
             title: {
                 text: `Previsão do Percentual de ${selectedComponent}`,
                 align: 'left',
-                style: { color: '#ffffff', fontSize: '17px' }
+                style: { color: '#000000', fontSize: '17px' } // Cor para o título do gráfico
             },
             legend: {
-                labels: { colors: '#ffffff' },
+                labels: { colors: '#000000' }, // Cor para as legendas
                 position: 'bottom'
             },
             grid: {
-                borderColor: '#ffffff',
+                borderColor: '#000000', // Cor para a grade
                 strokeDashArray: 0
             }
         };
