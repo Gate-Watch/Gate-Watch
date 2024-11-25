@@ -1,20 +1,20 @@
 @font-face {
     font-family: montSerrat;
     src: url(../Fonts/MontSerrat-Regular.ttf);
-  }
+}
 
-  @font-face {
+@font-face {
     font-family: openSans;
     src: url(../Fonts/OpenSans-Regular.ttf);
-  }
+}
 
-  * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html{
+html {
     background-color: #d9d9d9;
 }
 
@@ -25,10 +25,10 @@ body {
 }
 
 .conteudoPagina {
-        display: flex;
-        background-color: #d9d9d9;
-        width: 100%;
-        height: 100vh;
+    display: flex;
+    background-color: #d9d9d9;
+    width: 100%;
+    height: 100vh;
 }
 
 .conteudoPagina .boxLateral {
@@ -48,7 +48,7 @@ body {
     height: 24vh;
     width: 13vw;
     font-family: "montSerrat";
-    
+
 }
 
 .conteudoPagina .boxLateral .boxIdentificacao h1 {
@@ -63,7 +63,7 @@ body {
     margin: 0%;
     color: #d9d9d9;
     font-size: 11px;
-   text-decoration: underline;
+    text-decoration: underline;
 }
 
 .conteudoPagina .boxLateral .boxOpcoes {
@@ -83,7 +83,7 @@ body {
     font-weight: 700;
     width: 15vw;
     height: 5vw;
-    
+
 }
 
 a {
@@ -128,7 +128,7 @@ a {
     padding-left: 3%;
 }
 
-.titulo img{
+.titulo img {
     width: 6%;
     margin-right: 1vh;
 }
@@ -157,7 +157,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem .boxLogo{
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem .boxLogo {
     height: 10vh;
     width: 17vw;
     display: flex;
@@ -165,11 +165,12 @@ a {
     align-items: flex-end;
     padding-right: 2%;
 }
-.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem .boxLogo img{
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem .boxLogo img {
     width: 26%;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo{
+.conteudoPagina .conteudoMetricas .boxConteudo {
     height: 90vh;
     width: 85vw;
     display: flex;
@@ -179,10 +180,10 @@ a {
 .conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes {
     height: 90vh;
     width: 63vw;
-    
+
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias{
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxMedias {
     width: 63vw;
     height: 32vh;
     display: flex;
@@ -252,7 +253,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico{
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico {
     height: 8vh;
     width: 56vw;
     display: flex;
@@ -261,12 +262,12 @@ a {
     align-items: center;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico h2{
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico h2 {
     font-family: "montSerrat";
     font-size: 15px;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico select{
+.conteudoPagina .conteudoMetricas .boxConteudo .boxComponentes .boxGrafico .grafico .tituloGrafico select {
     background-color: #18204b;
     color: #ffffff;
     border-radius: 20px;
@@ -334,16 +335,16 @@ a {
     flex-direction: column;
     align-items: center;
 
-} 
+}
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .boxRankingTotens .boxTotem{
-   height: 7vh;
-   width: 13vw;
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   align-items: center;
-   font-family: "openSans";
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .boxRankingTotens .boxTotem {
+    height: 7vh;
+    width: 13vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "openSans";
 }
 
 .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .boxSaibaMais {
@@ -354,7 +355,7 @@ a {
     align-items: center;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .boxSaibaMais button{
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .boxSaibaMais button {
     height: 5vh;
     width: 10vw;
     display: flex;
@@ -394,7 +395,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 .boxLogo{
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 .boxLogo {
     height: 10vh;
     width: 17vw;
     display: flex;
@@ -402,7 +403,8 @@ a {
     align-items: flex-end;
     padding-right: 2%;
 }
-.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 .boxLogo img{
+
+.conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem1 .boxLogo img {
     width: 26%;
 }
 
@@ -455,7 +457,7 @@ a {
     font-size: 16px;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam .box .tituloComponentesAtual{
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxComponentesAtual .boxDiscoRam .box .tituloComponentesAtual {
     height: 4vh;
     width: 27vw;
     display: flex;
@@ -543,7 +545,7 @@ a {
 }
 
 
-.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual{
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual {
     height: 47vh;
     width: 56vw;
     background-color: #f8f8f8;
@@ -555,7 +557,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxTitulo{
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGraficoCpuAtual .boxTitulo {
     height: 8vh;
     width: 50vw;
     display: flex;
@@ -592,7 +594,7 @@ a {
     align-items: center;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGeralAlertas{
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxGeralAlertas {
     height: 47vh;
     width: 27vw;
     /* background-color: #f8f8f8; */
@@ -603,7 +605,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas{
+.conteudoPagina .conteudoMetricas .boxConteudoTempoReal .boxTempoRealAlertas .boxAlertas {
     height: 47vh;
     width: 27vw;
     /* background-color: #f8f8f8; */
@@ -666,7 +668,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoCadastro .boxCadastro{
+.conteudoPagina .conteudoCadastro .boxCadastro {
     height: 85vh;
     width: 70vw;
     display: flex;
@@ -686,7 +688,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg {
+.conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco .boxImg {
     height: 85vh;
     width: 34vw;
     background-color: #000000a6;
@@ -699,7 +701,7 @@ a {
 
 }
 
-.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg {
+.conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco .boxImg {
     height: 85vh;
     width: 34vw;
     background-color: #000000da;
@@ -711,23 +713,23 @@ a {
 
 }
 
-.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg h1 {
+.conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco .boxImg h1 {
     color: #f8f8f8;
     font-family: "montSerrat";
     margin-bottom: 2%;
 
 }
 
-.conteudoPagina .conteudoCadastro .boxCadastro  .boxFundoFosco .boxImg span {
+.conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco .boxImg span {
     width: 25vw;
     text-align: center;
     color: #ffffff;
     font-family: "montSerrat";
     font-size: 15px;
     font-weight: 500;
-    
+
 }
- 
+
 
 
 /* .conteudoPagina .conteudoCadastro .boxCadastro .boxFundoFosco .boxImg img {
@@ -737,7 +739,8 @@ a {
 .conteudoPagina .conteudoCadastro .boxCadastro .boxFormulario {
     height: 85vh;
     width: 36vw;
-    background-color: var(--white);;
+    background-color: var(--white);
+    ;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     display: flex;
@@ -748,13 +751,13 @@ a {
 
 }
 
-.conteudoPagina .conteudoCadastro .boxCadastro .boxFormulario .tituloFormulario{
+.conteudoPagina .conteudoCadastro .boxCadastro .boxFormulario .tituloFormulario {
     height: 15vh;
     width: 32vw;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    
+
 }
 
 .conteudoPagina .conteudoCadastro .boxCadastro .boxFormulario .tituloFormulario h1 {
@@ -819,26 +822,42 @@ a {
     align-items: center;
 }
 
-.titulo1 .bar{
+.titulo1 .bar {
     height: 4vh;
     width: 0.3vw;
     background-color: #18204b;
     margin-right: 10px;
 }
 
-.wordcloud{
-    background-color: white;
-    display: flex;
-    flex-direction: row;
+.wordcloud #char3{
+    width: 583px;
+    /* Adapta-se à largura da div */
+    height: 400px;
+    /* Ocupa toda a altura disponível */
+    transform: scale(0.8);
+    object-fit: contain;
+    /* Garante que o conteúdo fique ajustado */
 }
 
-.wordcloud img{
-    width: 49%;
+.wordcloud {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    /* Garante que elementos extras não avancem */
 }
+
+
+
 
 .nuvem {
     width: 42vw;
-    height: fit-content;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
     background-color: white;
     margin-left: 1%;
     margin-top: 0.01%;
@@ -846,33 +865,38 @@ a {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.posicao{
+#chart3 {
+    width: 50vw;
+    height: fit-content;
+}
+
+.posicao {
     border: 6px groove aqua;
     border-radius: 50%;
     margin-bottom: 6vh;
 }
 
-.rank{
+.rank {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.processos{
+.processos {
     display: flex;
     flex-direction: column;
 }
 
-.processo{
+.processo {
     font-family: "montSerrat";
     margin-bottom: 6vh;
     font-size: 3vh;
     margin-left: 1vw;
 }
 
-.projecao {
+.frequencia {
     width: 38vw;
-    height: 50vh;
+    height: 500px;
     background-color: white;
     margin-left: 1%;
     margin-top: 0.01%;
@@ -880,7 +904,7 @@ a {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.titulo2{
+.titulo2 {
     height: 10vh;
     width: 44vw;
     display: flex;
@@ -894,7 +918,7 @@ a {
     align-items: center;
 }
 
-.titulo2 .bar{
+.titulo2 .bar {
     height: 4vh;
     width: 0.3vw;
     background-color: #18204b;
@@ -907,20 +931,20 @@ a {
 }
 
 #chart {
-    width: 37vw;
-    height: 10vh;
+    max-height: 400px;
+    /* Define altura máxima */
+    width: 100%;
+    /* Garante largura total */
+    display: block;
+    /* Remove comportamento inline */
+    margin: 0 auto;
+    /* Centraliza o canvas */
 }
 
 .blocoTop {
     width: 100%;
     display: flex;
     flex-direction: row;
-}
-
-img, #chart {
-    max-width: 100%;
-    height: auto;
-    display: block;
 }
 
 .mainContent {
@@ -937,13 +961,14 @@ img, #chart {
     width: 10px;
     background: #ddd;
 }
+
 .mainContent::-webkit-scrollbar-thumb {
     background: #000;
     border-radius: 5px;
 }
 
 
-.titulo3{
+.titulo3 {
     /* height: 10vh; */
     width: 44vw;
     display: flex;
@@ -958,14 +983,14 @@ img, #chart {
     margin-top: 1%;
 }
 
-.titulo3 .bar{
+.titulo3 .bar {
     height: 4vh;
     width: 0.3vw;
     background-color: #18204b;
     margin-right: 10px;
 }
 
-.header{
+.header {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -973,13 +998,13 @@ img, #chart {
     padding: 3vh;
 }
 
-.header h1{
+.header h1 {
     font-family: 'montSerrat';
     font-size: 5vh;
     color: #0e132c;
 }
 
-.header select{
+.header select {
     width: 12vw;
     height: 5vh;
     border-radius: 10px;
@@ -988,13 +1013,15 @@ img, #chart {
     color: white;
 }
 
-.blocoBottom{
+.blocoBottom {
     width: 100%;
     margin-top: 1%;
 }
 
 #chart2 {
-    margin-top: 10px;
+    width: 583px;
+    /* Adapta-se à largura da div */
+    height: 400px;
 }
 
 .scatter .canvas {

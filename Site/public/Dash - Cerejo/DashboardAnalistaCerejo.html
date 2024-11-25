@@ -7,7 +7,8 @@
     <title>Métricas Analista - GateWatch</title>
     <link rel="stylesheet" href="../CSS/styleDashboards.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-wordcloud"></script>
 </head>
 
 <body>
@@ -48,228 +49,115 @@
                         <div class="bar"></div>Nuvem de processos
                     </div>
                     <div class="wordcloud">
-                        <img src="../Images/WordCloud-Processos.PNG" alt="">
-                        <div class="rank">
-                            <div class="posicao">9%</div>
-                            <div class="posicao">6%</div>
-                            <div class="posicao">4%</div>
-                            <div class="posicao">3%</div>
-                        </div>
-                        <div class="porcessos">
-                            <div class="processo">codeexe</div>
-                            <div class="processo">conhostexe</div>
-                            <div class="processo">msedewebviewexe</div>
-                            <div class="processo">backgroundtaskhostexe</div>
-                        </div>
+                        <canvas id="chart3" width="527" height="500" style="display: block;box-sizing: border-box;height: 400px;width: 400px;"></canvas>
                     </div>
                 </div>
 
-                <div class="projecao">
+                <div class="frequencia">
                     <div class="titulo2">
                         <div class="bar"></div>Frequência de processos
                     </div>
-                    <div class="freqPlot" id="chart2"></div>
+                    <div id="chart2"></div>
                 </div>
             </div>
 
             <div class="blocoBottom">
-                <div class="frequencia">
+                <div class="projecao">
                     <div class="titulo3">
                         <div class="bar"></div>Projeção da execução de processos
                     </div>
-                    <div class="scatter">
-                        <canvas id="chart"></canvas>
-                    </div>
+                    <canvas id="chart"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Nome do usuário
+        const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+        document.getElementById('nome_perfil').textContent = nomeUsuario || 'Usuário não identificado';
+
+        // Gráfico de dispersão (scatter)
+        const ctxScatter = document.getElementById('chart').getContext('2d');
+        new Chart(ctxScatter, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Scatter Dataset',
+                    data: [
+                        { x: -10, y: 0 },
+                        { x: 0, y: 10 },
+                        { x: 10, y: 5 },
+                        { x: 0.5, y: 5.5 }
+                    ],
+                    backgroundColor: 'rgb(255, 99, 132)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Isso permite ajustar a altura manualmente no CSS
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+
+        // Gráfico de barras com ApexCharts
+        const apexOptions = {
+            series: [{
+                name: 'Actual',
+                data: [
+                    { x: 'chromeexe', y: 1292, goals: [{ name: 'Expected', value: 1400, strokeHeight: 5, strokeColor: '#775DD0' }] },
+                    { x: 'codeexe', y: 4432, goals: [{ name: 'Expected', value: 5400, strokeHeight: 5, strokeColor: '#775DD0' }] },
+                    { x: 'runtimebrokerexe', y: 5423, goals: [{ name: 'Expected', value: 5200, strokeHeight: 5, strokeColor: '#775DD0' }] },
+                    { x: 'msedewebviewexe', y: 6653, goals: [{ name: 'Expected', value: 6500, strokeHeight: 5, strokeColor: '#775DD0' }] },
+                    { x: 'backgroundtaskhostexe', y: 8133, goals: [{ name: 'Expected', value: 6600, strokeHeight: 5, strokeColor: '#775DD0' }] }
+                ]
+            }],
+            chart: {
+                height: 400,
+                type: 'bar'
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '60%'
+                }
+            },
+            colors: ['#00E396'],
+            legend: {
+                show: true,
+                customLegendItems: ['Actual', 'Expected'],
+                markers: {
+                    fillColors: ['#00E396', '#775DD0']
+                }
+            }
+        };
+
+        const apexChart = new ApexCharts(document.querySelector("#chart2"), apexOptions);
+        apexChart.render();
+
+        // Gráfico de nuvem de palavras (WordCloud)
+        const ctxWordCloud = document.getElementById('chart3').getContext('2d');
+        new Chart(ctxWordCloud, {
+            type: 'wordCloud',
+            data: {
+                labels: ['codeexe', 'conhostexe', 'msedewebviewexe', 'backgroundtaskhostexe'],
+                datasets: [{
+                    label: 'Processamento',
+                    data: [90, 60, 40, 30]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false // Permite o ajuste dinâmico da altura
+            }
+        });
+
+    </script>
 </body>
 
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
-<script>
-    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
-
-    if (nomeUsuario) {
-        document.getElementById('nome_perfil').textContent = nomeUsuario;
-    } else {
-        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
-    }
-
-    const ctx = document.getElementById('chart');
-
-    const data = {
-        datasets: [{
-            label: 'Scatter Dataset',
-            data: [{
-                x: -10,
-                y: 0
-            }, {
-                x: 0,
-                y: 10
-            }, {
-                x: 10,
-                y: 5
-            }, {
-                x: 0.5,
-                y: 5.5
-            }],
-            backgroundColor: 'rgb(255, 99, 132)'
-        }],
-    };
-
-    const config = {
-        type: 'scatter',
-        data: data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom'
-                }
-            }
-        }
-    };
-
-
-    new Chart(ctx, config);
-
-
-    var options = {
-        series: [
-            {
-                name: 'Actual',
-                data: [
-                    {
-                        x: '2011',
-                        y: 1292,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1400,
-                                strokeHeight: 5,
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    },
-                    {
-                        x: '2012',
-                        y: 4432,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 5400,
-                                strokeHeight: 5,
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    },
-                    {
-                        x: '2013',
-                        y: 5423,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 5200,
-                                strokeHeight: 5,
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    },
-                    {
-                        x: '2014',
-                        y: 6653,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 6500,
-                                strokeHeight: 5,
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    },
-                    {
-                        x: '2015',
-                        y: 8133,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 6600,
-                                strokeHeight: 13,
-                                strokeWidth: 0,
-                                strokeLineCap: 'round',
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    },
-                    {
-                        x: '2016',
-                        y: 7132,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 7500,
-                                strokeHeight: 5,
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    },
-                    {
-                        x: '2017',
-                        y: 7332,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 8700,
-                                strokeHeight: 5,
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    },
-                    {
-                        x: '2018',
-                        y: 6553,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 7300,
-                                strokeHeight: 2,
-                                strokeDashArray: 2,
-                                strokeColor: '#775DD0'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        chart: {
-            height: 296,
-            type: 'bar'
-        },
-        plotOptions: {
-            bar: {
-                columnWidth: '60%'
-            }
-        },
-        colors: ['#00E396'],
-        dataLabels: {
-            enabled: false
-        },
-        legend: {
-            show: true,
-            showForSingleSeries: true,
-            customLegendItems: ['Actual', 'Expected'],
-            markers: {
-                fillColors: ['#00E396', '#775DD0']
-            }
-        }
-    };
-
-    var chart = new ApexCharts(document.querySelector("#chart2"), options);
-    chart.render();
-</script>
