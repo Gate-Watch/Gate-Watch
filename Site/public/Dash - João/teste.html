@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico Dinâmico</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        // Estrutura inicial de dados do gráfico
+        const data = {
+            labels: [],  // Labels para o eixo X
+            datasets: [{
+                label: 'Valor Dinâmico',
+                data: [],  // Dados para o eixo Y
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 2,
+                tension: 0.1
+            }]
+        };
+
+        // Configuração do gráfico
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        display: true,
+                        beginAtZero: false,
+                        ticks: {
+                            stepSize: 10
+                        }
+                    },
+                    x: {
+                        display: true,
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 10
+                        }
+                    }
+                }
+            }
+        };
+
+        const myChart = new Chart(ctx, config);
+
+        let contador = 0;
+
+        function adicionarDados() {
+            // Gerar dados simulados (exemplo de dados de CPU)
+            const novoDado = Math.floor(Math.random() * 100);  // Simulando um valor entre 0 e 100
+            const novoLabel = `Label ${contador}`;
+
+            // Se o número de dados atingir 10, remove o dado mais antigo
+            if (data.labels.length >= 10) {
+                data.labels.shift();  // Remove o primeiro label (mais antigo)
+                data.datasets[0].data.shift();  // Remove o primeiro dado (mais antigo)
+            }
+
+            // Adiciona o novo dado no final
+            data.labels.push(novoLabel);
+            data.datasets[0].data.push(novoDado);
+
+            // Atualiza o gráfico
+            myChart.update();  // Atualiza o gráfico após adicionar/remover dados
+
+            // Incrementa o contador para o próximo label
+            contador++;
+        }
+
+        // Adiciona novos dados a cada 1 segundo
+        setInterval(adicionarDados, 1000);
+
+    </script>
+</body>
+</html>

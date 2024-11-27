@@ -204,4 +204,11 @@ AND fkTotem = 1
 GROUP BY dia_semana
 ORDER BY FIELD(dia_semana, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');	
 
-select * from Funcionario;
+# desempenho, monitoramento, operacao, processos totem
+select * from desempenho;
+select * from totem;
+show tables;
+
+select cpu_usage, dtHora from desempenho where fkTotem = 1;
+select cpu_usage, dtHora from desempenho where fkTotem = 2;
+select cpu_usage, dtHora from desempenho where fkTotem = 3;

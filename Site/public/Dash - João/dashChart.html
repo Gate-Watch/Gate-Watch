@@ -74,21 +74,21 @@
                     </div>
                     <div id="totemDisco1">
                         <div class="metade-ade" id="cardDisco1">
-                            <div class="div-disco" >
+                            <div class="div-disco">
                                 <canvas id="disco1"></canvas>
                             </div>
                         </div>
                     </div>
                     <div id="totemDisco2">
                         <div class="metade-ade" id="cardDisco2">
-                            <div class="div-disco" >
+                            <div class="div-disco">
                                 <canvas id="disco2"></canvas>
                             </div>
                         </div>
                     </div>
                     <div id="totemDisco3">
                         <div class="metade-ade" id="cardDisco3">
-                            <div class="div-disco" >
+                            <div class="div-disco">
                                 <canvas id="disco3"></canvas>
                             </div>
                         </div>
@@ -96,51 +96,51 @@
                 </div>
             </div>
             <!--  totem 1 -->
-           
-                <div id="totemRamCpu1">
-                    <div class="slice2-met" id="cardCpu1">
-                        <div class="div-cpu">
-                            <canvas id="cpu1"></canvas>
-                        </div>
-                    </div>
-                    <div class="slice2-ade" id="cardRam1">
-                        <div class="div-ram">
-                            <canvas id="ram1"></canvas>
-                        </div>
+
+            <div id="totemRamCpu1">
+                <div class="slice2-met" id="cardCpu1">
+                    <div class="div-cpu">
+                        <canvas id="cpu1"></canvas>
                     </div>
                 </div>
-            
-             <!-- totem 2 -->
-           
-                <div id="totemRamCpu2">
-                    <div class="slice2-met" id="cardCpu2">
-                        <div class="div-cpu">
-                            <canvas id="cpu2"></canvas>
-                        </div>
-                    </div>
-                    <div class="slice2-ade" id="cardRam2">
-                        <div class="div-ram">
-                            <canvas id="ram2"></canvas>
-                        </div>
-                    </div>
-                </div>
-           
-            <!--  totem 3  -->
-           
-                <div id="totemRamCpu3">
-                    <div class="slice2-met" id="cardCpu3">
-                        <div class="div-cpu">
-                            <canvas id="cpu3"></canvas>
-                        </div>
-                    </div>
-                    <div class="slice2-ade" id="cardRam3">
-                        <div class="div-ram">
-                            <canvas id="ram3"></canvas>
-                        </div>
+                <div class="slice2-ade" id="cardRam1">
+                    <div class="div-ram">
+                        <canvas id="ram1"></canvas>
                     </div>
                 </div>
             </div>
-        
+
+            <!-- totem 2 -->
+
+            <div id="totemRamCpu2">
+                <div class="slice2-met" id="cardCpu2">
+                    <div class="div-cpu">
+                        <canvas id="cpu2"></canvas>
+                    </div>
+                </div>
+                <div class="slice2-ade" id="cardRam2">
+                    <div class="div-ram">
+                        <canvas id="ram2"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!--  totem 3  -->
+
+            <div id="totemRamCpu3">
+                <div class="slice2-met" id="cardCpu3">
+                    <div class="div-cpu">
+                        <canvas id="cpu3"></canvas>
+                    </div>
+                </div>
+                <div class="slice2-ade" id="cardRam3">
+                    <div class="div-ram">
+                        <canvas id="ram3"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </section>
 </body>
@@ -148,19 +148,50 @@
 </html>
 
 <script>
-    const discoUmConfig = document.getElementById('disco1');
-    const discoDoisConfig = document.getElementById('disco2');
-    const discoTresConfig = document.getElementById('disco3');
 
-    // Dados do gráfico 1
-    const data = {
+    // disco - 1 
+
+    function obterDadosDisco() {
+        fetch('/dashJoao/dashDisco/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeDisco = response.usage;
+                const totalDisco = response.total;
+                const disponivelDisco = totalDisco - usoDeDisco;
+
+                console.log(usoDeDisco);
+                console.log(totalDisco);
+
+                if (usoDeDisco !== undefined && totalDisco !== undefined) {
+
+                    dataDisco.datasets[0].data.push(usoDeDisco);
+                    dataDisco.datasets[0].data.push(disponivelDisco);
+
+                    chartDiscoUm.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    obterDadosDisco();
+
+    const dataDisco = {
         labels: [
             'Em Uso',
             'Disponível',
         ],
         datasets: [{
             label: 'My First Dataset',
-            data: [65, 35],
+            data: [],
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)'
@@ -171,21 +202,76 @@
 
     const config = {
         type: 'doughnut',
-        data: data
+        data: dataDisco,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Uso de Disco',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial'
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'center'
+                }
+            }
+        }
     };
 
-    new Chart(discoUmConfig, config);
+    const discoUmConfig = document.getElementById('disco1');
+    chartDiscoUm = new Chart(discoUmConfig, config);
+
+    // disco - 2
+
+    function obterDadosDisco2() {
+        fetch('/dashJoao/dashDisco2/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeDisco = response.usage;
+                const totalDisco = response.total;
+                const disponivelDisco = totalDisco - usoDeDisco;
+
+                console.log(usoDeDisco);
+                console.log(totalDisco);
+
+                if (usoDeDisco !== undefined && totalDisco !== undefined) {
+
+                    dataDiscoDois.datasets[0].data.push(usoDeDisco);
+                    dataDiscoDois.datasets[0].data.push(disponivelDisco);
+
+                    chartDiscoDois.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    obterDadosDisco2();
 
 
-    // Dados do gráfico 2
-    const data2 = {
+    const dataDiscoDois = {
         labels: [
             'Em Uso',
             'Disponível',
         ],
         datasets: [{
             label: 'My First Dataset',
-            data: [40, 60],
+            data: [],
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)'
@@ -194,23 +280,77 @@
         }]
     };
 
-    const config2 = {
+    const configDois = {
         type: 'doughnut',
-        data: data2
+        data: dataDiscoDois,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Uso de Disco',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial'
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'center'
+                }
+            }
+        }
     };
 
-    new Chart(discoDoisConfig, config2);
+    const discoDoisConfig = document.getElementById('disco2');
+    chartDiscoDois = new Chart(discoDoisConfig, configDois);
 
+    // disco - 3
 
-    // Dados do gráfico 3
-    const data3 = {
+    function obterDadosDisco3() {
+        fetch('/dashJoao/dashDisco3/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeDisco = response.usage;
+                const totalDisco = response.total;
+                const disponivelDisco = totalDisco - usoDeDisco;
+
+                console.log(usoDeDisco);
+                console.log(totalDisco);
+
+                if (usoDeDisco !== undefined && totalDisco !== undefined) {
+
+                    dataDiscoTres.datasets[0].data.push(usoDeDisco);
+                    dataDiscoTres.datasets[0].data.push(disponivelDisco);
+
+                    chartDiscoTres.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    obterDadosDisco3();
+
+    const dataDiscoTres = {
         labels: [
             'Em Uso',
             'Disponível',
         ],
         datasets: [{
             label: 'My First Dataset',
-            data: [10, 90],
+            data: [],
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)'
@@ -219,25 +359,83 @@
         }]
     };
 
-    const config3 = {
+    const configTres = {
         type: 'doughnut',
-        data: data3
+        data: dataDiscoTres,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Uso de Disco',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial'
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'center'
+                }
+            }
+        }
     };
 
-    new Chart(discoTresConfig, config3);
+    const discoTresConfig = document.getElementById('disco3');
+    chartDiscoTres = new Chart(discoTresConfig, configTres);
 
-    // gráficos de cpu 1
-    const cpuUmConfig = document.getElementById('cpu1');
-    const cpuDoisConfig = document.getElementById('cpu2');
-    const cpuTresConfig = document.getElementById('cpu3');
+    // arredondamento de data
 
-    const labels = ['12:00:10', '12:00:20', '12:00:30', '12:00:40', '12:00:50', '12:01:00', '12:01:10'];
+    function formatarHorario(dataHora) {
+        const data = new Date(dataHora);
+        return data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    // cpu - 1
+
+    function obterDadosCpu1() {
+        fetch('/dashJoao/dashCpu/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeCpu = response.usage;
+                const dataHoraCpu = response.dtHora;
+
+                if (usoDeCpu !== undefined && dataHoraCpu !== undefined) {
+                    const horarioFormatado = formatarHorario(dataHoraCpu);
+
+                    if (dataCpu.labels.length >= 10) {
+                        dataCpu.labels.shift();
+                        dataCpu.datasets[0].data.shift();
+                    }
+
+                    dataCpu.labels.push(horarioFormatado);
+                    dataCpu.datasets[0].data.push(usoDeCpu)
+
+                    chartCpuUm.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosCpu1, 1000);
 
     const dataCpu = {
-        labels: labels,
+        labels: [],
         datasets: [{
-            label: 'My First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            label: 'Uso de CPU (%)',
+            data: [],
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
@@ -251,29 +449,29 @@
             responsive: true,
             plugins: {
                 title: {
-                    display: true,              // Exibe o título
-                    text: 'Monitoramento de CPU', // Texto do título
+                    display: true,
+                    text: 'Monitoramento de CPU',
                     font: {
-                        size: 18,                // Tamanho da fonte
-                        weight: 'bold',          // Peso da fonte
-                        family: 'Arial',         // Família da fonte
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial'
                     },
-                    color: 'black',             // Cor do título
+                    color: 'black',
                     padding: {
-                        top: 10,                // Distância do título para o gráfico
-                        bottom: 30              // Distância do título para o gráfico
+                        top: 10,
+                        bottom: 30
                     },
-                    align: 'start'             // Alinha o título à esquerda
+                    align: 'start'
                 },
                 annotation: {
                     annotations: {
                         line1: {
                             type: 'line',
-                            yMin: 80,   // Valor da linha
-                            yMax: 80,   // Valor da linha
-                            borderColor: 'red', // Cor da linha
-                            borderWidth: 2,     // Espessura da linha
-                            borderDash: [5, 5], // Linha pontilhada
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
                             label: {
                                 enabled: true,
                                 content: 'Limite de 80',
@@ -291,14 +489,51 @@
         }
     };
 
-    new Chart(cpuUmConfig, configCpuUm);
+    const cpuUmConfig = document.getElementById('cpu1');
+    const chartCpuUm = new Chart(cpuUmConfig, configCpuUm);
 
-    //cpu 2
+    // cpu - 2
+    
+    function obterDadosCpu2() {
+        fetch('/dashJoao/dashCpu2/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeCpu = response.usage;
+                const dataHoraCpu = response.dtHora;
+
+                if (usoDeCpu !== undefined && dataHoraCpu !== undefined) {
+                    const horarioFormatado = formatarHorario(dataHoraCpu);
+
+                    if (dataCpuDois.labels.length >= 10) {
+                        dataCpuDois.labels.shift();  
+                        dataCpuDois.datasets[0].data.shift();  
+                    }
+
+                    dataCpuDois.labels.push(horarioFormatado);
+                    dataCpuDois.datasets[0].data.push(usoDeCpu);
+
+                    chartCpuDois.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosCpu2, 1000);
+
     const dataCpuDois = {
-        labels: labels,
+        labels: [],
         datasets: [{
             label: 'My First Dataset',
-            data: [12, 23, 34, 45, 56, 67, 78],
+            data: [],
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
@@ -312,29 +547,29 @@
             responsive: true,
             plugins: {
                 title: {
-                    display: true,              // Exibe o título
-                    text: 'Monitoramento de CPU', // Texto do título
+                    display: true,
+                    text: 'Monitoramento de CPU',
                     font: {
-                        size: 18,                // Tamanho da fonte
-                        weight: 'bold',          // Peso da fonte
-                        family: 'Arial',         // Família da fonte
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial'
                     },
-                    color: 'black',             // Cor do título
+                    color: 'black',
                     padding: {
-                        top: 10,                // Distância do título para o gráfico
-                        bottom: 30              // Distância do título para o gráfico
+                        top: 10,
+                        bottom: 30
                     },
-                    align: 'start'             // Alinha o título à esquerda
+                    align: 'start'
                 },
                 annotation: {
                     annotations: {
                         line1: {
                             type: 'line',
-                            yMin: 80,   // Valor da linha
-                            yMax: 80,   // Valor da linha
-                            borderColor: 'red', // Cor da linha
-                            borderWidth: 2,     // Espessura da linha
-                            borderDash: [5, 5], // Linha pontilhada
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
                             label: {
                                 enabled: true,
                                 content: 'Limite de 80',
@@ -352,13 +587,51 @@
         }
     };
 
-    new Chart(cpuDoisConfig, configCpuDois);
+    const cpuDoisConfig = document.getElementById('cpu2');
+    const chartCpuDois= new Chart(cpuDoisConfig, configCpuDois);
+
+    // cpu - 3
+
+    function obterDadosCpu3() {
+        fetch('/dashJoao/dashCpu3/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeCpu = response.usage;
+                const dataHoraCpu = response.dtHora;
+
+                if (usoDeCpu !== undefined && dataHoraCpu !== undefined) {
+                    const horarioFormatado = formatarHorario(dataHoraCpu);
+
+                    if (dataCpuTres.labels.length >= 10) {
+                        dataCpuTres.labels.shift();
+                        dataCpuTres.datasets[0].data.shift();
+                    }
+
+                    dataCpuTres.labels.push(horarioFormatado);
+                    dataCpuTres.datasets[0].data.push(usoDeCpu)
+
+                    chartCpuTres.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosCpu3, 1000);
 
     const dataCpuTres = {
-        labels: labels,
+        labels: [],
         datasets: [{
             label: 'My First Dataset',
-            data: [77, 66, 55, 44, 33, 22, 11],
+            data: [],
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
@@ -373,29 +646,29 @@
             responsive: true,
             plugins: {
                 title: {
-                    display: true,              // Exibe o título
-                    text: 'Monitoramento de CPU', // Texto do título
+                    display: true,             
+                    text: 'Monitoramento de CPU',
                     font: {
-                        size: 18,                // Tamanho da fonte
-                        weight: 'bold',          // Peso da fonte
-                        family: 'Arial',         // Família da fonte
+                        size: 18,                
+                        weight: 'bold',          
+                        family: 'Arial',         
                     },
-                    color: 'black',             // Cor do título
+                    color: 'black',             
                     padding: {
-                        top: 10,                // Distância do título para o gráfico
-                        bottom: 30              // Distância do título para o gráfico
+                        top: 10,                
+                        bottom: 30              
                     },
-                    align: 'start'             // Alinha o título à esquerda
+                    align: 'start'             
                 },
                 annotation: {
                     annotations: {
                         line1: {
                             type: 'line',
-                            yMin: 80,   // Valor da linha
-                            yMax: 80,   // Valor da linha
-                            borderColor: 'red', // Cor da linha
-                            borderWidth: 2,     // Espessura da linha
-                            borderDash: [5, 5], // Linha pontilhada
+                            yMin: 80,   
+                            yMax: 80,   
+                            borderColor: 'red', 
+                            borderWidth: 2,     
+                            borderDash: [5, 5], 
                             label: {
                                 enabled: true,
                                 content: 'Limite de 80',
@@ -413,63 +686,88 @@
         }
     };
 
-    new Chart(cpuTresConfig, configCpuTres);
+    const cpuTresConfig = document.getElementById('cpu3');
+    chartCpuTres = new Chart(cpuTresConfig, configCpuTres);
 
-    // Gráficos de RAM
+    // ram - 1
 
-    // Obter o canvas do gráfico
-    const ramUmConfig = document.getElementById('ram1'); // Defina o canvas
-    const ramDoisConfig = document.getElementById('ram2');
-    const ramTresConfig = document.getElementById('ram3');
+    function obterDadosRam() {
+        fetch('/dashJoao/dashRam/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora; 
 
-    // Dados de exemplo para o gráfico
-    const label = ['12:00:10', '12:00:20', '12:00:30', '12:00:40', '12:00:50', '12:01:00', '12:01:10'];
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorario(dataHoraRam);
+
+                    if (dataRamUm.labels.length >= 10) {
+                        dataRamUm.labels.shift();
+                        dataRamUm.datasets[0].data.shift();
+                    }
+
+                    dataRamUm.labels.push(horarioFormatado);
+                    dataRamUm.datasets[0].data.push(usoDeRam)
+
+                    chartRamUm.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosRam, 1000);
 
     const dataRamUm = {
-        labels: label, // Definindo os rótulos dos meses
-        datasets: [
-            {
-                label: 'Uso de RAM', // Título do gráfico
-                data: [66,55,22,33,11,77,44], // Valores da RAM
-                fill: true, // Preenchimento da área abaixo da linha
-                borderColor: 'rgb(75, 192, 192)', // Cor da linha
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Cor de fundo (área preenchida)
-                tension: 0.1, // Suaviza a linha
-            }
-        ]
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
     };
 
-    // Configuração do gráfico
     const configUmRam = {
-        type: 'line', // Tipo de gráfico de linha
+        type: 'line',
         data: dataRamUm,
         options: {
             responsive: true,
             plugins: {
                 title: {
-                    display: true,              // Exibe o título
-                    text: 'Monitoramento de RAM', // Texto do título
+                    display: true,              
+                    text: 'Monitoramento de RAM', 
                     font: {
-                        size: 18,                // Tamanho da fonte
-                        weight: 'bold',          // Peso da fonte
-                        family: 'Arial',         // Família da fonte
+                        size: 18,                
+                        weight: 'bold',          
+                        family: 'Arial',         
                     },
-                    color: 'black',             // Cor do título
+                    color: 'black',             
                     padding: {
-                        top: 10,                // Distância do título para o gráfico
-                        bottom: 30              // Distância do título para o gráfico
+                        top: 10,                
+                        bottom: 30              
                     },
-                    align: 'start'             // Alinha o título à esquerda
+                    align: 'start'            
                 },
                 annotation: {
                     annotations: {
                         line1: {
                             type: 'line',
-                            yMin: 80,   // Valor da linha
-                            yMax: 80,   // Valor da linha
-                            borderColor: 'red', // Cor da linha
-                            borderWidth: 2,     // Espessura da linha
-                            borderDash: [5, 5], // Linha pontilhada
+                            yMin: 80,   
+                            yMax: 80,   
+                            borderColor: 'red', 
+                            borderWidth: 2,     
+                            borderDash: [5, 5], 
                             label: {
                                 enabled: true,
                                 content: 'Limite de 80',
@@ -486,60 +784,95 @@
             },
             scales: {
                 y: {
-                    beginAtZero: true, // Começa o eixo Y em zero
+                    beginAtZero: true,
                 },
             },
         }
     };
 
-    new Chart(ramUmConfig, configUmRam);
+    const ramUmConfig = document.getElementById('ram1'); 
+    chartRamUm = new Chart(ramUmConfig, configUmRam);
 
-    // gráfico ram 2
+    // ram - 2
+
+    function obterDadosRam2() {
+        fetch('/dashJoao/dashRam2/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
+
+
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorario(dataHoraRam);
+
+                    if (dataRamDois.labels.length >= 10) {
+                        dataRamDois.labels.shift();
+                        dataRamDois.datasets[0].data.shift();
+                    }
+
+                    dataRamDois.labels.push(horarioFormatado);
+                    dataRamDois.datasets[0].data.push(usoDeRam)
+
+                    chartRamDois.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosRam2, 1000);
 
     const dataRamDois = {
-        labels: label, // Definindo os rótulos dos meses
-        datasets: [
-            {
-                label: 'Uso de RAM', // Título do gráfico
-                data: [11,77,44,90,22,11,55], // Valores da RAM
-                fill: true, // Preenchimento da área abaixo da linha
-                borderColor: 'rgb(75, 192, 192)', // Cor da linha
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Cor de fundo (área preenchida)
-                tension: 0.1, // Suaviza a linha
-            }
-        ]
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
     };
 
-    // Configuração do gráfico
     const configDoisRam = {
-        type: 'line', // Tipo de gráfico de linha
+        type: 'line',
         data: dataRamDois,
         options: {
             responsive: true,
             plugins: {
                 title: {
-                    display: true,              // Exibe o título
-                    text: 'Monitoramento de RAM', // Texto do título
+                    display: true,              
+                    text: 'Monitoramento de RAM', 
                     font: {
-                        size: 18,                // Tamanho da fonte
-                        weight: 'bold',          // Peso da fonte
-                        family: 'Arial',         // Família da fonte
+                        size: 18,                
+                        weight: 'bold',          
+                        family: 'Arial',         
                     },
-                    color: 'black',             // Cor do título
+                    color: 'black',             
                     padding: {
-                        top: 10,                // Distância do título para o gráfico
-                        bottom: 30              // Distância do título para o gráfico
+                        top: 10,                
+                        bottom: 30              
                     },
-                    align: 'start'             // Alinha o título à esquerda
-                },annotation: {
+                    align: 'start'            
+                },
+                annotation: {
                     annotations: {
                         line1: {
                             type: 'line',
-                            yMin: 80,   // Valor da linha
-                            yMax: 80,   // Valor da linha
-                            borderColor: 'red', // Cor da linha
-                            borderWidth: 2,     // Espessura da linha
-                            borderDash: [5, 5], // Linha pontilhada
+                            yMin: 80,   
+                            yMax: 80,   
+                            borderColor: 'red', 
+                            borderWidth: 2,     
+                            borderDash: [5, 5], 
                             label: {
                                 enabled: true,
                                 content: 'Limite de 80',
@@ -556,60 +889,94 @@
             },
             scales: {
                 y: {
-                    beginAtZero: true, // Começa o eixo Y em zero
+                    beginAtZero: true,
                 },
             },
         }
     };
 
-    new Chart(ramDoisConfig, configDoisRam);
+    const ramDoisConfig = document.getElementById('ram2'); 
+    chartRamDois = new Chart(ramDoisConfig, configDoisRam);
 
-    // Gráfico ram 3
+    // ram - 3
+
+    function obterDadosRam3() {
+        fetch('/dashJoao/dashRam3/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
+
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorario(dataHoraRam);
+
+                    if (dataRamTres.labels.length >= 10) {
+                        dataRamTres.labels.shift();
+                        dataRamTres.datasets[0].data.shift();
+                    }
+
+                    dataRamTres.labels.push(horarioFormatado);
+                    dataRamTres.datasets[0].data.push(usoDeRam)
+
+                    chartRamTres.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosRam3, 1000);
 
     const dataRamTres = {
-        labels: label, // Definindo os rótulos dos meses
-        datasets: [
-            {
-                label: 'Uso de RAM', // Título do gráfico
-                data: [65, 59, 80, 81, 56, 55, 40], // Valores da RAM
-                fill: true, // Preenchimento da área abaixo da linha
-                borderColor: 'rgb(75, 192, 192)', // Cor da linha
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Cor de fundo (área preenchida)
-                tension: 0.1, // Suaviza a linha
-            }
-        ]
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
     };
 
-    // Configuração do gráfico
     const configTresRam = {
-        type: 'line', // Tipo de gráfico de linha
+        type: 'line',
         data: dataRamTres,
         options: {
             responsive: true,
             plugins: {
                 title: {
-                    display: true,              // Exibe o título
-                    text: 'Monitoramento de RAM', // Texto do título
+                    display: true,              
+                    text: 'Monitoramento de RAM', 
                     font: {
-                        size: 18,                // Tamanho da fonte
-                        weight: 'bold',          // Peso da fonte
-                        family: 'Arial',         // Família da fonte
+                        size: 18,                
+                        weight: 'bold',          
+                        family: 'Arial',         
                     },
-                    color: 'black',             // Cor do título
+                    color: 'black',             
                     padding: {
-                        top: 10,                // Distância do título para o gráfico
-                        bottom: 30              // Distância do título para o gráfico
+                        top: 10,                
+                        bottom: 30              
                     },
-                    align: 'start'             // Alinha o título à esquerda
-                },annotation: {
+                    align: 'start'            
+                },
+                annotation: {
                     annotations: {
                         line1: {
                             type: 'line',
-                            yMin: 80,   // Valor da linha
-                            yMax: 80,   // Valor da linha
-                            borderColor: 'red', // Cor da linha
-                            borderWidth: 2,     // Espessura da linha
-                            borderDash: [5, 5], // Linha pontilhada
+                            yMin: 80,   
+                            yMax: 80,   
+                            borderColor: 'red', 
+                            borderWidth: 2,     
+                            borderDash: [5, 5], 
                             label: {
                                 enabled: true,
                                 content: 'Limite de 80',
@@ -626,13 +993,13 @@
             },
             scales: {
                 y: {
-                    beginAtZero: true, // Começa o eixo Y em zero
+                    beginAtZero: true,
                 },
             },
         }
     };
 
-    new Chart(ramTresConfig, configTresRam);
-
+    const ramTresConfig = document.getElementById('ram3'); 
+    chartRamTres = new Chart(ramTresConfig, configTresRam);
 
 </script>
