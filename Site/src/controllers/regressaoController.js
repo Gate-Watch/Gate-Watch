@@ -4,9 +4,9 @@ async function getMetricasPorTotemEComponente(req, res) {
     const { totem, componente } = req.params;
 
     try {
-        // Buscar dados para a semana atual e semana passada
-        const semanaAtual = await model.getMetricsForCurrentWeek(totem, componente);
-        const semanaPassada = await model.getMetricsForLastWeek(totem, componente);
+        
+        const semanaAtual = await model.getMetricasSemanaAtual(totem, componente);
+        const semanaPassada = await model.getMetricaSemanaPassada(totem, componente);
 
         res.json({ semanaAtual, semanaPassada });
     } catch (error) {
@@ -17,7 +17,7 @@ async function getMetricasPorTotemEComponente(req, res) {
 
 async function getRankingTotens(req, res) {
     try {
-        const ranking = await model.getTopMetrics();
+        const ranking = await model.getMaioresMetricas();
         res.json(ranking);
     } catch (error) {
         console.error('Erro ao buscar ranking:', error.message);

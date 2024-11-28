@@ -1,25 +1,25 @@
 const db = require('../database/config');
 
-// Mapeia os componentes do frontend para as colunas do banco de dados
-function mapComponentToColumn(component) {
-    const mapping = {
+// mapeia os componentes do front para as colunas do bd
+function mapComponente(componente) {
+    const map = {
         Cpu: 'cpu_usage',
         Ram: 'memory_perc',
-        Disco: 'disk_perc',
+        Disco: 'disk_perc'
     };
-    return mapping[component] || null;
+    return map[componente] || null;
 }
 
-function    getMetricsForCurrentWeek(totem, component) {
-    const column = mapComponentToColumn(component);
-    if (!column) {
-        throw new Error(`Componente inválido: ${component}`);
+function getMetricasSemanaAtual(totem, componente) {
+    const coluna = mapComponente(componente);
+    if (!coluna) {
+        throw new Error(`Componente inválido: ${componente}`);
     }
 
     const query = `
         SELECT 
             DAYNAME(dtHora) AS dia_semana,
-            ROUND(AVG(${column}), 2) AS componente_avg
+            ROUND(AVG(${coluna}), 2) AS componente_avg
         FROM Desempenho
         WHERE fkTotem = ${totem}
         AND WEEK(dtHora) = WEEK(CURDATE())
@@ -31,16 +31,16 @@ function    getMetricsForCurrentWeek(totem, component) {
 }
 
 
-function getMetricsForLastWeek(totem, component) {
-    const column = mapComponentToColumn(component);
-    if (!column) {
-        throw new Error(`Componente inválido: ${component}`);
+function getMetricaSemanaPassada(totem, componente) {
+    const coluna = mapComponente(componente);
+    if (!coluna) {
+        throw new Error(`Componente inválido: ${componente}`);
     }
 
     const query = `
         SELECT 
             DAYNAME(dtHora) AS dia_semana,
-            ROUND(AVG(${column}), 2) AS componente_avg
+            ROUND(AVG(${coluna}), 2) AS componente_avg
         FROM Desempenho
         WHERE fkTotem = ${totem}
         AND WEEK(dtHora) = WEEK(CURDATE()) - 1
@@ -52,7 +52,7 @@ function getMetricsForLastWeek(totem, component) {
 }
 
 
-function getTopMetrics() {
+function getMaioresMetricas() {
     const query = `
         (
             SELECT 
@@ -94,7 +94,7 @@ function getTopMetrics() {
 
 
 module.exports = {
-    getMetricsForCurrentWeek,
-    getMetricsForLastWeek,
-    getTopMetrics,
+    getMetricasSemanaAtual,
+    getMetricaSemanaPassada,
+    getMaioresMetricas,
 };
