@@ -300,14 +300,24 @@ a {
     align-items: center;
 }
 
-.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking h4 {
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking .abaixo h4 {
     font-size: 16px; /* Texto maior */
     color: white; /* Títulos em branco */
     background-color: #18204b;
     border-radius: 5px;
     padding: 3px;
     margin-bottom: 10px;
-    text-align: center;
+    margin-left: 1vw;
+}
+
+.conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas .conteudo-ranking .acima h4 {
+    font-size: 16px; /* Texto maior */
+    color: white; /* Títulos em branco */
+    background-color: #18204b;
+    border-radius: 5px;
+    padding: 3px;
+    margin-bottom: 10px;
+    margin-right: 1vw;
 }
 
 /* Linha central que divide "Dias Acima" e "Dias Abaixo" */

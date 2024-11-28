@@ -17,8 +17,8 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuario");
-// var dashRegressaoRouter = require("./src/routes/dashRegressao");
-// var dashJoaoRouter = require("./src/routes/dashJoao");
+var dashRegressaoRouter = require("./src/routes/dashRegressao");
+var dashJoaoRouter = require("./src/routes/dashJoao");
 var alertasGerenteRouter = require("./src/routes/alertasGerente")
 
 app.use(express.json());
@@ -29,8 +29,8 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuario", usuarioRouter);
-// app.use("/dashRegressao", dashRegressaoRouter);
-// app.use("/dashJoao", dashJoaoRouter);
+app.use("/dashRegressao", dashRegressaoRouter);
+app.use("/dashJoao", dashJoaoRouter);
 app.use("/alertasGerente", alertasGerenteRouter)
 
 
