@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="./CSS/dashboardBeatriz.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-bundle.min.js"></script>
 </head>
 
 <body
-    onload=" listarMeses(), gerarGraficoPassageirosPorMes()">
+    onload=" listarMeses(), gerarGraficoPassageirosPorMes(), gerarRegressaoAlertasXPassageiros()">
 
     <div class="conteudoPagina">
         <div class="boxLateral">
@@ -108,7 +109,7 @@
                             <span>RELAÇÃO ENTRE ALERTAS E PASSAGEIROS</span>
                         </div>
                         <div class="divGrafAlerXPass">
-                            <canvas id="graficoAlertasXPassageiros" width="520" height="390"></canvas>
+                            <canvas id="graficoAlertasXPassageiros" width="570" height="390"></canvas>
                         </div>
                     </div>
                 </div>
@@ -243,58 +244,58 @@
 
 
 
-    // Dados simulados
-    const passageiros = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
-    const alertas = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+    // // Dados simulados
+    // const passageiros = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
+    // const alertas = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
-    // Dados do gráfico de dispersão
-    const data = {
-        datasets: [{
-            label: 'Alertas vs Passageiros',
-            data: passageiros.map((p, index) => ({
-                x: p,
-                y: alertas[index]
-            })),
-            backgroundColor: '#18204b',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-        }]
-    };
+    // // Dados do gráfico de dispersão
+    // const data = {
+    //     datasets: [{
+    //         label: 'Alertas vs Passageiros',
+    //         data: passageiros.map((p, index) => ({
+    //             x: p,
+    //             y: alertas[index]
+    //         })),
+    //         backgroundColor: '#18204b',
+    //         borderColor: 'rgba(75, 192, 192, 1)',
+    //         borderWidth: 1
+    //     }]
+    // };
 
-    // Configuração do gráfico
-    const config = {
-        type: 'scatter',
-        data: data,
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Quantidade de Passageiros (milhares)'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Frequência de Alertas'
-                    }
-                }
-            }
-        }
-    };
+    // // Configuração do gráfico
+    // const config = {
+    //     type: 'scatter',
+    //     data: data,
+    //     options: {
+    //         responsive: true,
+    //         scales: {
+    //             x: {
+    //                 title: {
+    //                     display: true,
+    //                     text: 'Quantidade de Passageiros (milhares)'
+    //                 }
+    //             },
+    //             y: {
+    //                 title: {
+    //                     display: true,
+    //                     text: 'Frequência de Alertas'
+    //                 }
+    //             }
+    //         }
+    //     }
+    // };
 
-    // Criando o gráfico no canvas
-    const ctx = document.getElementById('graficoAlertasXPassageiros').getContext('2d');
-    new Chart(ctx, config);
+    // // Criando o gráfico no canvas
+    // const ctx = document.getElementById('graficoAlertasXPassageiros').getContext('2d');
+    // new Chart(ctx, config);
 
 
 
-    const meses = [
-        'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-    ];
-    const passageirosMensais = [120, 150, 170, 140, 160, 180, 190, 200, 210, 220, 230, 240];
+    // const meses = [
+    //     'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+    //     'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
+    // ];
+    // const passageirosMensais = [120, 150, 170, 140, 160, 180, 190, 200, 210, 220, 230, 240];
 
 
 
@@ -465,6 +466,118 @@
         );
         
     }
+
+
+
+    async function gerarRegressaoAlertasXPassageiros() {
+    return fetch(`/alertasGerente/gerarRegressaoAlertasXPassageiros/${fkCompanhia}/`, {
+        method: "GET",
+        cache: 'no-store',
+        headers: {
+            "Content-Type": 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+            return [];
+        }
+    }).catch(error => {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        return [];
+    });
+}
+
+function calcularRegressaoLinear(x, y) {
+    const n = x.length;
+    const somaX = x.reduce((acc, val) => acc + val, 0);
+    const somaY = y.reduce((acc, val) => acc + val, 0);
+    const somaXY = x.reduce((acc, val, i) => acc + val * y[i], 0);
+    const somaX2 = x.reduce((acc, val) => acc + val * val, 0);
+
+    const m = (n * somaXY - somaX * somaY) / (n * somaX2 - somaX * somaX);
+    const b = (somaY - m * somaX) / n;
+
+    return { m, b };
+}
+
+// Configurar o Chart.js
+document.addEventListener("DOMContentLoaded", async function () {
+    const resposta = await gerarRegressaoAlertasXPassageiros();
+
+    let alertas = [];
+    let passageirosAzul = [];
+
+    resposta.forEach(registro => {
+        alertas.push(registro.quantidadeAlertas);
+        passageirosAzul.push(registro.passageirosAzul);
+    });
+
+    // Calcular a linha de regressão
+    const { m, b } = calcularRegressaoLinear(passageirosAzul, alertas);
+
+    // Gerar os pontos da linha de regressão
+    const xMin = Math.min(...passageirosAzul);
+    const xMax = Math.max(...passageirosAzul);
+    const linhaRegressao = [
+        { x: xMin, y: m * xMin + b },
+        { x: xMax, y: m * xMax + b }
+    ];
+
+    // Configurar os datasets
+    const data = {
+        datasets: [
+            {
+                label: 'Alertas',
+                data: passageirosAzul.map((x, i) => ({ x: x, y: alertas[i] })),
+                backgroundColor: '#236B8E',
+                borderColor: '#236B8E',
+                pointRadius: 5
+            },
+            {
+                label: 'Linha de Regressão',
+                data: linhaRegressao,
+                type: 'line',
+                borderColor: '#18204b',
+                borderWidth: 2,
+                fill: false,
+                pointRadius: 0
+            }
+        ]
+    };
+
+    // Configurações do gráfico
+    const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Passageiros Azul'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Quantidade de Alertas'
+                    }
+                }
+            }
+        }
+    };
+
+    // Renderizar o gráfico
+    const ctx = document.getElementById('graficoAlertasXPassageiros').getContext('2d');
+    new Chart(ctx, config);
+});
+
+
 
 
 

@@ -212,3 +212,69 @@ show tables;
 select cpu_usage, dtHora from desempenho where fkTotem = 1;
 select cpu_usage, dtHora from desempenho where fkTotem = 2;
 select cpu_usage, dtHora from desempenho where fkTotem = 3;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select * from Alerta;
+select * from movimentacao;
+
+CREATE TABLE movimentacao (
+idMovimentacao int primary key auto_increment,
+mes varchar(100),
+icao varchar(8),
+aerodromo varchar(200),
+municipio varchar(100),
+ano year, 
+tipoVoo varchar(100),
+totalPassageiros int,
+passageirosAzul int,
+mesSigla varchar(3),
+numMes int
+);
+
+drop table movimentacao;
+
+ALTER TABLE movimentacao CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\dadosAgrupadosMesWC.csv'
+INTO TABLE movimentacao
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(mes, icao, aerodromo, municipio, ano, tipoVoo, totalPassageiros, passageirosAzul, mesSigla, numMes);
+
+select * from movimentacao;
+
+
+SELECT
+    mes, 
+    passageirosAzul, 
+    COUNT(idAlerta) AS quantidadeAlertas
+FROM
+    movimentacao 
+LEFT JOIN
+    Alerta 
+    ON MONTH(dtAlerta) = numMes AND YEAR(dtAlerta) = ano
+GROUP BY
+    mes, ano, passageirosAzul, numMes
+ORDER BY
+    numMes;
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 # Tratamento do raw pro trusted dos dados de movimentacao
 
-caminho_arquivo <- "C:/Users/Admin/Downloads/DadosCompletosMovimentacao.csv"
+caminho_arquivo <- "C:\\Users\\Samsung\\Downloads\\DadosCompletosMovimentacao (1).csv"
 
 dados1 <- read.csv(caminho_arquivo, stringsAsFactors = FALSE, sep = ";", fileEncoding = "UTF-8")
 

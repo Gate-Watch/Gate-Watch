@@ -32,4 +32,8 @@ router.get("/gerarGraficoFrequenciaAlertas/:fkCompanhia/:mesSelecionado/:totemSe
   alertasGerenteController.gerarGraficoFrequenciaAlertas(req, res); // Chama a função no controlador
 });
 
+router.get("/gerarRegressaoAlertasXPassageiros/:fkCompanhia", function (req, res) {
+  alertasGerenteController.gerarRegressaoAlertasXPassageiros(req, res); // Chama a função no controlador
+});
+
 module.exports = router;

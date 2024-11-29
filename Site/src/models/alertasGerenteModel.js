@@ -97,4 +97,29 @@ function gerarGraficoFrequenciaAlertas(fkCompanhia, mesSelecionado, totemSelecio
     return database.executar(instrucaoSql); // Retorna a consulta ao banco de dados
 }
 
-module.exports = { listarTotens, totemMaiorAlerta, diaMaiorAlerta, listarMeses, gerarGraficoPassageirosPorMes, gerarGraficoFrequenciaAlertas };
+function gerarRegressaoAlertasXPassageiros(fkCompanhia) {
+    var instrucaoSql = `
+    SELECT
+        mes, 
+        passageirosAzul, 
+    COUNT(idAlerta) AS quantidadeAlertas
+        FROM
+            movimentacao 
+        LEFT JOIN
+            Alerta 
+            ON MONTH(dtAlerta) = numMes AND YEAR(dtAlerta) = ano 
+        JOIN Totem
+        	ON idTotem = fkTotem
+        JOIN Companhia 
+        	ON idCompanhia = fkCompanhia
+        WHERE fkCompanhia = '${fkCompanhia}'
+        GROUP BY
+            mes, ano, passageirosAzul, numMes
+        ORDER BY
+            numMes;
+    `;
+
+    return database.executar(instrucaoSql); // Retorna a consulta ao banco de dados
+}
+
+module.exports = { listarTotens, totemMaiorAlerta, diaMaiorAlerta, listarMeses, gerarGraficoPassageirosPorMes, gerarGraficoFrequenciaAlertas, gerarRegressaoAlertasXPassageiros };
