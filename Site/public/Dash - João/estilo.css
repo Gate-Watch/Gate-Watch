@@ -59,13 +59,13 @@
 }
 
 .nav {
-    width: 15vw;
+    width: 13vw;
     height: 100vh;
     background: #091836;
 }
 
 .dash {
-    width: 85%;
+    width: 87vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -282,5 +282,48 @@ select option {
     border: none;
 }
 
-/* Gráficos */
+/* Dashboard Comparar */ 
 
+.comparar_totem {
+    width: 87vw;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    right: 0;
+    background: rgba(0, 0, 0, 0.842)
+}
+
+.comparar_fechar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 83svw;
+}
+
+.comparar_fechar i{
+    font-size: 60px;
+    color: #fff;
+}
+.comparar_fechar h1 {
+    font-size: 30px;
+    color: #FFF;
+}
+
+.comparar_comparator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.totem_comparar {
+    width: 40vw;
+    height: 80vh;
+    background: #fff;
+    overflow: auto;
+    border-radius: 5px;
+}

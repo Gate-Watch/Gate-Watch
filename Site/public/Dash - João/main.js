@@ -185,46 +185,6 @@ function disco(totem) {
             cpuCard.style.display = "none";
     }
 }
-function escolheTotem() {
-    const selectTotem = document.getElementById("escolheTotem");
-    const valorSelecionado = selectTotem.value;
-
-    const totemUmDiv = document.getElementById("totem1");
-    const totemDoisDiv = document.getElementById("totem2");
-    const totemTresDiv = document.getElementById("totem3");
-
-    
-
-    const totemDaVez = document.getElementById("totemDaVez");
-
-    if (valorSelecionado == "totemUm") {
-        totemUmDiv.style.display = "flex";
-        totemDoisDiv.style.display = "none";
-        totemTresDiv.style.display = "none";
-
-        checkUm.style.display = "grid";
-        checkDois.style.display = "none";
-        checkTres.style.display = "none";
-    }
-    if (valorSelecionado == "totemDois") {
-        totemUmDiv.style.display = "none";
-        totemDoisDiv.style.display = "flex";
-        totemTresDiv.style.display = "none";
-
-        checkUm.style.display = "none";
-        checkDois.style.display = "grid";
-        checkTres.style.display = "none";
-    }
-    if (valorSelecionado == "totemTres") {
-        totemUmDiv.style.display = "none";
-        totemDoisDiv.style.display = "none";
-        totemTresDiv.style.display = "flex";
-
-        checkUm.style.display = "none";
-        checkDois.style.display = "none";
-        checkTres.style.display = "grid";
-    }
-}
 function escolherTotem() {
     const selectTotem = document.getElementById("escolheTotem");
     const valorSelecionado = selectTotem.value;
@@ -285,3 +245,12 @@ function escolherTotem() {
     }
 }
 
+function comparar() {
+    let comparator = document.getElementById('dashComparar');
+
+    if(comparator.style.display == 'none') {
+        comparator.style.display = 'flex'
+    } else {
+        comparator.style.display = 'none'
+    }
+}
