@@ -49,7 +49,8 @@
                         <div class="bar"></div>Nuvem de processos
                     </div>
                     <div class="wordcloud">
-                        <canvas id="chart3" width="527" height="500" style="display: block;box-sizing: border-box;height: 400px;width: 400px;"></canvas>
+                        <canvas id="chart3" width="527" height="500"
+                            style="display: block;box-sizing: border-box;height: 400px;width: 400px;"></canvas>
                     </div>
                 </div>
 
@@ -73,91 +74,147 @@
     </div>
 
     <script>
-        // Nome do usuário
-        const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
-        document.getElementById('nome_perfil').textContent = nomeUsuario || 'Usuário não identificado';
+        // Fetch e atualização do Scatter Chart
+        async function updateScatterChart() {
+            try {
+                const response = await fetch('/dashCerejo/frequencia');
+                const data = await response.json();
+    
+                const scatterData = data.map(item => ({
+                    x: item.nomeProcesso,
+                    y: item.frequencia
+                }));
+    
+                const ctxScatter = document.getElementById('chart').getContext('2d');
+                new Chart(ctxScatter, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Frequência de Processos',
+                            data: scatterData,
+                            backgroundColor: 'rgb(255, 99, 132)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                type: 'category',
+                                position: 'bottom',
+                                title: {
+                                    display: true,
+                                    text: 'Processos'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Frequência'
+                                }
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Erro ao carregar dados do Scatter Chart:', error);
+            }
+        }
+    
+        // Fetch e atualização do Apex Bar Chart
+        async function updateApexChart() {
+            try {
+                const response = await fetch('/dashCerejo/frequencia');
+                const data = await response.json();
+    
+                const seriesData = data.map(item => ({
+                    x: item.nomeProcesso,
+                    y: item.frequencia,
+                    goals: [{
+                        name: 'Expected',
+                        value: item.frequencia + 50, // Exemplo de valor esperado
+                        strokeHeight: 5,
+                        strokeColor: '#775DD0'
+                    }]
+                }));
+    
+                const apexOptions = {
+                    series: [{
+                        name: 'Frequência Atual',
+                        data: seriesData
+                    }],
+                    chart: {
+                        height: 400,
+                        type: 'bar'
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '60%'
+                        }
+                    },
+                    colors: ['#00E396'],
+                    legend: {
+                        show: true,
+                        customLegendItems: ['Frequência Atual', 'Esperado'],
+                        markers: {
+                            fillColors: ['#00E396', '#775DD0']
+                        }
+                    }
+                };
+    
+                const apexChart = new ApexCharts(document.querySelector("#chart2"), apexOptions);
+                apexChart.render();
+            } catch (error) {
+                console.error('Erro ao carregar dados do Apex Bar Chart:', error);
+            }
+        }
+    
+        // Fetch e atualização do WordCloud Chart
+        async function updateWordCloudChart() {
+        try {
+            const response = await fetch('/dashCerejo/cpu');
+            const data = await response.json();
 
-        // Gráfico de dispersão (scatter)
-        const ctxScatter = document.getElementById('chart').getContext('2d');
-        new Chart(ctxScatter, {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Scatter Dataset',
-                    data: [
-                        { x: -10, y: 0 },
-                        { x: 0, y: 10 },
-                        { x: 10, y: 5 },
-                        { x: 0.5, y: 5.5 }
-                    ],
-                    backgroundColor: 'rgb(255, 99, 132)'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false, // Isso permite ajustar a altura manualmente no CSS
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom'
+            // Validando e limitando os dados
+            const labels = data.slice(0, 20).map(item => item.nomeProcesso); // Limite de 20 palavras
+            const weights = data.slice(0, 20).map(item => Math.max(parseFloat(item.total_cpu), 1)); // Evitar valores muito pequenos ou negativos
+
+            // Criando o gráfico WordCloud
+            const ctxWordCloud = document.getElementById('chart3').getContext('2d');
+            const wordCloudChart = new Chart(ctxWordCloud, {
+                type: 'wordCloud',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Uso de CPU',
+                        data: weights
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    layout: {
+                        padding: { top: 10, bottom: 10 }
                     }
                 }
-            }
-        });
+            });
 
-
-        // Gráfico de barras com ApexCharts
-        const apexOptions = {
-            series: [{
-                name: 'Actual',
-                data: [
-                    { x: 'chromeexe', y: 1292, goals: [{ name: 'Expected', value: 1400, strokeHeight: 5, strokeColor: '#775DD0' }] },
-                    { x: 'codeexe', y: 4432, goals: [{ name: 'Expected', value: 5400, strokeHeight: 5, strokeColor: '#775DD0' }] },
-                    { x: 'runtimebrokerexe', y: 5423, goals: [{ name: 'Expected', value: 5200, strokeHeight: 5, strokeColor: '#775DD0' }] },
-                    { x: 'msedewebviewexe', y: 6653, goals: [{ name: 'Expected', value: 6500, strokeHeight: 5, strokeColor: '#775DD0' }] },
-                    { x: 'backgroundtaskhostexe', y: 8133, goals: [{ name: 'Expected', value: 6600, strokeHeight: 5, strokeColor: '#775DD0' }] }
-                ]
-            }],
-            chart: {
-                height: 400,
-                type: 'bar'
-            },
-            plotOptions: {
-                bar: {
-                    columnWidth: '60%'
-                }
-            },
-            colors: ['#00E396'],
-            legend: {
-                show: true,
-                customLegendItems: ['Actual', 'Expected'],
-                markers: {
-                    fillColors: ['#00E396', '#775DD0']
-                }
-            }
-        };
-
-        const apexChart = new ApexCharts(document.querySelector("#chart2"), apexOptions);
-        apexChart.render();
-
-        // Gráfico de nuvem de palavras (WordCloud)
-        const ctxWordCloud = document.getElementById('chart3').getContext('2d');
-        new Chart(ctxWordCloud, {
-            type: 'wordCloud',
-            data: {
-                labels: ['codeexe', 'conhostexe', 'msedewebviewexe', 'backgroundtaskhostexe'],
-                datasets: [{
-                    label: 'Processamento',
-                    data: [90, 60, 40, 30]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false // Permite o ajuste dinâmico da altura
-            }
-        });
-
+            wordCloudChart.update();
+        } catch (error) {
+            console.error('Erro ao carregar dados do WordCloud Chart:', error);
+        }
+    }
+    
+        // Chamada das funções de atualização
+        updateScatterChart();
+        updateApexChart();
+        updateWordCloudChart();
     </script>
+        
+
 </body>
 
 </html>
