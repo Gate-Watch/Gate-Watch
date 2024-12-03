@@ -281,6 +281,31 @@ window.onload = function() {
     let alertPercentageChart; 
 
 
+
+    async function carregarAnoMesRecentes() {
+    try {
+        const resposta = await fetch('/api/anoMesMaisRecente');
+        const { ano, mes } = await resposta.json();
+
+        const selectAno = document.getElementById('selectAnoGrafico');
+        const selectMes = document.getElementById('selectMesGrafico');
+
+        if (ano && mes) {
+            selectAno.value = ano;
+            await carregarMeses(ano); 
+
+            selectMes.value = mes;
+
+            atualizarGeral();
+        } else {
+            console.warn("Ano ou mês mais recentes não encontrados.");
+        }
+    } catch (erro) {
+        console.error("Erro ao carregar ano e mês recentes:", erro);
+    }
+}
+
+
     async function carregarAnos() {
     try {
         const response = await fetch('/api/anos');
@@ -303,13 +328,14 @@ window.onload = function() {
 }
 
 
+
 async function carregarMeses(ano) {
     try {
         const response = await fetch(`/api/meses/${ano}`);
         const meses = await response.json();
 
         const selectMes = document.getElementById('selectMesGrafico');
-        selectMes.innerHTML = '';
+        selectMes.innerHTML = ''; 
 
         meses.forEach(mes => {
             const option = document.createElement('option');
@@ -317,12 +343,11 @@ async function carregarMeses(ano) {
             option.textContent = mes.mes;
             selectMes.appendChild(option);
         });
-
-        selectMes.value = new Date().getMonth() + 1;
     } catch (error) {
-        console.error("Erro ao carregar meses:", error);
+        console.error("Erro ao carregar meses disponíveis:", error);
     }
 }
+
 
 
 async function atualizarGraficoPorMes() {
@@ -694,15 +719,25 @@ function atualizarGraficoPorMes() {
     }
 }
 
-function atualizarGeral() {
+async function atualizarGeral() {
     const ano = document.getElementById('selectAnoGrafico').value;
     const mes = document.getElementById('selectMesGrafico').value;
-    const filtro = document.getElementById('selectTotemGrafico2').value;
+    const filtro = document.getElementById('selectTotemGrafico2').value; 
+
     if (ano && mes && filtro) {
-        console.log(`Atualizando gráfico para Ano: ${ano}, Mês: ${mes}, Filtro: ${filtro}`);
-        obterUptime(ano, mes, filtro);
+        try {
+            const response = await fetch(`/api/semanal/${ano}/${mes}`);
+            const dados = await response.json();
+            atualizarSemana(dados, filtro); 
+        } catch (error) {
+            console.error("Erro ao atualizar o gráfico com ano, mês e filtro selecionados:", error);
+        }
+    } else {
+        console.warn("Ano, mês ou filtro não selecionados.");
     }
 }
+
+
 
 async function popularSelects() {
     try {
@@ -736,10 +771,13 @@ async function popularSelects() {
 }
 
 window.onload = function() {
+    carregarAnoMesRecentes();
     popularSelects();
     document.getElementById('selectAnoGrafico').addEventListener('change', atualizarGraficoPorAno);
     document.getElementById('selectMesGrafico').addEventListener('change', atualizarGraficoPorMes);
     document.getElementById('selectTotemGrafico2').addEventListener('change', atualizarGeral);
+    obterHorario();
+
 };
 
 
@@ -752,6 +790,8 @@ document.addEventListener("DOMContentLoaded", () => {
     obterHorario();
     obterTopAlertas();
     carregarAnos();
+    carregarAnoMesRecentes();
+
  
 
 

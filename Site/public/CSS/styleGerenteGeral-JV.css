@@ -1029,7 +1029,7 @@ a {
 #alertPercentageChart{
     display: block;
     box-sizing: border-box;
-    height: 120px;
+    height: 100px;
     width: 500px;
     margin-top: 10px;
 }
@@ -1081,9 +1081,14 @@ html, body {
 }
 
 
+
 .slaTeste2 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 50px;
+    border-radius: 8px;
+    margin-top: 10px;
     margin-bottom: -80px;
     font-family: "montSerrat";
-    justify-content: center;
-
 }

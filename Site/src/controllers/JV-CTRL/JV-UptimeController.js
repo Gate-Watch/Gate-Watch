@@ -37,8 +37,19 @@ async function obterMesesDisponiveis(req, res) {
     }
 }
 
+async function obterAnoMesMaisRecente(req, res) {
+    try {
+        const resultado = await disponibilidadeModel.obterAnoMesMaisRecente();
+        res.json(resultado);
+    } catch (erro) {
+        console.error("Erro ao obter ano e mês mais recente:", erro);
+        res.status(500).json({ erro: erro.sqlMessage || "Erro interno do servidor" });
+    }
+}
+
 module.exports = {
     obterDisponibilidadeSemanal,
     obterAnosDisponiveis,
-    obterMesesDisponiveis
+    obterMesesDisponiveis,
+    obterAnoMesMaisRecente
 };

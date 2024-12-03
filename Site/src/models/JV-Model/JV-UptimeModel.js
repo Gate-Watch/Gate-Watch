@@ -67,8 +67,23 @@ async function obterMesesDisponiveis(ano) {
     }
 }
 
+async function obterAnoMesMaisRecente() {
+    const query = `
+        SELECT YEAR(MAX(dtHora)) AS ano, MONTH(MAX(dtHora)) AS mes
+        FROM Desempenho;
+    `;
+    try {
+        const resultados = await database.executar(query);
+        return resultados[0]; 
+    } catch (erro) {
+        console.error("Erro ao obter ano e mês mais recente:", erro);
+        throw erro;
+    }
+}
+
 module.exports = {
     obterDisponibilidadeSemanal,
     obterAnosDisponiveis,
-    obterMesesDisponiveis
+    obterMesesDisponiveis,
+    obterAnoMesMaisRecente
 };
