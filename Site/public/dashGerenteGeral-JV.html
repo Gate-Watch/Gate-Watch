@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas Gerente - GateWatch</title>
+    <link rel="stylesheet" href="./CSS/styleGerenteGeral-JV.css">
+    <link >
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="conteudoPagina">
+        <div class="boxLateral">
+            <div class="boxIdentificacao">
+                <h1 class="fonte_perfil" id="nome_perfil"></h1>
+                <h3>GERENTE DE DADOS</h3>
+            </div>
+            <div class="boxOpcoes">
+                <div class="box" style="background-color: #41446877;">TENDÊNCIAS</div>
+                <a href="https://bandteccom-my.sharepoint.com/..."><div class="box">RELATÓRIO</div></a>
+                <a href="cadastroTotens.html"><div class="box">TOTENS</div></a>
+            </div>
+            <a href="cadastro.html">
+                <div class="boxSair">SAIR</div>
+            </a>
+        </div>
+        
+        <div class="conteudoMetricas">
+            <div class="boxTitulo">
+                <div class="titulo">STATUS GERAL DOS COMPONENTES</div>
+                <div class="imgLogo"><img src="/Images/gwLogo_black.png" alt=""></div>
+
+
+            </div>
+
+
+
+            <div class="boxConteudo">
+                <div class="boxComponentes">
+                    <div class="boxMedias">
+                        <div class="box">
+                            <div class="boxIntTitulo">ESTABILIDADE GERAL DA CPU
+                                <span class="tooltip">ⓘ
+                                    <span class="tooltiptext">Indicador que reflete a percentual médio de uso de CPU de todos os totens, baseado em históricos de uso.</span>
+                                </span>
+                            </div>
+                            <div class="indicadorEstado" id="indicadorCpu"></div>
+                        </div>
+                        
+                        <div class="box">
+                            <div class="boxIntTitulo">ESTABILIDADE GERAL DE RAM
+                                <span class="tooltip">ⓘ
+                                    <span class="tooltiptext">Indicador que reflete a percentual médio de uso de RAM de todos os totens, baseado em históricos de uso.</span>
+                                </span>
+                            </div>
+                            <div class="indicadorEstado" id="indicadorRam"></div>
+                        </div>
+                        
+                        <div class="box">
+                            <div class="boxIntTitulo">ESTABILIDADE GERAL DO DISCO
+                                <span class="tooltip">ⓘ
+                                    <span class="tooltiptext">Indicador que reflete a percentual médio de uso do DISCO de todos os totens, baseado em históricos de uso.</span>
+                                </span>
+                            </div>
+                            <div class="indicadorEstado" id="indicadorDisco"></div>
+                        </div>
+                    </div>
+
+
+                    
+                <!--
+<div class="boxGrafico">
+    <div class="grafico">
+        <div class="tituloGrafico">
+            <h2>PERCENTUAL MÉDIO DE USO DOS COMPONENTES POR TOTEM</h2>
+            <select id="selectTotemGrafico" onchange="atualizarGrafico()">
+                <option>Selecione um Totem</option>
+                <option>TOTEM 1</option>
+                <option>TOTEM 2</option>
+                <option>TOTEM 3</option>
+            </select>
+        </div>
+        <div class="boxIntGrafico">
+            <canvas id="myChart" width="1220" height="400"></canvas>
+        </div>
+    </div>
+</div>
+-->
+
+
+<div class="boxGrafico">
+    <div class="grafico">
+        <div class="tituloGrafico">
+            <h2>UPTIME SEMANAL</h2>
+            <select id="selectAnoGrafico" onchange="atualizarGraficoPorAno()">
+            </select>
+            <select id="selectMesGrafico" onchange="atualizarGraficoPorMes()">
+            </select>
+            <select id="selectTotemGrafico2" onchange="atualizarGeral()">
+                <option disabled>Filtrar Disponibilidade</option>
+                <option>Geral</option>
+                <option>Minima</option>
+                <option>Maxima</option>
+            </select>
+        </div>
+        <div class="boxIntGrafico">
+            <canvas id="availabilityChart" width="1220" height="400"></canvas>
+        </div>
+        <div id="registrosGrafico" class="slaTeste"><h3>Registro min: | Registro max:</h3></div>
+
+    </div>
+</div>
+
+                   
+                    
+                </div>
+
+
+
+               
+
+
+                <div class="boxAlertas">
+                    <div class="boxRankingSuperior">
+                        <div class="boxTitulo" id="boxTitulo">HORÁRIO DE PICO</div>  
+                        <div class="boxQtd" id="boxHora">Carregando...</div>
+                        <span class="tooltip">ⓘ
+                            <span class="tooltiptext">Indicador que reflete o dia do mês maior utilização dos totens</span>
+                        </span>
+                        
+                    </div>
+                    
+                    <div class="boxRankingAlertas">
+                        <div class="boxTitulo">ALERTAS TOTEM</div>
+                        <div class="boxQtd">
+                            <h3>IDENTIFICAÇÃO</h3>
+                            <h3>|</h3>
+                            <h3>QUANTIDADE</h3>
+                        </div>
+                        <div class="boxRankingTotens">
+                            <div class="boxTotem"><h3>TOTEM 3</h3><h3>30</h3></div>
+                            <div class="boxTotem"><h3>TOTEM 1</h3><h3>18</h3></div>
+                            <div class="boxTotem"><h3>TOTEM 2</h3><h3>6</h3></div>
+                        </div>
+                        <div class="boxSaibaMais"><button>SAIBA MAIS</button></div>
+                    </div>
+                    <div class="boxRankingPizza">
+                        <div class="boxTitulo2">PERCENTUAL DE ALERTAS</div>
+                        <div class="boxIntGrafico">
+                            <canvas id="alertPercentageChart" width="700" height="150"></canvas>
+                        </div>
+                        <div class="slaTeste2">
+                            <h4>CPU: | RAM: | DISCO: </h4>
+                        </div>
+                    </div>
+                    
+                   
+
+                    
+                   
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+    document.getElementById('nome_perfil').textContent = nomeUsuario ? nomeUsuario : 'Usuário não identificado';
+
+
+window.onload = function() {
+    popularSelects();
+    document.getElementById('selectAnoGrafico').addEventListener('change', atualizarGeral);
+    document.getElementById('selectMesGrafico').addEventListener('change', atualizarGeral);
+    document.getElementById('selectTotemGrafico2').addEventListener('change', atualizarGeral);
+};
+
+
+    function atualizarIndicadorEstado(componente, estado) {
+        const indicador = document.getElementById(`indicador${componente}`);
+        
+        if (estado === "bom") {
+            indicador.style.backgroundColor = "#2E7D32"; 
+        } else if (estado === "moderado") {
+            indicador.style.backgroundColor = "#FFA726"; 
+        } else if (estado === "crítico") {
+            indicador.style.backgroundColor = "#D32F2F"; 
+        }
+    }
+
+    atualizarIndicadorEstado("Cpu", "bom");
+    atualizarIndicadorEstado("Ram", "moderado");
+    atualizarIndicadorEstado("Disco", "crítico");
+
+
+
+    const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['06/10', '07/10', '08/10', '09/10', '10/10', '11/10', '12/10'],
+            datasets: [
+                { label: 'CPU', data: [35, 45, 30, 50, 55, 40, 60], backgroundColor: '#18204b', borderWidth: 1 },
+                { label: 'RAM', data: [65, 70, 55, 75, 60, 65, 80], backgroundColor: '#41b8d5', borderWidth: 1 },
+                { label: 'DISCO', data: [45, 50, 35, 60, 55, 40, 55], backgroundColor: '#8eeff1', borderWidth: 1 }
+            ]
+        },
+        options: { scales: { y: { beginAtZero: true } } }
+    });
+
+    const ctxAvailability = document.getElementById('availabilityChart').getContext('2d');
+    const availabilityChart = new Chart(ctxAvailability, {
+        type: 'line',
+        data: {
+            labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+            datasets: [
+                {
+                    label: 'TOTEM 1',
+                    data: [98, 97, 95, 96],
+                    borderColor: '#18204b', 
+                    backgroundColor: 'rgba(24, 32, 75, 0.2)', 
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#18204b'
+                },
+                {
+                    label: 'TOTEM 2',
+                    data: [94, 95, 93, 92],
+                    borderColor: '#41b8d5', 
+                    backgroundColor: 'rgba(65, 184, 213, 0.2)', 
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#41b8d5'
+                },
+                {
+                    label: 'TOTEM 3',
+                    data: [89, 88, 87, 90],
+                    borderColor: '#FFA726', 
+                    backgroundColor: 'rgba(255, 167, 38, 0.2)', 
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#FFA726'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Disponibilidade (%)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Data'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+
+    let alertPercentageChart; 
+
+
+    async function carregarAnos() {
+    try {
+        const response = await fetch('/api/anos');
+        const anos = await response.json();
+
+        const selectAno = document.getElementById('selectAnoGrafico');
+        anos.forEach(ano => {
+            const option = document.createElement('option');
+            option.value = ano.ano;
+            option.textContent = ano.ano;
+            selectAno.appendChild(option);
+        });
+
+        selectAno.value = anos[0].ano;
+
+        carregarMeses(anos[0].ano);
+    } catch (error) {
+        console.error("Erro ao carregar anos:", error);
+    }
+}
+
+
+async function carregarMeses(ano) {
+    try {
+        const response = await fetch(`/api/meses/${ano}`);
+        const meses = await response.json();
+
+        const selectMes = document.getElementById('selectMesGrafico');
+        selectMes.innerHTML = '';
+
+        meses.forEach(mes => {
+            const option = document.createElement('option');
+            option.value = mes.mes;
+            option.textContent = mes.mes;
+            selectMes.appendChild(option);
+        });
+
+        selectMes.value = new Date().getMonth() + 1;
+    } catch (error) {
+        console.error("Erro ao carregar meses:", error);
+    }
+}
+
+
+async function atualizarGraficoPorMes() {
+    const ano = document.getElementById('selectAnoGrafico').value;
+    const mes = document.getElementById('selectMesGrafico').value;
+    const response = await fetch(`http://localhost:3333/api/mensal/${ano}/${mes}`);
+    const dados = await response.json();
+    atualizarSemana(dados); 
+}
+
+async function atualizarGraficoPorAno() {
+    const ano = document.getElementById('selectAnoGrafico').value;
+    const response = await fetch(`http://localhost:3333/api/anual/${ano}`);
+    const dados = await response.json();
+    atualizarSemana(dados); 
+}
+
+
+
+
+
+ async function obterEsta() {
+    try {
+        const resposta = await fetch("http://localhost:3333/api/estabilidade");
+        const dados = await resposta.json();
+
+        if (dados.length > 0) {
+            atualizarStatus(dados); 
+        } else {
+            console.error("Nenhum dado achado");
+        }
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+    }
+}
+
+    async function obterTopAlertas(){
+        try {
+            const resposta = await fetch('http://localhost:3333/api/top5')
+            console.log("Reposta:", resposta)
+
+            if(!resposta.ok){
+                const textoerro = await resposta.text()
+                console.erro("erro na api:", resposta.status, resposta.statusText, textoerro)
+                return
+            }
+
+            const dados = await resposta.json()
+            console.log("Dados recebidos", dados)
+
+            if(dados){
+                console.log("Top alertas:", dados)
+                atualizarAlertas(dados)
+            }else {
+                console.error("Nenhum totem tem alerta")
+            }
+        }catch (error){
+            console.error("Erro aoo obter top 5", error)
+        }
+    }
+
+
+
+    async function obterHorario() {
+    try {
+        console.log("Fazendo requisição para /api/hora-picos");
+        const resposta = await fetch('http://localhost:3333/api/hora-picos');
+        console.log("Resposta recebida:", resposta);
+
+        if (!resposta.ok) {
+            const textoErro = await resposta.text(); 
+            console.error("Erro na resposta da API:", resposta.status, resposta.statusText, textoErro);
+            return;
+        }
+
+        const dados = await resposta.json(); 
+        console.log("Dados recebidos da API:", dados);
+
+        if (dados && dados.faixa_hora) {
+            console.log("Horário de pico encontrado:", dados.faixa_hora);
+            atualizarHorario(dados.faixa_hora);
+        } else {
+            console.error("Nenhum horário de pico encontrado");
+        }
+    } catch (error) {
+        console.error("Erro ao obter horário:", error);
+    }
+}
+
+
+async function obterAlertas() {
+    try {
+        const resposta = await fetch('/api/percentuais-alertas');
+        const data = await resposta.json();
+
+        if (data.length > 0) {
+            const alertasCpu = data.find(item => item.componente.toLowerCase() === 'cpu')?.percentual || 0;
+            const alertasRam = data.find(item => item.componente.toLowerCase() === 'memoria')?.percentual || 0;
+            const alertasDisco = data.find(item => item.componente.toLowerCase() === 'disco')?.percentual || 0;
+
+            atualizarGrafico([alertasCpu, alertasRam, alertasDisco]);
+        } else {
+            console.error("Nenhum alerta encontrado.");
+        }
+    } catch (error) {
+        console.log("Erro ao obter dados de alertas", error);
+    }
+}
+
+
+
+function atualizarAlertas(dados) {
+    const boxRankingTotens = document.querySelector('.boxRankingTotens');
+
+    boxRankingTotens.innerHTML = '';
+
+    if (!dados || dados.length === 0) {
+        console.warn('Nenhum dado de alerta encontrado para exibir.');
+        const mensagem = document.createElement('div');
+        mensagem.textContent = 'Nenhum alerta encontrado';
+        mensagem.style.textAlign = 'center';
+        boxRankingTotens.appendChild(mensagem);
+        return;
+    }
+
+    dados.forEach(({ fkTotem, totalAlertas }) => {
+        const boxTotem = document.createElement('div');
+        boxTotem.classList.add('boxTotem'); 
+
+        const totemNome = document.createElement('h3');
+        totemNome.textContent = fkTotem;
+
+        const alertasQtd = document.createElement('h3');
+        alertasQtd.textContent = totalAlertas;
+
+        boxTotem.appendChild(totemNome);
+        boxTotem.appendChild(alertasQtd);
+        boxRankingTotens.appendChild(boxTotem);
+    });
+}
+
+
+
+
+
+
+function atualizarStatus(dados) {
+
+    const data = dados[0]; 
+
+    const componentes = [
+        { nome: "Cpu", valor: data.media_cpu_usage },
+        { nome: "Ram", valor: data.media_memory_usage },
+        { nome: "Disco", valor: data.media_disk_usage }
+    ];
+
+    componentes.forEach(({ nome, valor }) => {
+        if (valor === undefined) {
+            console.error(`Dados inválidos para componente: ${nome}, valor: ${valor}`);
+            return;
+        }
+
+        const indicador = document.getElementById(`indicador${nome}`);
+        if (indicador) {
+            if (valor < 50) {
+                indicador.style.backgroundColor = "#2E7D32"; 
+            } else if (valor >= 50 && valor <= 80) {
+                indicador.style.backgroundColor = "#FFA726";
+            } else {
+                indicador.style.backgroundColor = "#D32F2F"; 
+            }
+        } 
+    });
+}
+
+
+
+
+
+
+
+
+function atualizarHorario(horario) {
+        const horaEscolhida = document.getElementById('boxHora');
+
+        if (!horaEscolhida) {
+            console.error("Não foi possível atualizar o horário, elemento não encontrado");
+            return;
+        }
+
+        console.log("Atualizando hora para:", horario);
+        horaEscolhida.textContent = horario || "Nenhum horário especificado";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        obterHorario();
+        obterEsta();
+        obterUptime();
+        atualizarGraficoPorMes(); 
+    });
+
+
+
+
+    function atualizarGrafico(porcentagens) {
+    const ctxAlertPercentage = document.getElementById('alertPercentageChart');
+    
+    if (!ctxAlertPercentage) {
+        console.error("Canvas para o gráfico de alertas não encontrado.");
+        return;
+    }
+    
+    const context = ctxAlertPercentage.getContext('2d');
+    
+    if (alertPercentageChart) {
+        alertPercentageChart.data.datasets[0].data = porcentagens;
+        alertPercentageChart.update();
+    } else {
+        alertPercentageChart = new Chart(context, {
+            type: 'pie',
+            data: {
+                labels: ['CPU', 'RAM', 'DISCO'],
+                datasets: [{
+                    label: 'Porcentagens de Alertas (%)',
+                    data: porcentagens,
+                    backgroundColor: ['#18204b', '#41b8d5', '#8eeff1'],
+                    borderColor: ['#fff', '#fff', '#fff'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false 
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.label || '';
+                                let value = context.raw;
+
+                                if (typeof value === 'string') {
+                                    value = parseFloat(value);
+                                }
+
+                                if (typeof value === 'number' && !isNaN(value)) {
+                                    return `${label}: ${value.toFixed(2)}%`;
+                                }
+
+                                console.warn("Valor inválido no tooltip:", value);
+                                return `${label}: Nenhum dado disponível`;
+                            }
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
+    const cpuElemento = document.querySelector('.slaTeste2 h4');
+    if (cpuElemento) {
+        const cpu = porcentagens[0] && !isNaN(Number(porcentagens[0])) ? Number(porcentagens[0]).toFixed(2) : 'N/A';
+        const ram = porcentagens[1] && !isNaN(Number(porcentagens[1])) ? Number(porcentagens[1]).toFixed(2) : 'N/A';
+        const disco = porcentagens[2] && !isNaN(Number(porcentagens[2])) ? Number(porcentagens[2]).toFixed(2) : 'N/A';
+        
+        cpuElemento.textContent = `CPU: ${cpu}% | RAM: ${ram}% | DISCO: ${disco}%`;
+    }
+}
+
+
+
+async function obterUptime(ano, mes, filtro) {
+    try {
+        const resposta = await fetch(`http://localhost:3333/api/semanal/${ano}/${mes}`);
+        const dados = await resposta.json();
+
+        if (dados.length > 0) {
+            atualizarSemana(dados, filtro);
+        } else {
+            console.error("Nenhum dado encontrado");
+        }
+    } catch (error) {
+        console.error("Erro ao requisitar dados de uptime", error);
+    }
+}
+
+function atualizarSemana(dados, filtro) {
+    const semanas = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+
+    availabilityChart.data.labels = semanas;
+    availabilityChart.data.datasets = [];
+
+    const totems = dados.map(totem => totem.totem);
+    const disponibilidades = dados.map(totem => [
+        parseFloat(totem.disponibilidade_semana_1),
+        parseFloat(totem.disponibilidade_semana_2),
+        parseFloat(totem.disponibilidade_semana_3),
+        parseFloat(totem.disponibilidade_semana_4)
+    ]);
+
+    let filteredDatasets = totems.map((totem, index) => ({
+        label: totem,
+        data: disponibilidades[index],
+        borderColor: '#18204b',
+        backgroundColor: 'rgba(24, 32, 75, 0.2)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#18204b'
+    }));
+
+    if (filtro === 'Minima') {
+        let minTotemIndex = -1;
+        let minDisponibilidade = Infinity;
+
+        disponibilidades.forEach((dispon, index) => {
+            const minVal = Math.min(...dispon);
+            if (minVal < minDisponibilidade) {
+                minDisponibilidade = minVal;
+                minTotemIndex = index;
+            }
+        });
+
+        if (minTotemIndex !== -1) {
+            filteredDatasets = [filteredDatasets[minTotemIndex]];
+        }
+    } else if (filtro === 'Maxima') {
+        let maxTotemIndex = -1;
+        let maxDisponibilidade = -Infinity;
+
+        disponibilidades.forEach((dispon, index) => {
+            const maxVal = Math.max(...dispon);
+            if (maxVal > maxDisponibilidade) {
+                maxDisponibilidade = maxVal;
+                maxTotemIndex = index;
+            }
+        });
+
+        if (maxTotemIndex !== -1) {
+            filteredDatasets = [filteredDatasets[maxTotemIndex]];
+        }
+    }
+
+    availabilityChart.data.datasets = filteredDatasets;
+    availabilityChart.update();
+
+    atualizarRegistros();
+}
+
+
+function atualizarGraficoPorAno() {
+    const ano = document.getElementById('selectAnoGrafico').value;
+    const mes = document.getElementById('selectMesGrafico').value;
+    const filtro = document.getElementById('selectTotemGrafico2').value;
+    if (ano && mes && filtro) {
+        console.log(`Atualizando gráfico para Ano: ${ano}, Mês: ${mes}, Filtro: ${filtro}`);
+        obterUptime(ano, mes, filtro);
+    }
+}
+
+function atualizarGraficoPorMes() {
+    const ano = document.getElementById('selectAnoGrafico').value;
+    const mes = document.getElementById('selectMesGrafico').value;
+    const filtro = document.getElementById('selectTotemGrafico2').value;
+    if (ano && mes && filtro) {
+        console.log(`Atualizando gráfico para Ano: ${ano}, Mês: ${mes}, Filtro: ${filtro}`);
+        obterUptime(ano, mes, filtro);
+    }
+}
+
+function atualizarGeral() {
+    const ano = document.getElementById('selectAnoGrafico').value;
+    const mes = document.getElementById('selectMesGrafico').value;
+    const filtro = document.getElementById('selectTotemGrafico2').value;
+    if (ano && mes && filtro) {
+        console.log(`Atualizando gráfico para Ano: ${ano}, Mês: ${mes}, Filtro: ${filtro}`);
+        obterUptime(ano, mes, filtro);
+    }
+}
+
+async function popularSelects() {
+    try {
+        const respostaAnos = await fetch("http://localhost:3333/api/anosDisponiveis");
+        const anosDisponiveis = await respostaAnos.json();
+
+        const selectAno = document.getElementById('selectAnoGrafico');
+        anosDisponiveis.forEach(ano => {
+            const option = document.createElement('option');
+            option.value = ano;
+            option.text = ano;
+            selectAno.add(option);
+        });
+
+        const respostaMeses = await fetch("http://localhost:3333/api/mesesDisponiveis/" + anosDisponiveis[0]);
+        const mesesDisponiveis = await respostaMeses.json();
+
+        const selectMes = document.getElementById('selectMesGrafico');
+        selectMes.innerHTML = ''; 
+
+        mesesDisponiveis.forEach(mes => {
+            const option = document.createElement('option');
+            option.value = mes;
+            option.text = mes;
+            selectMes.add(option);
+        });
+
+    } catch (error) {
+        console.error("Erro ao popular selects de anos e meses", error);
+    }
+}
+
+window.onload = function() {
+    popularSelects();
+    document.getElementById('selectAnoGrafico').addEventListener('change', atualizarGraficoPorAno);
+    document.getElementById('selectMesGrafico').addEventListener('change', atualizarGraficoPorMes);
+    document.getElementById('selectTotemGrafico2').addEventListener('change', atualizarGeral);
+};
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    obterAlertas();
+    obterUptime();
+    obterHorario();
+    obterTopAlertas();
+    carregarAnos();
+ 
+
+
+});
+
+function atualizarRegistros() {
+    const datasets = availabilityChart.data.datasets;
+    let registroMin = Infinity;
+    let registroMax = -Infinity;
+
+    datasets.forEach(dataset => {
+        dataset.data.forEach(valor => {
+            if (valor < registroMin) registroMin = valor;
+            if (valor > registroMax) registroMax = valor;
+        });
+    });
+
+    const slaTeste = document.querySelector('#registrosGrafico h3');
+    if (slaTeste) {
+        slaTeste.textContent = `Registro min: ${registroMin.toFixed(2)} | Registro max: ${registroMax.toFixed(2)}`;
+    }
+}
+
+let originalDatasets = null; 
+
+function atualizarGrafico2() {
+    if (!originalDatasets) {
+        originalDatasets = JSON.parse(JSON.stringify(availabilityChart.data.datasets));
+    }
+
+    availabilityChart.data.datasets = JSON.parse(JSON.stringify(originalDatasets));
+
+    const filtroSelecionado = document.getElementById('selectTotemGrafico2').value;
+    const datasets = availabilityChart.data.datasets;
+
+    let totemMenorMedia = null;
+    let totemMaiorMedia = null;
+    let menorMedia = Infinity;
+    let maiorMedia = -Infinity;
+
+    let menorRegistro = Infinity;
+    let maiorRegistro = -Infinity;
+
+    datasets.forEach((dataset) => {
+        const dados = dataset.data;
+        let soma = 0;
+
+        for (let i = 0; i < dados.length; i++) {
+            const valor = dados[i];
+            soma += valor;
+
+            if (valor < menorRegistro) menorRegistro = valor;
+            if (valor > maiorRegistro) maiorRegistro = valor;
+        }
+
+        const mediaAtual = soma / dados.length;
+
+        if (mediaAtual < menorMedia) {
+            menorMedia = mediaAtual;
+            totemMenorMedia = dataset;
+        }
+
+        if (mediaAtual > maiorMedia) {
+            maiorMedia = mediaAtual;
+            totemMaiorMedia = dataset;
+        }
+    });
+
+    if (filtroSelecionado === "Minima" && totemMenorMedia) {
+        availabilityChart.data.datasets = [totemMenorMedia];
+        menorRegistro = Math.min(...totemMenorMedia.data);
+        maiorRegistro = Math.max(...totemMenorMedia.data);
+    } else if (filtroSelecionado === "Maxima" && totemMaiorMedia) {
+        availabilityChart.data.datasets = [totemMaiorMedia];
+        menorRegistro = Math.min(...totemMaiorMedia.data);
+        maiorRegistro = Math.max(...totemMaiorMedia.data);
+    } else {
+        availabilityChart.data.datasets = [totemMaiorMedia];
+        menorRegistro = Math.min(...totemMaiorMedia.data);
+        maiorRegistro = Math.max(...totemMaiorMedia.data);
+    }
+
+    availabilityChart.update();
+
+    const slaTeste = document.querySelector('.slaTeste h3');
+    if (slaTeste) {
+        slaTeste.textContent = `Registro min: ${menorRegistro.toFixed(2)} | Registro max: ${maiorRegistro.toFixed(2)}`;
+    }
+}
+
+
+
+    function compararMinMax(){
+        const minimo = null
+        const maximo = null
+        
+
+        
+    }
+
+    window.onload = function(){
+        obterUptime();
+        atualizarGraficoPorMes();
+    }
+
+</script>
+</body>
+</html>

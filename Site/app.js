@@ -21,6 +21,11 @@ var dashRegressaoRouter = require("./src/routes/dashRegressao");
 var dashJoaoRouter = require("./src/routes/dashJoao");
 var alertasGerenteRouter = require("./src/routes/alertasGerente")
 var dashCerejoRouter = require("./src/routes/dashCerejo")
+const percentualAlertasRoutes = require("./src/routes/JV-ROTAS/JV-PercentualAlertasRoutes");
+const horaRoutes = require("./src/routes/JV-ROTAS/JV-HoraRota");
+const estaRoutes = require("./src/routes/JV-ROTAS/JV-EstabilidadeRota")
+const uptimeRoutes = require("./src/routes/JV-ROTAS/JV-UptimeRota");
+const alertaRotas = require("./src/routes/JV-ROTAS/JV-AlertasRotas")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +39,11 @@ app.use("/dashRegressao", dashRegressaoRouter);
 app.use("/dashJoao", dashJoaoRouter);
 app.use("/alertasGerente", alertasGerenteRouter);
 app.use("/dashCerejo", dashCerejoRouter);
+app.use("/api", percentualAlertasRoutes);
+app.use("/api", horaRoutes);
+app.use("/api", estaRoutes);
+app.use("/api", uptimeRoutes);
+app.use("/api", alertaRotas);
 
 app.listen(PORTA_APP, function () {
     console.log(`
