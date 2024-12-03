@@ -21,7 +21,7 @@ function cadastroTotem (nomeTotem, numSerie, fabricante, ano, companhia) {
 
 
 
-    var instrucaoSql = `INSERT INTO Totem (nome_totem, codigo_serie, fabricante, ano_totem, fkCompanhia) Values ('${nomeTotem}','${numSerie}','${fabricante}','${ano}','${companhia}')`;
+    var instrucaoSql = `INSERT INTO Totem (nome_totem, codigo_serie, fabricante, ano, fkCompanhia) Values ('${nomeTotem}','${numSerie}','${fabricante}','${ano}','${companhia}')`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -34,7 +34,7 @@ function verificarCodigoSeguranca(codSeg) {
                 WHEN chave_seguranca_gerente = '${codSeg}' THEN 'gerente'
                 ELSE null 
             END AS cargo
-        FROM Companhia 
+        FROM Companhia JOIN Operacao ON idCompanhia = fkCompanhia
         WHERE chave_seguranca_analista = '${codSeg}' OR chave_seguranca_gerente = '${codSeg}';
     `;
     return database.executar(instrucaoSql);
@@ -48,9 +48,29 @@ function cadastrar(idCompanhia, cargo, nome, email, senha) {
     return database.executar(instrucaoSql);
 }
 
+function cadastrarCompanhia(nomeFantasia, cnpj, email) {
+    const instrucaoSql = `
+        INSERT INTO Companhia (nome_fantasia, cnpj, email_comp)
+        VALUES ('${nomeFantasia}', '${cnpj}', '${email}')
+    `;
+    
+    return database.executar(instrucaoSql);
+}
+
+function cadastrarOperacao(idAeroporto, idCompanhia, chaveSegAnalista, chaveSegGerente) {
+    const instrucaoSql = `
+        INSERT INTO Operacao (fkAeroporto, fkCompanhia, chave_seguranca_analista, chave_seguranca_gerente)
+        VALUES ('${idAeroporto}', '${idCompanhia}', '${chaveSegAnalista}', '${chaveSegGerente}')
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     verificarCodigoSeguranca,
     cadastrar,
-    cadastroTotem
+    cadastroTotem,
+    cadastrarCompanhia,
+    cadastrarOperacao
 };

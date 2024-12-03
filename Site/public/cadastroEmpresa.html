@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro-GateWatch</title>
+    <link rel="shortcut icon" type="image/png" href="../Images/gwLogo_white.png">
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+    <!-- <meta http-equiv="refresh" content="3" /> -->
+    <meta name="keywords" content="navbar, responsive, HTML, CSS, JavaScript, nav" />
+    <meta name="author" content="Manikanta Vedula" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="../JavaScript/sessao.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="logo">
+            <img class="logoImg" src="Images/gwLogo_white.png" alt="">
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+        </ul>
+    </nav>
+
+    <div class="cad_espaco"></div>
+
+    <div class="cad_container painel-direito-ativo">
+        <!-- Sign Up -->
+        <div class="cad_container__form cad_container--logIn">
+            <form action="#" class="form" id="form1">
+                <h2 class="cad_form__title">Cadastrar Companhia</h2>
+                <input id="nomeCompanhia_input" class="cad_inp" type="text" placeholder="Nome">
+                <input id="cnpjCompanhia_input" class="cad_inp" type="text" placeholder="CNPJ">
+                <input id="emailCompanhia_input" class="cad_inp" type="email" placeholder="Email">
+                <input id="idAeroporto_input" class="cad_inp" type="text" placeholder="Identificação Aeroporto">
+                <input id="codSegCompanhiaG_input" class="cad_inp" type="text" placeholder="Chave gerente">
+                <input id="codSegCompanhiaA_input" class="cad_inp" type="text" placeholder="Chave analista">
+                <button type="button" class="cad_btn" onclick="cadastrarCompanhia()">Cadastrar</button>
+            </form>
+        </div>
+
+
+        <!-- Sign In -->
+        <!-- <div class="cad_container__form cad_container--cadastro">
+      <form action="#" class="form" id="form2">
+        <h2 class="cad_form__title">Login</h2>
+        <input id="emailLogin_input" type="email" placeholder="Email" class="cad_inp" />
+        <input id="senhaLogin_input" type="password" placeholder="Senha" class="cad_inp" />
+        <a href="#" class="cad_link">Esqueceu sua senha?</a>
+        <button onclick="entrar()" class="cad_btn">Login</button>
+      </form>
+    </div> -->
+
+        <!-- Error and Loading Cards -->
+        <div class="card_erro" id="cardErro" style="display: none; text-align: center; color: red;">
+            <span id="mensagem_erro"></span>
+        </div>
+        <div class="card_aguardar" id="div_aguardar" style="display: none; text-align: center; color: blue;">
+            <span>Aguarde...</span>
+        </div>
+
+        <!-- cad_sobreposicao -->
+        <div class="cad_container__cad_sobreposicao">
+            <div class="cad_sobreposicao">
+                <div class="cad_sobreposicao__panel cad_sobreposicao--esquerdo">
+                    <h5>Cadastre os funcionários</h5>
+                    <a href="cadastro.html"><button class="cad_btn" id="login">Cadastre-se</button></a>
+                </div>
+                <div class="cad_sobreposicao__panel cad_sobreposicao--right">
+                    <h5>Ainda não possui Login?</h5>
+                    <button class="cad_btn" id="cadastro">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cad_espaco"></div>
+
+    </section>
+</body>
+
+</html>
+
+
+<style>
+    :root {
+        /* COLORS */
+        --white: #e9e9e9;
+        --gray: #333;
+        --blue: #0367a6;
+        --lightblue: #008997;
+
+        /* RADII */
+        --button-radius: 0.7rem;
+
+        /* SIZES */
+        --max-width: 1080px;
+        --max-height: 600px;
+
+    }
+
+    body {
+        align-items: center;
+        background-color: var(--white);
+        display: grid;
+        place-items: center;
+    }
+</style>
+
+<script>
+
+    //   const logincad_Btn = document.getElementById("login");
+    //   const cadastrocad_Btn = document.getElementById("cadastro");
+    //   const Form1 = document.getElementById("form1");
+    //   const Form2 = document.getElementById("form2");
+    //   const cad_container = document.querySelector(".cad_container");
+
+    //   logincad_Btn.addEventListener("click", () => {
+    //     cad_container.classList.remove("painel-direito-ativo");
+    //   });
+
+    //   cadastrocad_Btn.addEventListener("click", () => {
+    //     cad_container.classList.add("painel-direito-ativo");
+    //   });
+
+    //   Form1.addEventListener("submit", (e) => e.preventDefault());
+    //   Form2.addEventListener("submit", (e) => e.preventDefault());
+
+    //   //Header
+    //   const menuSlide = () => {
+    //     const menuIcon = document.querySelector(".menu-icon");
+    //     const navLinks = document.querySelector(".nav-links");
+    //     const navLinksInner = document.querySelectorAll(".nav-links li");
+
+    //     //menu-icon click event
+    //     menuIcon.addEventListener("click", () => {
+    //       //toggle active class
+    //       navLinks.classList.toggle("menu-active");
+
+    //       //animate navLinks
+    //       navLinksInner.forEach((li, index) => {
+    //         if (li.style.animation) {
+    //           li.style.animation = "";
+    //         } else {//toggle for menu-icon animation
+    //           li.style.animation = `navLinkAnime 0.5s ease forwards ${index / 7 + 0.3
+    //             }s`;
+    //         }
+    //       });
+
+    //       //toggle for menu-icon animation
+    //       menuIcon.classList.toggle("span-anime");
+    //     });
+    //   };
+
+    //   menuSlide();
+
+    async function cadastrarCompanhia() {
+        var nomeCVar = document.getElementById('nomeCompanhia_input').value.trim();
+        var cnpjCVar = document.getElementById('cnpjCompanhia_input').value.trim();
+        var emailCVar = document.getElementById('emailCompanhia_input').value.trim();
+        var idAeroportoVar = document.getElementById('idAeroporto_input').value.trim();
+        var codSegCompanhiaGVar = document.getElementById('codSegCompanhiaG_input').value.trim();
+        var codSegCompanhiaAVar = document.getElementById('codSegCompanhiaA_input').value.trim();
+
+        // Validações
+        if (
+            !nomeCVar || !cnpjCVar || !emailCVar ||
+            !idAeroportoVar || !codSegCompanhiaGVar || !codSegCompanhiaAVar
+        ) {
+            mostrarErro("Todos os campos devem ser preenchidos.");
+            return;
+        }
+
+        if (nomeCVar.length <= 1) {
+            mostrarErro("O nome é muito curto.");
+            return;
+        }
+
+        if (!emailCVar.includes("@") || !emailCVar.includes(".")) {
+            mostrarErro("O email não é válido.");
+            return;
+        }
+
+        if (cnpjCVar.length !== 14 || isNaN(cnpjCVar)) {
+            mostrarErro("CNPJ inválido. Deve conter 14 números.");
+            return;
+        }
+
+
+        document.getElementById('div_aguardar').style.display = "block";
+
+        try {
+            const response = await fetch("/usuario/cadastroCompanhia", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeFantasiaCompanhia: nomeCVar,
+                    cnpjCompanhia: cnpjCVar,
+                    emailCompanhia: emailCVar,
+                    idAeroporto: idAeroportoVar,
+                    chaveSegAnalista: codSegCompanhiaAVar,
+                    chaveSegGerente: codSegCompanhiaGVar,
+                }),
+            });
+
+            console.log("Resposta do servidor:", response);
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Dados recebidos:", data);
+                mostrarSucesso("Companhia cadastrada com sucesso!");
+                document.getElementById('formCadastro').reset();
+            } else {
+                const erroTexto = await response.text();
+                console.error("Erro na resposta do servidor:", erroTexto);
+                mostrarErro(`Erro no cadastro: ${erroTexto}`);
+            }
+        } catch (error) {
+            console.error("Erro ao cadastrar companhia:", error.message);
+            mostrarErro("Erro ao realizar o cadastro. Tente novamente mais tarde.");
+        }
+
+        function mostrarErro(mensagem) {
+            document.getElementById('cardErro').style.display = "block";
+            document.getElementById('mensagem_erro').innerHTML = mensagem;
+            sumirMensagem();
+        }
+
+        function mostrarSucesso(mensagem) {
+            document.getElementById('cardErro').style.display = "block";
+            document.getElementById('mensagem_erro').style.color = "green";
+            document.getElementById('mensagem_erro').innerHTML = mensagem;
+        }
+
+        function sumirMensagem() {
+            setTimeout(() => {
+                document.getElementById('cardErro').style.display = "none";
+                document.getElementById('mensagem_erro').innerHTML = "";
+                document.getElementById('mensagem_erro').style.color = "red";
+            }, 5000);
+        }
+
+    }
+
+
+
+</script>
