@@ -13,4 +13,6 @@ router.post("/cadastroTotem", function (req, res) {
     usuarioController.cadastroTotemControler(req, res);
 }); 
 
+router.post("/cadastroCompanhia", usuarioController.cadastrarCompanhia);
+
 module.exports = router;

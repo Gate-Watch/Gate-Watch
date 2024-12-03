@@ -89,9 +89,40 @@ async function cadastrar(req, res) {
     }
 }
 
+async function cadastrarCompanhia(req, res) {
+    const {
+        nomeFantasiaCompanhia: nomeFantasia,
+        cnpjCompanhia: cnpj,
+        emailCompanhia: email,
+        idAeroporto,
+        chaveSegAnalista,
+        chaveSegGerente
+    } = req.body;
+
+    // Validação básica
+    if (!nomeFantasia || !cnpj || !email || !idAeroporto || !chaveSegAnalista || !chaveSegGerente) {
+        return res.status(400).send("Todos os campos devem ser preenchidos.");
+    }
+
+    try {
+        const resultCompanhia = await usuarioModel.cadastrarCompanhia(nomeFantasia, cnpj, email);
+        console.log("Companhia criada com sucesso:", resultCompanhia);
+        const idCompanhia = resultCompanhia.insertId;
+        console.log("ID da Companhia:", idCompanhia);
+    
+        await usuarioModel.cadastrarOperacao(idAeroporto, idCompanhia, chaveSegAnalista, chaveSegGerente);
+        res.json({ message: "Companhia e operação cadastradas com sucesso!" });
+    } catch (erro) {
+        console.error("Erro no cadastro da companhia:", erro);
+        res.status(500).send("Erro ao realizar o cadastro.");
+    }
+}
+
+
 module.exports = {
     autenticar,
     verificarCodigoSeguranca,
     cadastrar,
-    cadastroTotemControler
+    cadastroTotemControler,
+    cadastrarCompanhia
 };

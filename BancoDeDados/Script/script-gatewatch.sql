@@ -6,32 +6,26 @@ USE GateWatch;
 -- Criação da tabela Aeroporto
 CREATE TABLE Aeroporto(
     idAeroporto INT PRIMARY KEY AUTO_INCREMENT,
-    nome_aero VARCHAR(45) NOT NULL,
-    codigo_icao VARCHAR(4) NOT NULL,
-    codigo_iata VARCHAR(3)
+    nome_fantasia VARCHAR(45) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL
 );
 
 -- Criação da tabela Companhia
 CREATE TABLE Companhia(
     idCompanhia INT PRIMARY KEY AUTO_INCREMENT,
     nome_fantasia VARCHAR(45) NOT NULL,
-    razao_social VARCHAR(45) NOT NULL,
     cnpj VARCHAR(14) NOT NULL,
-    codigo_icao VARCHAR(4) NOT NULL,
-    codigo_iata VARCHAR(3),
-    email_comp VARCHAR(45) NOT NULL,
-    telefone_comp VARCHAR(11) NOT NULL,
-    chave_seguranca_analista VARCHAR(45) NOT NULL,
-    chave_seguranca_gerente VARCHAR(45) NOT NULL
+    email_comp VARCHAR(45) NOT NULL
 );
 
-select * from Companhia;
 
 -- Criação da tabela Operacao
 CREATE TABLE Operacao (
     idOperacao INT AUTO_INCREMENT,
     fkAeroporto INT,
     fkCompanhia INT,
+    chave_seguranca_analista VARCHAR(45) NOT NULL,
+    chave_seguranca_gerente VARCHAR(45) NOT NULL,
     PRIMARY KEY(idOperacao, fkAeroporto, fkCompanhia),
     FOREIGN KEY(fkAeroporto) REFERENCES Aeroporto(idAeroporto),
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
@@ -49,13 +43,25 @@ CREATE TABLE Funcionario(
     CONSTRAINT chkCargo CHECK(cargo IN('Gerente', 'Analista'))
 );
 
+select * from Companhia join Operacao on idCompanhia = fkCompanhia;
 select * from Funcionario;
+
+SELECT idCompanhia, 
+            CASE 
+                WHEN chave_seguranca_analista = '1A2B3C4D5E' THEN 'analista'
+                WHEN chave_seguranca_gerente = 'A1B2C3D4E5' THEN 'gerente'
+                ELSE null 
+            END AS cargo
+        FROM Companhia JOIN Operacao on idCompanhia = fkCompanhia
+        WHERE chave_seguranca_analista = '1A2B3C4D5E' OR chave_seguranca_gerente = 'A1B2C3D4E5';
 
 -- Criação da tabela Totem
 CREATE TABLE Totem(
 	idTotem int primary key auto_increment,
     nome_totem varchar(100),
-    codigo_serie varchar(100),
+    codigo_serie VARCHAR(100),
+    fabricante VARCHAR(100),
+    ano YEAR,
     fkCompanhia INT,
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
 );
@@ -92,20 +98,21 @@ CREATE TABLE Desempenho(
 
 -- Criação da tabela alertas
 CREATE TABLE Alerta (
-    idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    idAlerta INT AUTO_INCREMENT,
     dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     componente VARCHAR(45),
     medida DOUBLE,
     statusTotem varchar(45),
     fkTotem int,
+    PRIMARY KEY (idAlerta, fkTotem),
     FOREIGN KEY (fkTotem) REFERENCES Totem(idTotem),
     CONSTRAINT chkComponente CHECK(componente IN('cpu', 'memoria', 'disco'))
 );
 
-select * from Alerta;
+
 
 CREATE TABLE Processos (
-    id INT AUTO_INCREMENT PRIMARY KEY, 
+    id INT AUTO_INCREMENT, 
     pId INT,                            
     nomeProcesso VARCHAR(45),
     cpu_percent DECIMAL(5,2),
@@ -113,6 +120,7 @@ CREATE TABLE Processos (
     disk_mb DECIMAL(10,2),
     dataProcesso DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, 
     fkTotem INT,
+    PRIMARY KEY (id, fkTotem),
     FOREIGN KEY (fkTotem) REFERENCES Totem(idTotem)
 );
 
@@ -122,23 +130,22 @@ select * from Processos;
 
 truncate table Processos;
 
--- Inserção de dados na tabela Companhia
-INSERT INTO Companhia VALUES (DEFAULT, 'Azul', 'AZUL LINHAS AEREAS BRASILEIRAS S.A.', '12345678910111', 'AZU', 'AD', 'azul@azulairlines.com', '11989898989', '1A2B3C4D5E', 'A1B2C3D4E5');
 
 -- Inserção de dados na tabela Aeroporto
 INSERT INTO Aeroporto VALUES 
-    (DEFAULT, 'Aeroporto Internacional de Guarulhos', 'SBGR', 'GRU'),
-    (DEFAULT, 'Aeroporto de São Paulo/Congonhas', 'SBSP', 'CGH');
+    (DEFAULT, 'Aeroporto de São Paulo/Congonhas', '12345678910111'),
+    (DEFAULT, 'Aeroporto Internacional de Guarulhos', '11101987654321');
 
--- Inserção de dados na tabela Operacao
-INSERT INTO Operacao VALUES(DEFAULT, 1, 1), (DEFAULT, 2, 1);
+    select * from Aeroporto;
+    select * from Companhia;
+
 
 -- Inserção de dados na tabela Totem
 INSERT INTO Totem VALUES
-    (1, true, 'Modelo A', 1),
-    (2, true, 'Modelo B', 1),
-    (3, true, 'Modelo C', 1);
+    (default, 'Totem 2', '5678', 'Dell', '2022', 1),
+    (default, 'Totem 3', '9123', 'Dell', 2015, 1);
 
+select * from Totem;
 
 DELIMITER //
 CREATE PROCEDURE SimularDesempenho2Horas()
@@ -154,7 +161,6 @@ BEGIN
     DECLARE disk_total DOUBLE;
     DECLARE disk_perc DOUBLE;
     DECLARE fkTotem INT;
-
 
     WHILE dia <= 21 DO
         SET hora = 0;
@@ -225,9 +231,9 @@ select cpu_usage, dtHora from desempenho where fkTotem = 3;
 
 
 
-
 select * from Alerta;
-select * from movimentacao;
+select * from desempenho;
+select * from processos;
 
 CREATE TABLE movimentacao (
 idMovimentacao int primary key auto_increment,
@@ -260,21 +266,20 @@ select * from movimentacao;
 
 
 SELECT
-    mes, 
-    passageirosAzul, 
-    COUNT(idAlerta) AS quantidadeAlertas
+    movimentacao.mes, 
+    movimentacao.passageirosAzul, 
+    COUNT(Alerta.idAlerta) AS quantidadeAlertas
 FROM
     movimentacao 
 LEFT JOIN
     Alerta 
-    ON MONTH(dtAlerta) = numMes AND YEAR(dtAlerta) = ano
+    ON MONTH(Alerta.dtAlerta) = movimentacao.numMes AND YEAR(Alerta.dtAlerta) = movimentacao.ano 
+JOIN Totem
+	ON idTotem = fkTotem
+JOIN Companhia 
+	ON idCompanhia = fkCompanhia
+WHERE fkCompanhia = 1
 GROUP BY
-    mes, ano, passageirosAzul, numMes
+    movimentacao.mes, movimentacao.ano, movimentacao.passageirosAzul, movimentacao.numMes
 ORDER BY
-    numMes;
-
-
-
-
-
-
+    movimentacao.numMes;
