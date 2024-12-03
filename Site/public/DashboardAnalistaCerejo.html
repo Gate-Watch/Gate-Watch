@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Métricas Analista - GateWatch</title>
-    <link rel="stylesheet" href="../CSS/styleDashboards.css">
+    <link rel="stylesheet" href="CSS/dashboardCerejo.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-wordcloud"></script>
@@ -22,8 +22,8 @@
                 <a href="index.html">
                     <div class="box">HOME</div>
                 </a>
-                <a href="dashboardAnalistaMetricas.html">
-                    <div class="box" style="background-color: #41446877;">DASHBOARD</div>
+                <a href="../public/DashboardAnalistaCerejo.html">
+                    <div class="box">DASHBOARD</div>
                 </a>
                 <a href="dashboardAnalistaRegressao.html">
                     <div class="box">PREVISÕES</div>
@@ -43,7 +43,17 @@
                     <option value="toten3">TÓTEM 3</option>
                 </select>
             </div>
+
             <div class="blocoTop">
+                <div class="frequencia">
+                    <div class="titulo2">
+                        <div class="bar"></div>Frequência de processos
+                    </div>
+                    <div id="chart2"></div>
+                </div>
+            </div>
+
+            <div class="blocoBottom">
                 <div class="nuvem">
                     <div class="titulo1">
                         <div class="bar"></div>Nuvem de processos
@@ -54,15 +64,6 @@
                     </div>
                 </div>
 
-                <div class="frequencia">
-                    <div class="titulo2">
-                        <div class="bar"></div>Frequência de processos
-                    </div>
-                    <div id="chart2"></div>
-                </div>
-            </div>
-
-            <div class="blocoBottom">
                 <div class="projecao">
                     <div class="titulo3">
                         <div class="bar"></div>Projeção da execução de processos
@@ -79,12 +80,12 @@
             try {
                 const response = await fetch('/dashCerejo/frequencia');
                 const data = await response.json();
-    
+
                 const scatterData = data.map(item => ({
                     x: item.nomeProcesso,
                     y: item.frequencia
                 }));
-    
+
                 const ctxScatter = document.getElementById('chart').getContext('2d');
                 new Chart(ctxScatter, {
                     type: 'scatter',
@@ -120,31 +121,31 @@
                 console.error('Erro ao carregar dados do Scatter Chart:', error);
             }
         }
-    
+
         // Fetch e atualização do Apex Bar Chart
         async function updateApexChart() {
             try {
                 const response = await fetch('/dashCerejo/frequencia');
                 const data = await response.json();
-    
+
                 const seriesData = data.map(item => ({
                     x: item.nomeProcesso,
                     y: item.frequencia,
                     goals: [{
                         name: 'Expected',
-                        value: item.frequencia + 50, // Exemplo de valor esperado
+                        value: item.frequencia + 50,
                         strokeHeight: 5,
                         strokeColor: '#775DD0'
                     }]
                 }));
-    
+
                 const apexOptions = {
                     series: [{
                         name: 'Frequência Atual',
                         data: seriesData
                     }],
                     chart: {
-                        height: 400,
+                        height: 320,
                         type: 'bar'
                     },
                     plotOptions: {
@@ -161,59 +162,100 @@
                         }
                     }
                 };
-    
+
                 const apexChart = new ApexCharts(document.querySelector("#chart2"), apexOptions);
                 apexChart.render();
             } catch (error) {
                 console.error('Erro ao carregar dados do Apex Bar Chart:', error);
             }
         }
-    
-        // Fetch e atualização do WordCloud Chart
+
+        // WordCloud Chart - Inclusão
         async function updateWordCloudChart() {
-        try {
-            const response = await fetch('/dashCerejo/cpu');
-            const data = await response.json();
+            try {
+                // Chamar a API que você criou no backend
+                const response = await fetch('/dashCerejo/cpu');  // Endereço da API
+                const data = await response.json();
 
-            // Validando e limitando os dados
-            const labels = data.slice(0, 20).map(item => item.nomeProcesso); // Limite de 20 palavras
-            const weights = data.slice(0, 20).map(item => Math.max(parseFloat(item.total_cpu), 1)); // Evitar valores muito pequenos ou negativos
-
-            // Criando o gráfico WordCloud
-            const ctxWordCloud = document.getElementById('chart3').getContext('2d');
-            const wordCloudChart = new Chart(ctxWordCloud, {
-                type: 'wordCloud',
-                data: {
-                    labels,
-                    datasets: [{
-                        label: 'Uso de CPU',
-                        data: weights
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    layout: {
-                        padding: { top: 10, bottom: 10 }
-                    }
+                // Verifique se a resposta possui dados válidos
+                if (data.length === 0) {
+                    console.error('Nenhum dado para gerar a nuvem de palavras');
+                    return;
                 }
-            });
 
-            wordCloudChart.update();
-        } catch (error) {
-            console.error('Erro ao carregar dados do WordCloud Chart:', error);
+                // Normalizando os valores para um intervalo de 10 a 50 (ajusta o tamanho das fontes)
+                const maxValue = Math.max(...data.map(item => parseFloat(item.total_cpu)));
+                const minValue = Math.min(...data.map(item => parseFloat(item.total_cpu)));
+
+                // Verificar se os valores de minValue e maxValue são diferentes
+                if (maxValue === minValue) {
+                    console.error('Não há variação suficiente nos dados para gerar uma Word Cloud significativa');
+                    return;
+                }
+
+                const normalizedData = data.map(item => ({
+                    label: item.nomeProcesso,
+                    value: ((parseFloat(item.total_cpu) - minValue) / (maxValue - minValue)) * 40 + 10 // Intervalo 10-50
+                }));
+
+                // Limitando os dados aos 20 elementos mais relevantes
+                const limitedData = normalizedData.slice(0, 20);
+
+                // Extraindo labels e valores normalizados
+                const labels = limitedData.map(item => item.label);
+                const weights = limitedData.map(item => item.value);
+
+                // Gerar cores nos tons de azul, violeta e preto
+                const colors = labels.map(() => {
+                    const hue = Math.random() * 240 + 180; // Tons entre azul (180°) e violeta (240°)
+                    const saturation = 50 + Math.random() * 30; // Saturação entre 50% e 80%
+                    const lightness = 30 + Math.random() * 40; // Luminosidade entre 30% e 70%
+                    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                });
+
+                // Criando o gráfico WordCloud
+                const ctxWordCloud = document.getElementById('chart3').getContext('2d');
+                const wordCloudChart = new Chart(ctxWordCloud, {
+                    type: 'wordCloud',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: 'Uso de CPU (Normalizado)',
+                            data: weights,
+                            color: colors // Aplica as cores geradas
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        layout: {
+                            padding: { top: 5, bottom: 5 } // Margens menores
+                        },
+                        elements: {
+                            wordCloud: {
+                                minFontSize: 10, // Fonte mínima
+                                maxFontSize: 50, // Fonte máxima
+                                aspectRatio: 1 // Mantém o layout quadrado
+                            }
+                        }
+                    }
+                });
+
+                wordCloudChart.update();
+            } catch (error) {
+                console.error('Erro ao carregar dados do WordCloud Chart:', error);
+            }
         }
-    }
-    
-        // Chamada das funções de atualização
+
+
+        // Chamadas das funções
         updateScatterChart();
         updateApexChart();
         updateWordCloudChart();
     </script>
-        
 
 </body>
 

@@ -138,7 +138,78 @@ INSERT INTO Totem VALUES
     (1, true, 'Modelo A', 1),
     (2, true, 'Modelo B', 1),
     (3, true, 'Modelo C', 1);
+    
+-- Criar uma procedure para inserir 1000 registros na tabela Processos
+DELIMITER $$
+CREATE PROCEDURE InserirProcessos()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE nomeProcesso VARCHAR(45);
+    DECLARE pId INT;
+    DECLARE cpu_percent DECIMAL(5,2);
+    DECLARE memory_mb DECIMAL(10,2);
+    DECLARE disk_mb DECIMAL(10,2);
+    DECLARE fkTotem INT;
 
+    WHILE i <= 1000 DO
+        -- Gerar dados aleatórios para os processos
+        SET nomeProcesso = CASE FLOOR(1 + (RAND() * 5)) -- Gera um número aleatório entre 1 e 5
+            WHEN 1 THEN 'Chrome'
+            WHEN 2 THEN 'Python'
+            WHEN 3 THEN 'NodeJS'
+            WHEN 4 THEN 'Photoshop'
+            WHEN 5 THEN 'Opera GX'
+            WHEN 6 THEN 'Valorant'
+            WHEN 7 THEN 'League Of Legends'
+            WHEN 8 THEN 'Microsoft Edge'
+            WHEN 9 THEN 'Counter Strike'
+            WHEN 10 THEN 'Visual Studio Code'
+            ELSE 'Slack' 
+        END;
+        SET pId = CASE nomeProcesso
+            WHEN 'Chrome' THEN 101
+            WHEN 'Python' THEN 102
+            WHEN 'NodeJS' THEN 103
+            WHEN 'Photoshop' THEN 104
+            WHEN 'Opera GX' THEN 105
+            WHEN 'Valorant' THEN 106
+            WHEN 'League Of Legends' THEN 107
+            WHEN 'Microsoft Edge' THEN 108
+            WHEN 'Counter Strike' THEN 109
+            WHEN 'Visual Studio Code' THEN 110
+            ELSE 111
+        END;
+
+        SET cpu_percent = ROUND((RAND() * 65) + 15, 1); -- CPU entre 15% e 80%
+        SET memory_mb = ROUND(((RAND() * 65) + 15) * 1024, 1); -- Memória total entre 15GB e 80GB, convertida para MB
+        SET disk_mb = ROUND(((RAND() * 600) + 200) * 1024, 1); -- Disco total entre 200GB e 800GB, convertida para MB
+
+        -- Associar a um Totem aleatório
+        SET fkTotem = FLOOR(1 + (RAND() * 3)); -- Gera valores entre 1 e 4
+
+        -- Inserir na tabela
+        INSERT INTO Processos (pId, nomeProcesso, cpu_percent, memory_mb, disk_mb, fkTotem)
+        VALUES (pId, nomeProcesso, cpu_percent, memory_mb, disk_mb, fkTotem);
+
+        SET i = i + 1;
+    END WHILE;
+END $$
+DELIMITER ;
+
+-- Chamar a procedure para inserir os dados
+CALL InserirProcessos();
+
+SELECT nomeProcesso, COUNT(*) AS frequencia
+FROM Processos
+GROUP BY nomeProcesso
+ORDER BY frequencia DESC;
+
+SELECT nomeProcesso, SUM(cpu_percent) AS total_cpu
+FROM Processos
+GROUP BY nomeProcesso
+ORDER BY total_cpu DESC;
+
+select * from Processos;
 
 DELIMITER //
 CREATE PROCEDURE SimularDesempenho2Horas()
@@ -213,22 +284,6 @@ select cpu_usage, dtHora from desempenho where fkTotem = 1;
 select cpu_usage, dtHora from desempenho where fkTotem = 2;
 select cpu_usage, dtHora from desempenho where fkTotem = 3;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-select * from Alerta;
-select * from movimentacao;
-
 CREATE TABLE movimentacao (
 idMovimentacao int primary key auto_increment,
 mes varchar(100),
@@ -243,8 +298,6 @@ mesSigla varchar(3),
 numMes int
 );
 
-drop table movimentacao;
-
 ALTER TABLE movimentacao CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\dadosAgrupadosMesWC.csv'
@@ -257,7 +310,6 @@ IGNORE 1 ROWS
 (mes, icao, aerodromo, municipio, ano, tipoVoo, totalPassageiros, passageirosAzul, mesSigla, numMes);
 
 select * from movimentacao;
-
 
 SELECT
     mes, 
@@ -273,7 +325,7 @@ GROUP BY
 ORDER BY
     numMes;
 
-
+select * from Processos;
 
 
 
