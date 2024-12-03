@@ -151,7 +151,7 @@
                             <canvas id="alertPercentageChart" width="700" height="150"></canvas>
                         </div>
                         <div class="slaTeste2">
-                            <h4>CPU: | RAM: | DISCO: </h4>
+                            <h4>CPU: | RAM:  DISCO: </h4>
                         </div>
                     </div>
                     
@@ -615,7 +615,7 @@ function atualizarHorario(horario) {
         const ram = porcentagens[1] && !isNaN(Number(porcentagens[1])) ? Number(porcentagens[1]).toFixed(2) : 'N/A';
         const disco = porcentagens[2] && !isNaN(Number(porcentagens[2])) ? Number(porcentagens[2]).toFixed(2) : 'N/A';
         
-        cpuElemento.textContent = `CPU: ${cpu}% | RAM: ${ram}% | DISCO: ${disco}%`;
+        cpuElemento.textContent = `CPU: ${cpu}% | RAM: ${ram}%  DISCO: ${disco}%`;
     }
 }
 
