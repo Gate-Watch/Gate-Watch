@@ -282,6 +282,8 @@ window.onload = function() {
 
 
 
+
+
     async function carregarAnoMesRecentes() {
     try {
         const resposta = await fetch('/api/anoMesMaisRecente');
@@ -329,25 +331,42 @@ window.onload = function() {
 
 
 
+const meses = {
+    1: "Janeiro",
+    2: "Fevereiro",
+    3: "Março",
+    4: "Abril",
+    5: "Maio",
+    6: "Junho",
+    7: "Julho",
+    8: "Agosto",
+    9: "Setembro",
+    10: "Outubro",
+    11: "Novembro",
+    12: "Dezembro"
+};
+
 async function carregarMeses(ano) {
     try {
         const response = await fetch(`/api/meses/${ano}`);
-        const meses = await response.json();
+        const mesesDisponiveis = await response.json();
 
         const selectMes = document.getElementById('selectMesGrafico');
         selectMes.innerHTML = ''; 
 
-        meses.forEach(mes => {
+        mesesDisponiveis.forEach(mesObj => {
+            const mesNumero = mesObj.mes; 
             const option = document.createElement('option');
-            option.value = mes.mes;
-            option.textContent = mes.mes;
+            option.value = mesNumero; 
+            option.textContent = meses[mesNumero]; 
             selectMes.appendChild(option);
         });
+
+        console.log("Meses adicionados ao select.");
     } catch (error) {
         console.error("Erro ao carregar meses disponíveis:", error);
     }
 }
-
 
 
 async function atualizarGraficoPorMes() {
