@@ -18,7 +18,6 @@ async function totenAlertas5(req, res) {
     }
 }
 
-
 module.exports = {
     totenAlertas5
 };

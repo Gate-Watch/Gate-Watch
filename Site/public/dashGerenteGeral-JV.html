@@ -134,7 +134,7 @@
                     <div class="boxRankingAlertas">
                         <div class="boxTitulo">ALERTAS TOTEM</div>
                         <div class="boxQtd">
-                            <h3>IDENTIFICAÇÃO</h3>
+                            <h3>CÓDIGO DE SÉRIE</h3>
                             <h3>|</h3>
                             <h3>QUANTIDADE</h3>
                         </div>
@@ -403,30 +403,20 @@ async function atualizarGraficoPorAno() {
     }
 }
 
-    async function obterTopAlertas(){
-        try {
-            const resposta = await fetch('http://localhost:3333/api/top5')
-            console.log("Reposta:", resposta)
-
-            if(!resposta.ok){
-                const textoerro = await resposta.text()
-                console.erro("erro na api:", resposta.status, resposta.statusText, textoerro)
-                return
-            }
-
-            const dados = await resposta.json()
-            console.log("Dados recebidos", dados)
-
-            if(dados){
-                console.log("Top alertas:", dados)
-                atualizarAlertas(dados)
-            }else {
-                console.error("Nenhum totem tem alerta")
-            }
-        }catch (error){
-            console.error("Erro aoo obter top 5", error)
+async function obterTopAlertas() {
+    try {
+        const resposta = await fetch('http://localhost:3333/api/top5');
+        if (!resposta.ok) {
+            console.error("Erro na API:", resposta.status, await resposta.text());
+            return;
         }
+        const dados = await resposta.json();
+        atualizarAlertas(dados);
+    } catch (error) {
+        console.error("Erro ao obter os Top 5 alertas:", error);
     }
+}
+
 
 
 
@@ -476,15 +466,11 @@ async function obterAlertas() {
     }
 }
 
-
-
 function atualizarAlertas(dados) {
     const boxRankingTotens = document.querySelector('.boxRankingTotens');
-
-    boxRankingTotens.innerHTML = '';
+    boxRankingTotens.innerHTML = ''; 
 
     if (!dados || dados.length === 0) {
-        console.warn('Nenhum dado de alerta encontrado para exibir.');
         const mensagem = document.createElement('div');
         mensagem.textContent = 'Nenhum alerta encontrado';
         mensagem.style.textAlign = 'center';
@@ -492,12 +478,12 @@ function atualizarAlertas(dados) {
         return;
     }
 
-    dados.forEach(({ fkTotem, totalAlertas }) => {
+    dados.forEach(({ codigo_serie, totalAlertas }) => {
         const boxTotem = document.createElement('div');
-        boxTotem.classList.add('boxTotem'); 
+        boxTotem.classList.add('boxTotem');
 
         const totemNome = document.createElement('h3');
-        totemNome.textContent = fkTotem;
+        totemNome.textContent = codigo_serie;
 
         const alertasQtd = document.createElement('h3');
         alertasQtd.textContent = totalAlertas;
@@ -507,6 +493,7 @@ function atualizarAlertas(dados) {
         boxRankingTotens.appendChild(boxTotem);
     });
 }
+
 
 
 
