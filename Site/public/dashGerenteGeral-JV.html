@@ -107,7 +107,7 @@
         <div class="boxIntGrafico">
             <canvas id="availabilityChart" width="1220" height="400"></canvas>
         </div>
-        <div id="registrosGrafico" class="slaTeste"><h3>Registro min: | Registro max:</h3></div>
+        <div id="registrosGrafico" class="slaTeste"><h3>Registro Minímo: | Registro Máximo:</h3></div>
 
     </div>
 </div>
@@ -820,7 +820,7 @@ function atualizarRegistros() {
 
     const slaTeste = document.querySelector('#registrosGrafico h3');
     if (slaTeste) {
-        slaTeste.textContent = `Registro min: ${registroMin.toFixed(2)} | Registro max: ${registroMax.toFixed(2)}`;
+        slaTeste.textContent = `Registro Mínimo: ${registroMin.toFixed(2)} | Registro Máximo: ${registroMax.toFixed(2)}`;
     }
 }
 
