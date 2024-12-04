@@ -836,6 +836,7 @@ a {
 
 
 
+
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 200px; 
@@ -853,10 +854,16 @@ a {
     transition: opacity 0.3s;
 }
 
+
+
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
     left: -20px;
+}
+
+#tooltip:hover .tooltiptext{
+    left: -50px;
 }
 
 .boxConteudo {
