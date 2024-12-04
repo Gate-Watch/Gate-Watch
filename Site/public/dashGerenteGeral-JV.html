@@ -42,7 +42,7 @@
                         <div class="box">
                             <div class="boxIntTitulo">ESTABILIDADE GERAL DA CPU
                                 <span class="tooltip">ⓘ
-                                    <span class="tooltiptext">Indicador que reflete a percentual médio de uso de CPU de todos os totens, baseado em históricos de uso.</span>
+                                    <span class="tooltiptext">Indicador que reflete as flutuações percentuais de uso de CPU de todos os totens, baseado em históricos de uso.</span>
                                 </span>
                             </div>
                             <div class="indicadorEstado" id="indicadorCpu"></div>
@@ -51,7 +51,7 @@
                         <div class="box">
                             <div class="boxIntTitulo">ESTABILIDADE GERAL DE RAM
                                 <span class="tooltip">ⓘ
-                                    <span class="tooltiptext">Indicador que reflete a percentual médio de uso de RAM de todos os totens, baseado em históricos de uso.</span>
+                                    <span class="tooltiptext">Indicador que reflete as flutuações percentuais de uso de RAM de todos os totens, baseado em históricos de uso.</span>
                                 </span>
                             </div>
                             <div class="indicadorEstado" id="indicadorRam"></div>
@@ -60,7 +60,7 @@
                         <div class="box">
                             <div class="boxIntTitulo">ESTABILIDADE GERAL DO DISCO
                                 <span class="tooltip">ⓘ
-                                    <span class="tooltiptext">Indicador que reflete a percentual médio de uso do DISCO de todos os totens, baseado em históricos de uso.</span>
+                                    <span class="tooltiptext">Indicador que reflete as flutuações percentuais uso do DISCO de todos os totens, baseado em históricos de uso.</span>
                                 </span>
                             </div>
                             <div class="indicadorEstado" id="indicadorDisco"></div>
@@ -512,33 +512,36 @@ function atualizarAlertas(dados) {
 
 
 
-
 function atualizarStatus(dados) {
-
     const data = dados[0]; 
 
     const componentes = [
-        { nome: "Cpu", valor: data.media_cpu_usage },
-        { nome: "Ram", valor: data.media_memory_usage },
-        { nome: "Disco", valor: data.media_disk_usage }
+        { nome: "Cpu", media: data.media_cpu_usage, desvio: data.desvio_padrao_cpu_usage },
+        { nome: "Ram", media: data.media_memory_usage, desvio: data.desvio_padrao_memory_usage },
+        { nome: "Disco", media: data.media_disk_usage, desvio: data.desvio_padrao_disk_usage }
     ];
 
-    componentes.forEach(({ nome, valor }) => {
-        if (valor === undefined) {
-            console.error(`Dados inválidos para componente: ${nome}, valor: ${valor}`);
+    componentes.forEach(({ nome, media, desvio }) => {
+        if (media === undefined || desvio === undefined) {
+            console.error(`Dados inválidos para componente: ${nome}`);
             return;
+        }
+
+        const porcentagemDesvio = (desvio / media) * 100;
+
+        let cor;
+        if (porcentagemDesvio < 10) {
+            cor = "#2E7D32"; 
+        } else if (porcentagemDesvio >= 10 && porcentagemDesvio <= 25) {
+            cor = "#FFA726"; 
+        } else {
+            cor = "#D32F2F"; 
         }
 
         const indicador = document.getElementById(`indicador${nome}`);
         if (indicador) {
-            if (valor < 50) {
-                indicador.style.backgroundColor = "#2E7D32"; 
-            } else if (valor >= 50 && valor <= 80) {
-                indicador.style.backgroundColor = "#FFA726";
-            } else {
-                indicador.style.backgroundColor = "#D32F2F"; 
-            }
-        } 
+            indicador.style.backgroundColor = cor;
+        }
     });
 }
 
