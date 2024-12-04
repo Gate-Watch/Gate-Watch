@@ -114,7 +114,7 @@ function gerarRegressaoAlertasXPassageiros(fkCompanhia) {
         	ON idCompanhia = fkCompanhia
         WHERE fkCompanhia = '${fkCompanhia}'
         GROUP BY
-            mes, ano, passageirosAzul, numMes
+            mes, movimentacao.ano, passageirosAzul, numMes
         ORDER BY
             numMes;
     `;
