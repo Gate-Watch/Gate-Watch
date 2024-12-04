@@ -15,7 +15,7 @@ body {
 }
 .conteudoPagina {
     display: flex;
-    background-color: #d9d9d9;
+    background-color: #CFCFCF;
     width: 100vw;
     height: 100vh;
 }
@@ -120,6 +120,7 @@ a {
     padding-left: 3%;
     margin-top: -5px; 
     margin-right: 0;
+    margin-left: 7px;
 }
 
 
