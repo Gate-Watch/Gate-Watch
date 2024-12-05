@@ -67,7 +67,7 @@
                     <div class="titulo3">
                         <div class="bar"></div>Projeção da execução
                     </div>
-                    <canvas id="chart"></canvas>
+                    <div id="scatterChart"></div>
                 </div>
 
                 <div class="adicionais">
@@ -90,55 +90,36 @@
     </div>
 
     <script>
-        // Fetch e atualização do Scatter Chart
-        async function updateScatterChart() {
-            try {
-                const response = await fetch('/dashCerejo/frequencia');
-                const data = await response.json();
-
-                const scatterData = data.map(item => ({
-                    x: item.nomeProcesso,
-                    y: item.frequencia
-                }));
-
-                const ctxScatter = document.getElementById('chart').getContext('2d');
-                new Chart(ctxScatter, {
+        // Scatter Chart (ApexCharts)
+        function renderScatterChart() {
+            const options = {
+                series: [{
+                    name: "SAMPLE A",
+                    data: [[16.4, 5.4], [21.7, 2], [25.4, 3], [19, 2], [10.9, 1], [13.6, 3.2], [10.9, 7.4], [10.9, 0]]
+                }, {
+                    name: "SAMPLE B",
+                    data: [[36.4, 13.4], [1.7, 11], [5.4, 8], [9, 17], [1.9, 4], [3.6, 12.2], [1.9, 14.4], [1.9, 9]]
+                }],
+                chart: {
+                    height: 280,
                     type: 'scatter',
-                    data: {
-                        datasets: [{
-                            label: 'Frequência de Processos',
-                            data: scatterData,
-                            backgroundColor: 'rgb(255, 99, 132)'
-                        }]
-                    },
-                    options: {
-                        responsive: false,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'category',
-                                position: 'bottom',
-                                title: {
-                                    display: true,
-                                    text: 'Processamento'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Frequência'
-                                }
-                            }
-                        }
+                    zoom: { enabled: true, type: 'xy' }
+                },
+                xaxis: {
+                    tickAmount: 10,
+                    labels: {
+                        formatter: function (val) { return parseFloat(val).toFixed(1) }
                     }
-                });
-            } catch (error) {
-                console.error('Erro ao carregar dados do Scatter Chart:', error);
-            }
+                },
+                yaxis: { tickAmount: 7 }
+            };
+
+            const scatterChart = new ApexCharts(document.querySelector("#scatterChart"), options);
+            scatterChart.render();
         }
 
-        // Fetch e atualização do Apex Bar Chart
-        async function updateApexChart() {
+        // Bar Chart (ApexCharts)
+        async function renderBarChart() {
             try {
                 const response = await fetch('/dashCerejo/frequencia');
                 const data = await response.json();
@@ -154,88 +135,56 @@
                     }]
                 }));
 
-                const apexOptions = {
+                const options = {
                     series: [{
                         name: 'Frequência Atual',
                         data: seriesData,
                     }],
-                    chart: {
-                        height: 170,
-                        type: 'bar'
-                    },
-                    plotOptions: {
-                        bar: {
-                            columnWidth: '60%'
-                        }
-                    },
+                    chart: { height: 170, type: 'bar' },
+                    plotOptions: { bar: { columnWidth: '60%' } },
                     colors: ['darkblue'],
-                    legend: {
-                        show: true,
-                        customLegendItems: ['Frequência Atual'],
-                        markers: {
-                            fillColors: ['#00E396', '#775DD0']
-                        }
-                    }
+                    legend: { show: true }
                 };
 
-                const apexChart = new ApexCharts(document.querySelector("#chart2"), apexOptions);
-                apexChart.render();
+                const barChart = new ApexCharts(document.querySelector("#chart2"), options);
+                barChart.render();
             } catch (error) {
-                console.error('Erro ao carregar dados do Apex Bar Chart:', error);
+                console.error('Erro ao carregar dados do Bar Chart:', error);
             }
         }
 
-        // WordCloud Chart - Inclusão
-        async function updateWordCloudChart() {
+        // Word Cloud (Chart.js)
+        async function renderWordCloud() {
             try {
-                // Chamar a API que você criou no backend
-                const response = await fetch('/dashCerejo/cpu');  // Endereço da API
+                const response = await fetch('/dashCerejo/cpu');
                 const data = await response.json();
 
-                // Verifique se a resposta possui dados válidos
-                if (data.length === 0) {
-                    console.error('Nenhum dado para gerar a nuvem de palavras');
-                    return;
-                }
-
-                // Normalizando os valores para um intervalo de 10 a 50 (ajusta o tamanho das fontes)
                 const maxValue = Math.max(...data.map(item => parseFloat(item.total_cpu)));
                 const minValue = Math.min(...data.map(item => parseFloat(item.total_cpu)));
 
-                // Verificar se os valores de minValue e maxValue são diferentes
-                if (maxValue === minValue) {
-                    console.error('Não há variação suficiente nos dados para gerar uma Word Cloud significativa');
-                    return;
-                }
-
                 const normalizedData = data.map(item => ({
                     label: item.nomeProcesso,
-                    value: ((parseFloat(item.total_cpu) - minValue) / (maxValue - minValue)) * 40 + 10 // Intervalo 10-50
+                    value: ((parseFloat(item.total_cpu) - minValue) / (maxValue - minValue)) * 30 + 10 // Ajuste de tamanho (10 a 40)
                 }));
 
-                // Limitando os dados aos 20 elementos mais relevantes
                 const limitedData = normalizedData.slice(0, 20);
-
-                // Extraindo labels e valores normalizados
                 const labels = limitedData.map(item => item.label);
                 const weights = limitedData.map(item => item.value);
 
-                // Gerar cores nos tons de azul, violeta e preto
-                const colors = labels.map(() => {
-                    const hue = Math.random() * 240 + 180; // Tons entre azul (180°) e violeta (240°)
-                    const saturation = 50 + Math.random() * 30; // Saturação entre 50% e 80%
-                    const lightness = 30 + Math.random() * 40; // Luminosidade entre 30% e 70%
-                    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-                });
+                const generateColor = (value) => {
+                    const intensity = Math.round((value / Math.max(...weights)) * 255);
+                    return `rgb(${intensity}, ${intensity * 0.7}, 255)`;
+                };
 
-                // Criando o gráfico WordCloud
+                const colors = weights.map(generateColor);
+
                 const ctxWordCloud = document.getElementById('chart3').getContext('2d');
                 const wordCloudChart = new Chart(ctxWordCloud, {
                     type: 'wordCloud',
                     data: {
                         labels,
                         datasets: [{
-                            label: 'Uso de CPU (Normalizado)',
+                            label: 'Word Cloud',
                             data: weights,
                             color: colors
                         }]
@@ -243,37 +192,29 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: true,
-                        plugins: {
-                            legend: { display: false }
-                        },
-                        layout: {
-                            padding: { top: 10, bottom: 10 } // Espaçamento interno ajustado
-                        },
+                        plugins: { legend: { display: false } },
                         elements: {
                             wordCloud: {
-                                minFontSize: 1, // Aumenta a fonte mínima
-                                maxFontSize: 10, // Mantém a fonte máxima dentro do limite
-                                aspectRatio: 0, // Mantém proporção quadrada
-                                fit: false // Garante que se ajuste ao espaço disponível
+                                minFontSize: 12,
+                                maxFontSize: 40
                             }
                         }
                     }
                 });
 
-
                 wordCloudChart.update();
             } catch (error) {
-                console.error('Erro ao carregar dados do WordCloud Chart:', error);
+                console.error('Erro ao carregar dados do Word Cloud:', error);
             }
         }
 
-
-        // Chamadas das funções
-        updateScatterChart();
-        updateApexChart();
-        updateWordCloudChart();
+        // Inicialização dos gráficos
+        document.addEventListener("DOMContentLoaded", () => {
+            renderScatterChart();
+            renderBarChart();
+            renderWordCloud();
+        });
     </script>
-
 </body>
 
 </html>
