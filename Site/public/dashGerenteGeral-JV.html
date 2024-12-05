@@ -107,7 +107,7 @@
         <div class="boxIntGrafico">
             <canvas id="availabilityChart" width="1220" height="400"></canvas>
         </div>
-        <div id="registrosGrafico" class="slaTeste"><h3>Registro min: | Registro max:</h3></div>
+        <div id="registrosGrafico" class="slaTeste"><h3>Registro Minímo: | Registro Máximo:</h3></div>
 
     </div>
 </div>
@@ -134,7 +134,7 @@
                     <div class="boxRankingAlertas">
                         <div class="boxTitulo">ALERTAS TOTEM</div>
                         <div class="boxQtd">
-                            <h3>IDENTIFICAÇÃO</h3>
+                            <h3>CÓDIGO DE SÉRIE</h3>
                             <h3>|</h3>
                             <h3>QUANTIDADE</h3>
                         </div>
@@ -143,7 +143,7 @@
                             <div class="boxTotem"><h3>TOTEM 1</h3><h3>18</h3></div>
                             <div class="boxTotem"><h3>TOTEM 2</h3><h3>6</h3></div>
                         </div>
-                        <div class="boxSaibaMais"><button>SAIBA MAIS</button></div>
+                        <div class="boxSaibaMais"><button><a href="dashboardGerenteAlertas-Beatriz.html">SAIBA MAIS</a></button></div>
                     </div>
                     <div class="boxRankingPizza">
                         <div class="boxTitulo2">PERCENTUAL DE ALERTAS</div>
@@ -403,30 +403,20 @@ async function atualizarGraficoPorAno() {
     }
 }
 
-    async function obterTopAlertas(){
-        try {
-            const resposta = await fetch('http://localhost:3333/api/top5')
-            console.log("Reposta:", resposta)
-
-            if(!resposta.ok){
-                const textoerro = await resposta.text()
-                console.erro("erro na api:", resposta.status, resposta.statusText, textoerro)
-                return
-            }
-
-            const dados = await resposta.json()
-            console.log("Dados recebidos", dados)
-
-            if(dados){
-                console.log("Top alertas:", dados)
-                atualizarAlertas(dados)
-            }else {
-                console.error("Nenhum totem tem alerta")
-            }
-        }catch (error){
-            console.error("Erro aoo obter top 5", error)
+async function obterTopAlertas() {
+    try {
+        const resposta = await fetch('http://localhost:3333/api/top5');
+        if (!resposta.ok) {
+            console.error("Erro na API:", resposta.status, await resposta.text());
+            return;
         }
+        const dados = await resposta.json();
+        atualizarAlertas(dados);
+    } catch (error) {
+        console.error("Erro ao obter os Top 5 alertas:", error);
     }
+}
+
 
 
 
@@ -476,15 +466,11 @@ async function obterAlertas() {
     }
 }
 
-
-
 function atualizarAlertas(dados) {
     const boxRankingTotens = document.querySelector('.boxRankingTotens');
-
-    boxRankingTotens.innerHTML = '';
+    boxRankingTotens.innerHTML = ''; 
 
     if (!dados || dados.length === 0) {
-        console.warn('Nenhum dado de alerta encontrado para exibir.');
         const mensagem = document.createElement('div');
         mensagem.textContent = 'Nenhum alerta encontrado';
         mensagem.style.textAlign = 'center';
@@ -492,12 +478,12 @@ function atualizarAlertas(dados) {
         return;
     }
 
-    dados.forEach(({ fkTotem, totalAlertas }) => {
+    dados.forEach(({ codigo_serie, totalAlertas }) => {
         const boxTotem = document.createElement('div');
-        boxTotem.classList.add('boxTotem'); 
+        boxTotem.classList.add('boxTotem');
 
         const totemNome = document.createElement('h3');
-        totemNome.textContent = fkTotem;
+        totemNome.textContent = codigo_serie;
 
         const alertasQtd = document.createElement('h3');
         alertasQtd.textContent = totalAlertas;
@@ -507,6 +493,7 @@ function atualizarAlertas(dados) {
         boxRankingTotens.appendChild(boxTotem);
     });
 }
+
 
 
 
@@ -833,7 +820,7 @@ function atualizarRegistros() {
 
     const slaTeste = document.querySelector('#registrosGrafico h3');
     if (slaTeste) {
-        slaTeste.textContent = `Registro min: ${registroMin.toFixed(2)} | Registro max: ${registroMax.toFixed(2)}`;
+        slaTeste.textContent = `Registro Mínimo: ${registroMin.toFixed(2)} | Registro Máximo: ${registroMax.toFixed(2)}`;
     }
 }
 

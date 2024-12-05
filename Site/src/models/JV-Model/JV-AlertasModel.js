@@ -2,11 +2,13 @@ var database = require("../../database/config");
 
 async function obetertop5() {
     const query = `
-            SELECT fkTotem, COUNT(*) AS totalAlertas
-            FROM Alerta
-            GROUP BY fkTotem
-            ORDER BY totalAlertas DESC
-            LIMIT 5;
+        SELECT t.codigo_serie, COUNT(*) AS totalAlertas
+FROM Alerta a
+JOIN Totem t ON a.fkTotem = t.idTotem
+GROUP BY t.codigo_serie
+ORDER BY totalAlertas DESC
+LIMIT 5;
+
     `;
     try {
         const resultados = await database.executar(query);
@@ -17,6 +19,7 @@ async function obetertop5() {
         throw erro;
     }
 }
+
 
 
 module.exports = {
