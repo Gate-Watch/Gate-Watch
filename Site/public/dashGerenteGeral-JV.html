@@ -665,7 +665,7 @@ function atualizarSemana(dados, filtro) {
         borderColor: '#18204b',
         backgroundColor: 'rgba(24, 32, 75, 0.2)',
         fill: true,
-        tension: 0.4,
+        tension: 0.3,
         pointBackgroundColor: '#18204b'
     }));
 
@@ -702,10 +702,24 @@ function atualizarSemana(dados, filtro) {
     }
 
     availabilityChart.data.datasets = filteredDatasets;
+
+    availabilityChart.options.scales.y = {
+        beginAtZero: true,
+        max: 5, 
+        title: {
+            display: true,
+            text: 'Disponibilidade (%)'
+        },
+        ticks: {
+            stepSize: 1 
+        }
+    };
+
     availabilityChart.update();
 
     atualizarRegistros();
 }
+
 
 
 function atualizarGraficoPorAno() {
