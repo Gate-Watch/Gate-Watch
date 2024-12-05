@@ -59,16 +59,31 @@
                         <div class="bar"></div>Nuvem de processos
                     </div>
                     <div class="wordcloud">
-                        <canvas id="chart3" width="527" height="500"
-                            style="display: block;box-sizing: border-box;height: 400px;width: 400px;"></canvas>
+                        <canvas id="chart3"></canvas>
                     </div>
                 </div>
 
                 <div class="projecao">
                     <div class="titulo3">
-                        <div class="bar"></div>Projeção da execução de processos
+                        <div class="bar"></div>Projeção da execução
                     </div>
                     <canvas id="chart"></canvas>
+                </div>
+
+                <div class="adicionais">
+                    <div class="total">
+                        <div class="titulo4">
+                            <div class="bar"></div>Total de Processos
+                        </div>
+                        <h1>10</h1>
+                    </div>
+
+                    <div class="sistema">
+                        <div class="titulo5">
+                            <div class="bar"></div>Processos de sistema
+                        </div>
+                        <h1>5</h1>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,7 +112,7 @@
                         }]
                     },
                     options: {
-                        responsive: true,
+                        responsive: false,
                         maintainAspectRatio: false,
                         scales: {
                             x: {
@@ -105,7 +120,7 @@
                                 position: 'bottom',
                                 title: {
                                     display: true,
-                                    text: 'Processos'
+                                    text: 'Processamento'
                                 }
                             },
                             y: {
@@ -132,20 +147,20 @@
                     x: item.nomeProcesso,
                     y: item.frequencia,
                     goals: [{
-                        name: 'Expected',
+                        name: 'Esperado',
                         value: item.frequencia + 50,
                         strokeHeight: 5,
-                        strokeColor: '#775DD0'
+                        strokeColor: 'violet'
                     }]
                 }));
 
                 const apexOptions = {
                     series: [{
                         name: 'Frequência Atual',
-                        data: seriesData
+                        data: seriesData,
                     }],
                     chart: {
-                        height: 320,
+                        height: 170,
                         type: 'bar'
                     },
                     plotOptions: {
@@ -153,10 +168,10 @@
                             columnWidth: '60%'
                         }
                     },
-                    colors: ['#00E396'],
+                    colors: ['darkblue'],
                     legend: {
                         show: true,
-                        customLegendItems: ['Frequência Atual', 'Esperado'],
+                        customLegendItems: ['Frequência Atual'],
                         markers: {
                             fillColors: ['#00E396', '#775DD0']
                         }
@@ -222,27 +237,29 @@
                         datasets: [{
                             label: 'Uso de CPU (Normalizado)',
                             data: weights,
-                            color: colors // Aplica as cores geradas
+                            color: colors
                         }]
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
                         plugins: {
                             legend: { display: false }
                         },
                         layout: {
-                            padding: { top: 5, bottom: 5 } // Margens menores
+                            padding: { top: 10, bottom: 10 } // Espaçamento interno ajustado
                         },
                         elements: {
                             wordCloud: {
-                                minFontSize: 10, // Fonte mínima
-                                maxFontSize: 50, // Fonte máxima
-                                aspectRatio: 1 // Mantém o layout quadrado
+                                minFontSize: 1, // Aumenta a fonte mínima
+                                maxFontSize: 10, // Mantém a fonte máxima dentro do limite
+                                aspectRatio: 0, // Mantém proporção quadrada
+                                fit: false // Garante que se ajuste ao espaço disponível
                             }
                         }
                     }
                 });
+
 
                 wordCloudChart.update();
             } catch (error) {

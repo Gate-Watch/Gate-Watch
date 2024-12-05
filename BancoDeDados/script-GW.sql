@@ -31,6 +31,9 @@ CREATE TABLE Operacao (
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia)
 );
 
+select * from Operacao;
+
+
 -- Criação da tabela Funcionario
 CREATE TABLE Funcionario(
     idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
@@ -42,6 +45,10 @@ CREATE TABLE Funcionario(
     FOREIGN KEY(fkCompanhia) REFERENCES Companhia(idCompanhia),
     CONSTRAINT chkCargo CHECK(cargo IN('Gerente', 'Analista'))
 );
+
+INSERT INTO Funcionario (idFuncionario, nome, cargo, email, senha, fkCompanhia) VALUES
+    (DEFAULT, 'João Silva', 'Gerente', 'joao.silva@azul.com', 'senha123', 1),
+    (DEFAULT, 'Ana Costa', 'Analista', 'ana.costa@gol.com', 'senha456', 2);
 
 select * from Companhia join Operacao on idCompanhia = fkCompanhia;
 select * from Funcionario;
@@ -79,6 +86,10 @@ CREATE TABLE Monitoramento(
     FOREIGN KEY(fkTotem) REFERENCES Totem(idTotem)
 );
 
+INSERT INTO Monitoramento (idMonitoramento, fkFuncionario, fkTotem, dtHora_inicio, dtHora_fim) VALUES
+    (DEFAULT, 1, 1, '2024-12-01 08:00:00', '2024-12-01 10:00:00'),
+    (DEFAULT, 2, 2, '2024-12-01 09:00:00', '2024-12-01 11:00:00');
+
 -- Criação da tabela Desempenho
 CREATE TABLE Desempenho(
     idDesempenho INT AUTO_INCREMENT,
@@ -96,6 +107,10 @@ CREATE TABLE Desempenho(
     FOREIGN KEY (fkTotem) REFERENCES Totem(idTotem)
 );
 
+INSERT INTO Desempenho (idDesempenho, cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, dtHora, fkTotem) VALUES
+    (DEFAULT, 65.5, 3200, 12.4, 16.0, 77.5, 150.3, 256.0, 58.7, '2024-12-02 14:00:00', 1),
+    (DEFAULT, 70.2, 3100, 10.8, 16.0, 67.5, 140.7, 250.0, 56.3, '2024-12-02 16:00:00', 2);
+
 -- Criação da tabela alertas
 CREATE TABLE Alerta (
     idAlerta INT AUTO_INCREMENT,
@@ -109,7 +124,9 @@ CREATE TABLE Alerta (
     CONSTRAINT chkComponente CHECK(componente IN('cpu', 'memoria', 'disco'))
 );
 
-
+INSERT INTO Alerta (idAlerta, dtAlerta, componente, medida, statusTotem, fkTotem) VALUES
+    (DEFAULT, '2024-12-01 08:30:00', 'cpu', 85.0, 'ALERTA', 1),
+    (DEFAULT, '2024-12-01 09:30:00', 'memoria', 92.0, 'CRÍTICO', 2);
 
 CREATE TABLE Processos (
     id INT AUTO_INCREMENT, 
@@ -135,10 +152,18 @@ truncate table Processos;
 INSERT INTO Aeroporto VALUES 
     (DEFAULT, 'Aeroporto de São Paulo/Congonhas', '12345678910111'),
     (DEFAULT, 'Aeroporto Internacional de Guarulhos', '11101987654321');
+    
+INSERT INTO Operacao (idOperacao, fkAeroporto, fkCompanhia, chave_seguranca_analista, chave_seguranca_gerente) VALUES
+    (DEFAULT, 1, 1, '1A2B3C4D5E', 'A1B2C3D4E5'),
+    (DEFAULT, 2, 2, '2B3C4D5E6F', 'B2C3D4E5F6');
 
     select * from Aeroporto;
     select * from Companhia;
 
+-- Inserção de dados na tabela Companhia
+INSERT INTO Companhia VALUES
+	(default, 'Azul', '12345678910123', 'suporte@azul.com'),
+	(default, 'Gol', '12345678910124', 'suporte@gol.com');
 
 -- Inserção de dados na tabela Totem
 INSERT INTO Totem VALUES
@@ -162,7 +187,7 @@ BEGIN
 
     WHILE i <= 1000 DO
         -- Gerar dados aleatórios para os processos
-        SET nomeProcesso = CASE FLOOR(1 + (RAND() * 5)) -- Gera um número aleatório entre 1 e 5
+        SET nomeProcesso = CASE FLOOR(1 + (RAND() * 10)) -- Gera um número aleatório entre 1 e 5
             WHEN 1 THEN 'Chrome'
             WHEN 2 THEN 'Python'
             WHEN 3 THEN 'NodeJS'
@@ -348,5 +373,43 @@ ORDER BY
 
 select * from Processos;
 
+-- Inserindo na tabela Aeroporto
+INSERT INTO Aeroporto (idAeroporto, nome_fantasia, cnpj) VALUES
+    (DEFAULT, 'Aeroporto de São Paulo/Congonhas', '12345678910111'),
+    (DEFAULT, 'Aeroporto Internacional de Guarulhos', '11101987654321');
 
+-- Inserindo na tabela Companhia
+INSERT INTO Companhia (idCompanhia, nome_fantasia, cnpj, email_comp) VALUES
+    (DEFAULT, 'Azul', '12345678910123', 'suporte@azul.com'),
+    (DEFAULT, 'Gol', '12345678910124', 'suporte@gol.com');
 
+-- Inserindo na tabela Totem
+INSERT INTO Totem (idTotem, nome_totem, codigo_serie, fabricante, ano, fkCompanhia) VALUES
+    (DEFAULT, 'Totem 1', '1234', 'Dell', 2017, 1),
+    (DEFAULT, 'Totem 2', '5678', 'Dell', 2022, 1),
+    (DEFAULT, 'Totem 3', '9123', 'HP', 2015, 2);
+
+-- Inserindo na tabela Funcionario
+INSERT INTO Funcionario (idFuncionario, nome, cargo, email, senha, fkCompanhia) VALUES
+    (DEFAULT, 'João Silva', 'Gerente', 'joao.silva@azul.com', 'senha123', 1),
+    (DEFAULT, 'Ana Costa', 'Analista', 'ana.costa@gol.com', 'senha456', 2);
+
+-- Inserindo na tabela Operacao
+INSERT INTO Operacao (idOperacao, fkAeroporto, fkCompanhia, chave_seguranca_analista, chave_seguranca_gerente) VALUES
+    (DEFAULT, 1, 1, '1A2B3C4D5E', 'A1B2C3D4E5'),
+    (DEFAULT, 2, 2, '2B3C4D5E6F', 'B2C3D4E5F6');
+
+-- Inserindo na tabela Desempenho
+INSERT INTO Desempenho (idDesempenho, cpu_usage, cpu_freq, memory_usage, memory_total, memory_perc, disk_usage, disk_total, disk_perc, dtHora, fkTotem) VALUES
+    (DEFAULT, 65.5, 3200, 12.4, 16.0, 77.5, 150.3, 256.0, 58.7, '2024-12-02 14:00:00', 1),
+    (DEFAULT, 70.2, 3100, 10.8, 16.0, 67.5, 140.7, 250.0, 56.3, '2024-12-02 16:00:00', 2);
+
+-- Inserindo na tabela Alerta
+INSERT INTO Alerta (idAlerta, dtAlerta, componente, medida, statusTotem, fkTotem) VALUES
+    (DEFAULT, '2024-12-01 08:30:00', 'cpu', 85.0, 'ALERTA', 1),
+    (DEFAULT, '2024-12-01 09:30:00', 'memoria', 92.0, 'CRÍTICO', 2);
+
+-- Inserindo na tabela Movimentacao
+INSERT INTO movimentacao (idMovimentacao, mes, icao, aerodromo, municipio, ano, tipoVoo, totalPassageiros, passageirosAzul, mesSigla, numMes) VALUES
+    (DEFAULT, 'Janeiro', 'SBGR', 'Aeroporto Internacional de Guarulhos', 'Guarulhos', 2024, 'Doméstico', 500000, 200000, 'JAN', 1),
+    (DEFAULT, 'Fevereiro', 'SBSP', 'Aeroporto de Congonhas', 'São Paulo', 2024, 'Internacional', 300000, 150000, 'FEV', 2);
