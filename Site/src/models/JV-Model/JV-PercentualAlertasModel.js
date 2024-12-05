@@ -1,7 +1,12 @@
 var database = require("../../database/config");
 
 async function calcularPercentualAlertas() {
-    const instrucaoGeral = `select count(*) as totalAlertas from Alerta`;
+    const instrucaoGeral = `
+        SELECT COUNT(*) AS totalAlertas 
+        FROM Alerta
+        WHERE MONTH(dtAlerta) = MONTH(CURRENT_DATE()) 
+          AND YEAR(dtAlerta) = YEAR(CURRENT_DATE());
+    `;
     
     const totalAlertasResult = await database.executar(instrucaoGeral);
     const totalAlertas = totalAlertasResult[0]?.totalAlertas || 0; 
@@ -11,10 +16,12 @@ async function calcularPercentualAlertas() {
     }
 
     const percentual = `
-        select componente, count(*) as quantidade, 
-            (count(*) * 100.0 / ${totalAlertas}) as percentual
-        from Alerta
-        group by componente
+        SELECT componente, COUNT(*) AS quantidade, 
+               (COUNT(*) * 100.0 / ${totalAlertas}) AS percentual
+        FROM Alerta
+        WHERE MONTH(dtAlerta) = MONTH(CURRENT_DATE()) 
+          AND YEAR(dtAlerta) = YEAR(CURRENT_DATE())
+        GROUP BY componente;
     `;
     
     const percentuaisResult = await database.executar(percentual);
