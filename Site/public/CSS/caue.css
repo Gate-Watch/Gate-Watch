@@ -1,0 +1,550 @@
+@font-face {
+    font-family: montSerrat;
+    src: url(../Fonts/MontSerrat-Regular.ttf);
+}
+
+  
+
+body {
+    padding: 0;
+    margin: 0;
+        -sizing: border-box;
+    background-color:#d9d9d9;
+    overflow: hidden;
+}
+
+.containerPagina {
+    display: flex;
+    background-color: #d9d9d9;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+@media (max-width: 1024px) { /* Ajuste conforme necessário */
+    .containerPagina {
+        flex-direction: column;
+    }
+
+    .ranking {
+        width: 100%;  /* Certifique-se de que o ranking ocupa 100% da largura */
+        margin-left: 0;
+    }
+}
+
+.containerPagina .colunaLateral {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+    height: 100vh;
+    width: 13vw;
+}
+
+.containerPagina .colunaLateral .boxIdentificacao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 24vh;
+    width: 13vw;
+    font-family: "montSerrat";
+    
+}
+
+.containerPagina .colunaLateral .boxIdentificacao h1 {
+    font-size: 21px;
+    margin: 0%;
+    color: #ffffff;
+    text-align: center;
+    padding-bottom: 5%;
+}
+
+.containerPagina .colunaLateral .boxIdentificacao h3 {
+    margin: 0%;
+    color: #d9d9d9;
+    font-size: 11px;
+   text-decoration: underline;
+}
+
+.containerPagina .colunaLateral .boxOpcoes {
+    width: 15vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+}
+
+.containerPagina .colunaLateral .boxOpcoes .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "montSerrat";
+    font-weight: 700;
+    width: 13vw;
+    height: 5vw;
+    
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.containerPagina .colunaLateral .boxSair {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 15vw;
+    height: 7vh;
+    color: #ffffff;
+    font-family: "montSerrat";
+    font-weight: 700;
+
+}
+
+
+/* daqui para cima é só contéudo repetido da box lateral padronizada antiga */
+
+
+
+.boxAeroporto {
+    margin-left: 3%;
+    font-size: 2vh;
+    font-family: "montSerrat";
+    color: rgb(24, 32, 75);
+}
+
+.boxAeroporto a {
+    display: inline-block;
+    margin-left: 0%;
+    padding: 1vh 8vh;
+    border-radius: 8vh;
+    font-size: 3vh;
+    background-color: rgb(24, 32, 75);
+}
+
+.boxAeroporto span {
+    display: inline-block;
+    margin-left: 1%;
+    color: white;
+    background-color: rgb(24, 32, 75);
+    text-align: center;
+    width: 72px;
+    height: 30px;
+    border-radius: 15px ;
+    font-family: "montSerrat";
+}
+
+.boxWord {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 126vh;
+    height: 38vh;
+    margin: auto;
+    margin-bottom: 1%;
+    margin-left: 2%;
+    margin-top: 1%;
+    font-family: "montSerrat";
+}
+
+.boxWord h2 {
+    margin-left: 3%;
+    font-weight: 500;
+}
+
+.WordCloud {
+    background-color: #ffffff;
+    width: 65.5vh;
+    height: 38vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 10px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.WordCloud img {
+    max-width: 90%;
+}
+
+
+.Componentes {
+    background-color: #ffffff;
+    width: 59.5vh;
+    height: 38vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 10px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    flex-direction: column;
+}
+
+.gráficoAlertas {
+    background-color: #ffffff;
+    width: 126vh;
+    height: 41vh;
+    margin: auto;
+    margin-top: 0%;
+    margin-left: 2%;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.containerMetricas1 .texto h2 {
+    margin-bottom: 1%;
+    margin-left: 3%;
+    font-family: "montSerrat";
+    font-weight: 500;
+}
+
+.texto {
+    display: flex;
+    flex-direction: row;
+}
+
+.texto select {
+    border-radius: 10px;
+    width: 150px;
+    height: 28px;
+    margin-left: 35%;
+    margin-top: 2.8%;
+    color: white;
+    font-size: 15px;
+    background-color: rgb(24, 32, 75);
+
+}
+
+.textoComponentes {
+    display: flex;
+    flex-direction: row;
+    padding: 3%;
+}
+
+.textoComponentes select {
+    border-radius: 10px;
+    margin-top: 4%;
+    width: 150px;
+    height: 28px;
+    margin-left: 7%;
+    margin-right: 0%;
+    color: white;
+    font-size: 14px;
+    background-color: rgb(24, 32, 75);
+}
+
+.textoComponentes h2 {
+    font-size: small;
+
+}
+
+.graficoComponentes {
+    margin-right: 11%;
+}
+
+/* Daqui para cima é tudo sobre o primeiro container de métricas*/
+
+.containerMetricas2 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 4%;
+    margin-left: 2%;
+    margin-top: 0.5%;
+}
+
+.logo img {
+    width: 55px;
+    margin-left: 80%;
+    margin-bottom: 4%;
+    margin-top: 2%;
+    height: auto;
+}
+
+
+.ranking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    width: 48vh;
+    height: 75.4vh;
+    box-shadow: 10px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    font-family: "montSerrat";
+    font-weight: 500;
+    max-height: 75.4vh; 
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    padding: 10px;
+}
+
+.rankTitle {
+    display: flex;
+    margin: 0;
+    align-items: center; 
+
+
+}
+
+.rank select {
+    width: 70%;
+    height: 30px;
+    color: white;
+    font-family: "montSerrat";
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgb(24, 32, 75);
+}
+
+.rankTitle h1 {
+    z-index: 100;
+    padding: 10px;
+    font-family: "montSerrat";
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 10%;
+    margin: 0;
+    text-align: center;
+}
+
+.botao-rank {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.botao-rank button {
+    height: 35px;
+    background-color: rgb(24, 32, 75);
+    color: white;
+    border-radius: 15px;
+    margin: 6%;
+    width: 264px;
+    cursor: pointer;
+    transition: all 0.9s ease;
+    font-family: "montSerrat";
+}
+
+.botao-rank button:hover {
+    background-color: rgb(43, 43, 43);
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    font-family: "montSerrat";
+}
+
+/* Backdrop desfocado */
+.smileOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+    backdrop-filter: blur(5px); /* Desfoque do fundo */
+    z-index: 1000; /* Garante que está acima de tudo */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Janela centralizada */
+.smileMessageBox {
+    
+    background-color: #d9d9d9;
+    padding: 20px;
+    border-radius: 8px;
+    width: 999px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-size: 20px;
+    font-family: "montSerrat";
+    height: 558px;
+}
+
+.rosquinhaComponentes {
+    width: 300px;
+}
+
+/* Botão de fechar */
+.smileMessageBox button {
+    margin-top: 30px;
+    padding: 10px 20px;
+    border: none;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.smileMessageBox button:hover {
+    background-color: rgb(43, 43, 43);
+    transform: scale(1.1);
+}
+
+.graficosTop {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    height: 295px;
+}
+
+.lateralBar {
+    display: flex;
+    margin-left: 1%;
+    width: 29%;
+    background-color: white;
+    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    height: 250px;
+    flex-direction: column;
+    font-size: 17px;
+}
+
+.lateralBar p {
+    font-family: "montSerrat";
+    margin-bottom: 3%;
+    font-weight: 400;
+}
+
+.rosquinhaJanela p {
+    font-family: "montSerrat";
+    font-weight: 360;
+    margin-bottom: 16%;
+}
+
+.rosquinhaJanela {
+    margin-left: 1%;
+    width: 244px;
+    background-color: white;
+    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    height: 250px;
+}
+
+.alertaLinhaContainer  {
+    margin-top: -5%;
+    width: 100%;
+    background-color: white;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    height: 295px;
+}
+
+.informacoesTotem {
+    background-color: white;
+    width: 305px;
+    height: 250px;
+    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+#wordCloudProcessos {
+    width: 96.5%;    
+    height: 100%;    
+    margin: 0;    
+    padding: 0;
+    font-family: "montSerrat";
+    font-weight: 800;  
+    color: black;
+}
+
+.titleWordCloud {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.titleWordCloud select {
+    height: 27px;
+    width: 106px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgb(24, 32, 75);
+    margin-top: 14px;
+    margin-left: 28%;
+}
+
+.titleWordCloud h2 {
+    font-size: 18px;
+}
+
+#graficoComponentes {
+    min-height: 215px;
+    margin-left: 2%;   
+}
+
+.radarComponente {
+    background-color: white;
+    width: 38%;
+    height: 250px;
+    margin-left: 1%;
+    margin-bottom: 2%;
+    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.radarComponente {
+    font-family: "montSerrat";
+    font-size: 17px;
+    margin-bottom: 10%;
+
+}
+
+.itensTopoComparacao {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.itensTopoComparacao select {
+    margin-left: 68%;
+    height: 26px;
+    margin-top: 2%;
+    color: white;
+    border-radius: 10px;
+    width: 100px;
+    background-color: rgb(24, 32, 75);
+
+}
+
+.itensTopoComparacao p {
+    margin: 1%;
+    margin-top: 2%;
+    margin-left: 3%;
+}
+
+.radarComponente p {
+    font-weight: 400;
+}
+
+.ranking::-webkit-scrollbar {
+    width: 8px;     
+}
+
+.ranking::-webkit-scrollbar-thumb {
+    background: rgb(24, 32, 75);
+    border-radius: 10px;
+}
+
+.ranking::-webkit-scrollbar-track {
+    background: #d9d9d9;
+}

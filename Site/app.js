@@ -26,6 +26,10 @@ const horaRoutes = require("./src/routes/JV-ROTAS/JV-HoraRota");
 const estaRoutes = require("./src/routes/JV-ROTAS/JV-EstabilidadeRota")
 const uptimeRoutes = require("./src/routes/JV-ROTAS/JV-UptimeRota");
 const alertaRotas = require("./src/routes/JV-ROTAS/JV-AlertasRotas")
+const caueRoutes = require("./src/routes/caueRoutes/caue")
+const graficoLinhaRoutes = require ("./src/routes/caueRoutes/graficoLinhaRotas")
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -44,6 +48,8 @@ app.use("/api", horaRoutes);
 app.use("/api", estaRoutes);
 app.use("/api", uptimeRoutes);
 app.use("/api", alertaRotas);
+app.use("/apiCaue", caueRoutes);
+app.use("/apiGraficoLinha", graficoLinhaRoutes);
 
 app.listen(PORTA_APP, function () {
     console.log(`
