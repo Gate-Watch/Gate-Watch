@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/semanal/:totem/:componente', controller.getMetricasPorTotemEComponente);
 router.get('/ranking', controller.getRankingTotens);
-
+router.get('/diario/:totem/:componente/:dia', controller.getDadosDiarios);
 
 module.exports = router;

@@ -2,428 +2,544 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Métricas Gerente - GateWatch</title>
-    <link rel="stylesheet" href="./CSS/styleRegressao.css">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/regression"></script>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Métricas Gerente - GateWatch</title>
+   <link rel="stylesheet" href="./CSS/styleRegressao.css">
+   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+   <script src="https://cdn.jsdelivr.net/npm/regression"></script>
 </head>
 
 <body>
 
-    <div class="conteudoPagina">
-        <div class="boxLateral">
-            <div class="boxIdentificacao">
-                <h1 class="fonte_perfil" id="nome_perfil">Usuário</h1>
-                <h3>ANALISTA DE DADOS</h3>
-            </div>
-            <div class="boxOpcoes">
-                <a href="index.html">
-                    <div class="box">HOME</div>
-                </a>
-                <a href="dashboardAnalistaMetricas.html">
-                    <div class="box">DASHBOARD</div>
-                </a>
-                <a href="dashboardAnalistaRegressao.html">
-                    <div class="box" style="background-color: #41446877;">PREVISÕES</div>
-                </a>
-            </div>
-            <a href="cadastro.html">
-                <div class="boxSair">SAIR</div>
-            </a>
-        </div>
-        <div class="conteudoMetricas">
-            <div class="boxTitulo">
-                <div class="selecionarTotem">
-                    <select id="selectTotem" onchange="fetchMetrics()">
-                        <option value="1" selected>Totem 1</option>
-                        <option value="2">Totem 2</option>
-                        <option value="3">Totem 3</option>
-                    </select>
-                    <select id="selectComp" onchange="fetchMetrics()">
-                        <option value="Cpu" selected>CPU</option>
-                        <option value="Ram">RAM</option>
-                        <option value="Disco">DISCO</option>
-                    </select>
-                </div>
-            </div>
-            <div class="boxConteudo">
-                <div class="boxComponentes">
-                    <div class="ranking">
-                        <h3>Ranking das Maiores Métricas de cada Componente entre os Totens</h3>
-                        <div class="ranking-grid" id="ranking">
-                            <div id="posicao1" class="ranking-posicao"></div>
-                            <div id="nome1" class="ranking-nome"></div>
-                            <div id="posicao2" class="ranking-posicao"></div>
-                            <div id="nome2" class="ranking-nome"></div>
-                            <div id="posicao3" class="ranking-posicao"></div>
-                            <div id="nome3" class="ranking-nome"></div>
-                        </div>
+   <div class="conteudoPagina">
+       <div class="boxLateral">
+           <div class="boxIdentificacao">
+               <h1 class="fonte_perfil" id="nome_perfil">Usuário</h1>
+               <h3>ANALISTA DE DADOS</h3>
+           </div>
+           <div class="boxOpcoes">
+               <a href="index.html">
+                   <div class="box">HOME</div>
+               </a>
+               <a href="DashboardAnalistaCerejo.html">
+                   <div class="box">DASHBOARD</div>
+               </a>
+               <a href="dashboardAnalistaRegressao.html">
+                   <div class="box" style="background-color: #41446877;">PREVISÕES</div>
+               </a>
+           </div>
+           <a href="cadastro.html">
+               <div class="boxSair">SAIR</div>
+           </a>
+       </div>
+       <div class="conteudoMetricas">
+           <div class="boxTitulo">
+               <h2 class="tituloDash">Previsão das Métricas dos Componentes</h3>
+                   <div class="selecionarTotem">
+                       <select id="selectTotem" onchange="fetchMetrics()">
+                           <option value="1" selected>Totem 1</option>
+                           <option value="2">Totem 2</option>
+                           <option value="3">Totem 3</option>
+                       </select>
+                       <select id="selectComp" onchange="fetchMetrics()">
+                           <option value="Cpu" selected>CPU</option>
+                           <option value="Ram">RAM</option>
+                           <option value="Disco">DISCO</option>
+                       </select>
+                       <!-- <button id="openModal" class="modal-button">Abrir Modal</button> -->
+                   </div>
+                   <img src="Images/gwLogo_black.png" alt="" style="height: 7.5vh; width: 3.5vw; margin-left: 0.6vw;">
+           </div>
+           <div class="boxConteudo">
+               <div class="boxComponentes">
+                   <div class="ranking">
+                       <h3>Ranking das Maiores Métricas de cada Componente entre os Totens</h3>
+                       <div class="ranking-grid" id="ranking">
+                           <div id="posicao1" class="ranking-posicao"></div>
+                           <div id="nome1" class="ranking-nome"></div>
+                           <div id="posicao2" class="ranking-posicao"></div>
+                           <div id="nome2" class="ranking-nome"></div>
+                           <div id="posicao3" class="ranking-posicao"></div>
+                           <div id="nome3" class="ranking-nome"></div>
+                       </div>
 
-                    </div>
-                    <div class="boxMedias">
-                        <div class="box1">
-                            <h4>Dia com maior previsão</h4>
-                            <p id="maiorPrevisao">Carregando...</p>
-                        </div>
-                        <div class="box2">
-                            <h4>Dia com menor previsão</h4>
-                            <p id="menorPrevisao">Carregando...</p>
-                        </div>
-                    </div>
-                    <div class="boxGrafico">
-                        <div class="grafico">
-                            <div id="chart" style="margin-top: 0vh;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="boxAlertas">
-                    <div class="boxRankingAlertas">
-                        <h3 style="text-align: center; margin-top: -0.8vh;">Dias com Métrica Acima e Abaixo da Previsão</h3>
-                        <div class="linha-central"></div> <!-- Linha centralizada -->
-                        <div class="conteudo-ranking" style="margin-top: -4.5vh;">
-                            <div class="acima">
-                                <h4>Dias Acima:</h4>
-                                <ul id="diasAcima" style="margin-right: 3.7vw; margin-top: 0.5vh"></ul>
-                            </div>
-                            <div class="abaixo">
-                                <h4>Dias Abaixo:</h4>
-                                <ul id="diasAbaixo" style="margin-right: 1.8vw; margin-top: 0.5vh;"></ul>
-                            </div>
-                        </div>
-                    </div>                                     
-                    <div class="grafico2">
-                        <div id="chart2" style="margin-top: 1vh;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                   </div>
+                   <div class="boxMedias">
+                       <div class="box1">
+                           <h4>Dia com maior previsão</h4>
+                           <p id="maiorPrevisao">Carregando...</p>
+                       </div>
+                       <div class="box2">
+                           <h4>Dia com menor previsão</h4>
+                           <p id="menorPrevisao">Carregando...</p>
+                       </div>
+                   </div>
+                   <div class="boxGrafico">
+                       <div class="grafico">
+                           <div id="chart" style="margin-top: 0vh;"></div>
+                       </div>
+                   </div>
+               </div>
+               <div class="boxAlertas">
+                   <div class="boxRankingAlertas">
+                       <h3 style="text-align: center; margin-top: -0.8vh;">Dias com Métrica Acima e Abaixo da Previsão
+                       </h3>
+                       <div class="linha-central"></div> <!-- Linha centralizada -->
+                       <div class="conteudo-ranking" style="margin-top: -4.5vh;">
+                           <div class="acima">
+                               <h4>Dias Acima:</h4>
+                               <ul id="diasAcima" style="margin-right: 3.7vw; margin-top: 0.5vh"></ul>
+                           </div>
+                           <div class="abaixo">
+                               <h4>Dias Abaixo:</h4>
+                               <ul id="diasAbaixo" style="margin-right: 1.8vw; margin-top: 0.5vh;"></ul>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="grafico2">
+                       <div id="chart2" style="margin-top: 1vh;"></div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="overlay" style="display: none;">
+       <div class="modal">
+           <button class="close-button">
+               <span class="X"></span>
+               <span class="Y"></span>
+               <div class="close">Sair</div>
+           </button>
+           <h2 id="modal-title">Detalhes do Dia</h2>
+           <p id="modal-content">Carregando informações...</p>
+
+           <!-- Botão de Select -->
+           <label for="select-dia">Escolha outro dia:</label>
+           <select id="select-dia" onchange="atualizarDiaSelecionado(this.value)">
+               <option value="Sunday">Domingo</option>
+               <option value="Monday">Segunda</option>
+               <option value="Tuesday">Terça</option>
+               <option value="Wednesday">Quarta</option>
+               <option value="Thursday">Quinta</option>
+               <option value="Friday">Sexta</option>
+               <option value="Saturday">Sábado</option>
+           </select>
+
+           <!-- Container para o Gráfico -->
+           <div id="modal-chart" style="height: 300px;"></div>
+       </div>
+   </div>
 
 </body>
 
 <script>
-    nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
+   nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
 
-    // Função assíncrona para buscar métricas e previsões dos totems selecionados
-    async function fetchMetrics() {
-        // Obtendo os valores selecionados pelo usuário para o Totem e o Componente
-        const selectedTotem = document.getElementById('selectTotem').value; // Ex.: "1", "2", etc.
-        const selectedComponent = document.getElementById('selectComp').value; // Ex.: "CPU", "RAM",etc.
+   let diaAtual; // Variável global para armazenar o dia atual
 
-        try {
-            // Realiza uma requisição para a API para buscar dados semanais com base nos filtros escolhidos
-            const response = await fetch(`/dashRegressao/semanal/${selectedTotem}/${selectedComponent}`);
+   function abrirModal(conteudo, diaInicial) {
+       const modal = document.querySelector('.overlay');
+       const modalConteudo = document.querySelector('#modal-content');
+       const selectDia = document.getElementById('select-dia');
 
-            // Verifica se a resposta da API foi bem-sucedida (status 200 OK)
-            if (!response.ok) throw new Error('Erro ao buscar dados do servidor.');
+       // Atualiza o conteúdo do modal e o select com o dia inicial
+       modalConteudo.textContent = conteudo;
+       selectDia.value = diaInicial;
 
-            // Desestrutura os dados retornados pela API em dois objetos: semanaAtual e semanaPassada
-            const { semanaAtual, semanaPassada } = await response.json();
+       // Salva o dia inicial na variável global e no sessionStorage
+       diaAtual = diaInicial;
+       sessionStorage.setItem('DIA_ATUAL', diaInicial);
 
-            // Array contendo os dias da semana em inglês (formatados para serem usados como referência)
-            const diasSemana = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+       // Renderiza o gráfico inicial
+       carregarGraficoDia(diaInicial);
 
-            // Criamos um array `valoresAtuais`, que conterá as médias dos valores do componente atual para cada dia da semana
-            const valoresAtuais = diasSemana.map(
-                (dia) =>
-                    semanaAtual.find((item) => item.dia_semana === dia)?.componente_avg || 0
-            );
-            /*
-                Explicação do `.map`:
-                - O método `.map` é usado para transformar os elementos de um array em outro array.
-                - Aqui, `diasSemana.map(...)` itera sobre cada dia da semana (ex.: "Sunday", "Monday", etc.).
-                - Para cada dia, usamos `.find` para buscar no array `semanaAtual` o item correspondente ao dia da semana.
-    
-                Explicação do `.find`:
-                - O método `.find` retorna o **primeiro elemento** de um array que atende a uma condição.
-                - No caso, `semanaAtual.find(item => item.dia_semana === dia)` busca o primeiro objeto em `semanaAtual` 
-                  onde o `dia_semana` seja igual ao `dia` atual.
-                - Se o objeto é encontrado, obtemos o valor médio (`componente_avg`) usando `?.componente_avg`.
-                - O operador `|| 0` retorna 0 caso nenhum item seja encontrado ou `componente_avg` seja `undefined`.
-    
-                Exemplo:
-                - Se `semanaAtual = [{ dia_semana: "Monday", componente_avg: 75 }]`:
-                    - Para "Monday", `find` retorna `{ dia_semana: "Monday", componente_avg: 75 }`.
-                    - O valor de `componente_avg` será 75.
-                    - Para "Tuesday", como não há objeto correspondente, retornamos 0.
-            */
+       // Exibe o modal
+       modal.style.display = 'flex';
+   }
 
-            // Fazemos a mesma coisa, mas para a semana passada, criando `valoresPassados`
-            const valoresPassados = diasSemana.map(
-                (dia) =>
-                    semanaPassada.find((item) => item.dia_semana === dia)?.componente_avg || 0
-            );
+   function configurarModal() {
+   const modal = document.querySelector('.overlay');
+   const closeButton = document.querySelector('.close-button');
 
-            // Array para armazenar as previsões calculadas usando regressão linear
-            const previsoes = [];
+   // Fechar o modal ao clicar no botão de fechar
+   closeButton.addEventListener('click', () => {
+       modal.style.display = 'none';
+   });
 
-            // Laço para calcular as previsões com base nos valores da semana passada
-            for (let i = 0; i < diasSemana.length; i++) {
-                // Pegamos os valores da semana passada até o índice atual (de 0 a i) usando `.slice`
-                const y = valoresPassados.slice(0, i + 1);
-                /*
-                    Explicação do `.slice`:
-                    - O método `.slice(start, end)` retorna uma cópia de uma parte de um array.
-                    - `start` é o índice inicial (inclusivo) e `end` é o índice final (exclusivo).
-                    - Aqui, `slice(0, i + 1)` retorna os valores do início do array até o índice `i` (inclusive).
-                    
-                    Exemplo:
-                    - Para `valoresPassados = [10, 20, 30, 40]`:
-                      - `i = 2`: `slice(0, 2 + 1)` retorna `[10, 20, 30]`.
-                */
+   // Fechar o modal ao clicar fora do conteúdo
+   modal.addEventListener('click', (event) => {
+       if (event.target === modal) {
+           modal.style.display = 'none';
+       }
+   });
 
-                // Criamos um array de índices `x` correspondente à quantidade de valores até o índice atual
-                const x = Array.from({ length: i + 1 }, (_, idx) => idx);
-                /*
-                    Explicação do `Array.from`:
-                    - `Array.from({ length: n }, callback)` cria um array de tamanho `n` preenchido com os valores gerados pelo callback.
-                    - O `_` é um parâmetro ignorado, enquanto `idx` é o índice atual.
-    
-                    Exemplo:
-                    - `Array.from({ length: 3 }, (_, idx) => idx)` retorna `[0, 1, 2]`.
-                */
+   // Ajustar o evento de mudança no select de dias
+   const selectDia = document.getElementById('select-dia');
+   selectDia.addEventListener('change', (event) => {
+       const diaSelecionado = event.target.value;
+       atualizarDiaSelecionado(diaSelecionado);
+   });
+   }
 
-                // Criamos os "pontos" para a regressão no formato [[x1, y1], [x2, y2], ...]
-                const pontos = x.map((val, idx) => [val, y[idx]]);
-                /*
-                    Exemplo:
-                    - Se `x = [0, 1, 2]` e `y = [10, 20, 30]`, `pontos` será:
-                      [[0, 10], [1, 20], [2, 30]]
-                */
+   async function carregarGraficoDia(dia) {
+   dia = dia || sessionStorage.getItem('DIA_ATUAL'); // Usa o dia armazenado caso não seja passado
 
-                // Aplicamos regressão linear usando a biblioteca `regression`
-                const modelo = regression.linear(pontos);
-                /*
-                    Explicação da Regressão Linear:
-                    - A regressão linear busca encontrar a melhor reta que descreve a relação entre `x` (dias) e `y` (valores).
-                    - O resultado é uma função do tipo: `y = ax + b`, onde:
-                      - `a` é o coeficiente angular (inclinação da reta).
-                      - `b` é o coeficiente linear (interseção com o eixo y).
-                    - `modelo.predict(x)` retorna o valor de `y` estimado para um dado `x`.
-                */
+   if (!dia) {
+       console.error('O dia não foi definido.');
+       return;
+   }
 
-                // Usamos o modelo para prever o valor para o dia `i` (baseado no índice)
-                previsoes.push(modelo.predict(i)[1]);
-                /*
-                    `modelo.predict(i)` retorna um array `[x, y]`.
-                    `modelo.predict(i)[1]` é o valor previsto de `y` para o índice `i`.
-                */
-            }
+   const selectedTotem = document.getElementById('selectTotem').value;
+   const selectedComponent = document.getElementById('selectComp').value;
 
-            // Calculamos a maior e a menor previsão
-            const maiorPrevisao = Math.max(...previsoes); // Maior valor no array de previsões
-            const menorPrevisao = Math.min(...previsoes); // Menor valor no array de previsões
+   try {
+       const response = await fetch(`/dashRegressao/diario/${selectedTotem}/${selectedComponent}/${dia}`);
+       if (!response.ok) throw new Error('Erro ao buscar dados do dia.');
 
-            // Encontramos os índices da maior e menor previsão
-            const indiceMaior = previsoes.indexOf(maiorPrevisao); // Índice do maior valor
-            const indiceMenor = previsoes.indexOf(menorPrevisao); // Índice do menor valor
+       const { valoresReais } = await response.json();
 
-            // Traduzimos os dias correspondentes aos índices encontrados
-            const diaMaiorPrevisao = traduzirDia(diasSemana[indiceMaior]);
-            const diaMenorPrevisao = traduzirDia(diasSemana[indiceMenor]);
+       const chartContainer = document.querySelector('#modal-chart');
+       chartContainer.innerHTML = ''; // Limpa o gráfico anterior
 
-            // Atualizamos o DOM com os dias de maior e menor previsão
-            document.getElementById("maiorPrevisao").textContent = diaMaiorPrevisao;
-            document.getElementById("menorPrevisao").textContent = diaMenorPrevisao;
+       const horarios = Array.from({ length: 24 }, (_, i) => `${i}h`); // Horários de 0h a 23h
 
-            // Atualizamos o ranking de dias com base nos valores reais e nas previsões
-            atualizarRanking(diasSemana, valoresAtuais, previsoes);
+       // Garante que valoresReais seja um array válido
+       const dadosValidos = Array.isArray(valoresReais) && valoresReais.length > 0 ? valoresReais : Array(24).fill(0);
 
-            // Renderizamos os gráficos com os valores reais e as previsões
-            renderChart1(diasSemana, valoresAtuais, previsoes.map(p => p + 10), previsoes.map(p => p - 10));
-            renderChart2(diasSemana, valoresAtuais, previsoes);
+       const options = {
+           chart: { type: 'line', height: 300 },
+           series: [
+               { name: 'Valores Reais', data: dadosValidos }
+           ],
+           xaxis: {
+               categories: horarios,
+               title: { text: 'Hora do Dia' }
+           },
+           yaxis: {
+               title: { text: 'Valor do Componente' }
+           },
+           title: {
+               text: `Valores do Dia: ${traduzirDia(dia)}`,
+               align: 'center'
+           },
+           colors: ['#1E90FF'], // Cor do gráfico
+           stroke: { curve: 'smooth', width: 2 },
+       };
 
-        } catch (error) {
-            // Captura e exibe qualquer erro ocorrido durante o processo
-            console.error('Erro ao buscar métricas:', error);
-        }
-    }
+       const chart = new ApexCharts(chartContainer, options);
+       chart.render();
+   } catch (error) {
+       console.error('Erro ao carregar gráfico do dia:', error);
 
-    function atualizarRanking(dias, valoresReais, previsoes) {
-    const diasAcima = [];
-    const diasAbaixo = [];
+       // Caso haja erro, renderiza um gráfico vazio com uma mensagem
+       const chartContainer = document.querySelector('#modal-chart');
+       chartContainer.innerHTML = ''; // Limpa o gráfico anterior
 
-    dias.forEach((dia, index) => {
-        if (valoresReais[index] > previsoes[index]) {
-            diasAcima.push(traduzirDia(dia));
-        } else if (valoresReais[index] < previsoes[index]) {
-            diasAbaixo.push(traduzirDia(dia));
-        }
-    });
+       const horarios = Array.from({ length: 24 }, (_, i) => `${i}h`);
 
-    const listaAcima = document.getElementById('diasAcima');
-    const listaAbaixo = document.getElementById('diasAbaixo');
+       const options = {
+           chart: { type: 'line', height: 300 },
+           series: [
+               { name: 'Valores Reais', data: Array(24).fill(0) }
+           ],
+           xaxis: {
+               categories: horarios,
+               title: { text: 'Hora do Dia' }
+           },
+           yaxis: {
+               title: { text: 'Valor do Componente' }
+           },
+           title: {
+               text: `Erro ao carregar os valores para o dia: ${traduzirDia(dia)}`,
+               align: 'center'
+           },
+           colors: ['#FF0000'], // Cor de erro
+           stroke: { curve: 'smooth', width: 2 },
+       };
 
-    // Atualiza o conteúdo em formato de grade
-    listaAcima.innerHTML = diasAcima
-        .map(dia => `<div class="dia">${dia}</div>`)
-        .join('');
-    listaAbaixo.innerHTML = diasAbaixo
-        .map(dia => `<div class="dia">${dia}</div>`)
-        .join('');
+       const chart = new ApexCharts(chartContainer, options);
+       chart.render();
+   }
 }
 
 
-    function renderChart1(dias, valores, previsaoMaxima, previsaoMinima) {
-        const selectedComponent = document.getElementById('selectComp').value;
-        const chartContainer = document.querySelector("#chart");
-        chartContainer.innerHTML = '';
+   function atualizarDiaSelecionado(dia) {
+       diaAtual = dia;
+       sessionStorage.setItem('DIA_ATUAL', dia);
+       carregarGraficoDia(dia);
+   }
 
-        const options = {
-            chart: { type: 'line', height: 290 },
-            series: [
-                { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
-                { name: 'Previsão Máxima', data: previsaoMaxima.map(v => Math.round(v)) },
-                { name: 'Previsão Mínima', data: previsaoMinima.map(v => Math.round(v)) },
-                {
-                    name: 'Limite (65%)',
-                    data: Array(dias.length).fill(65),
-                }
-            ],
-            xaxis: {
-                categories: dias.map(traduzirDia),
-                labels: { style: { colors: '#000000' } } // Cor para os valores no eixo X
-            },
-            yaxis: {
-                min: 0,
-                max: 100,
-                labels: {
-                    style: { colors: '#000000' }, // Cor para os valores no eixo Y
-                    formatter: val => val.toFixed(0)
-                }
-            },
-            stroke: {
-                curve: 'smooth',
-                width: [3, 3, 3, 2],
-                dashArray: [0, 0, 0, 7]
-            },
-            colors: ['#18204b', '#ff0000', '#1E90FF', '#000000'], // Cores das linhas
-            title: {
-                text: `Previsão do Percentual Máximo e Mínimo de ${selectedComponent}`,
-                align: 'left',
-                style: { color: '#000000', fontSize: '17px' } // Cor para o título do gráfico
-            },
-            legend: {
-                labels: { colors: '#000000' }, // Cor para as legendas
-                position: 'bottom'
-            },
-            grid: {
-                borderColor: '#000000', // Cor para a grade
-                strokeDashArray: 0
-            }
-        };
+   async function fetchMetrics() {
+   const selectedTotem = document.getElementById('selectTotem').value;
+   const selectedComponent = document.getElementById('selectComp').value;
 
-        const chart = new ApexCharts(chartContainer, options);
-        chart.render();
-    }
+   try {
+       const response = await fetch(`/dashRegressao/semanal/${selectedTotem}/${selectedComponent}`);
+       if (!response.ok) throw new Error('Erro ao buscar dados do servidor.');
 
-    function renderChart2(dias, valores, previsoes) {
-        const selectedComponent = document.getElementById('selectComp').value;
-        const chartContainer2 = document.querySelector("#chart2");
-        chartContainer2.innerHTML = '';
+       const { semanaAtual, semanaPassada } = await response.json();
+       const diasSemana = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-        const options = {
-            chart: { type: 'line', height: 290, width: 470 },
-            series: [
-                { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
-                { name: 'Previsão', data: previsoes.map(v => Math.round(v)) },
-                {
-                    name: 'Limite (65%)',
-                    data: Array(dias.length).fill(65),
-                }
-            ],
-            xaxis: {
-                categories: dias.map(traduzirDia),
-                labels: {
-                    style: { colors: '#000000' }, // Cor para os valores no eixo X
-                    rotate: -45,
-                    hideOverlappingLabels: false
-                }
-            },
-            yaxis: {
-                min: 0,
-                max: 100,
-                labels: {
-                    style: { colors: '#000000' }, // Cor para os valores no eixo Y
-                    formatter: val => val.toFixed(0)
-                }
-            },
-            stroke: {
-                curve: 'smooth',
-                width: [3, 3, 2],
-                dashArray: [0, 0, 7]
-            },
-            colors: ['#1E90FF', '#18204b', '#000000'], // Cores das linhas
-            title: {
-                text: `Previsão do Percentual de ${selectedComponent}`,
-                align: 'left',
-                style: { color: '#000000', fontSize: '17px' } // Cor para o título do gráfico
-            },
-            legend: {
-                labels: { colors: '#000000' }, // Cor para as legendas
-                position: 'bottom'
-            },
-            grid: {
-                borderColor: '#000000', // Cor para a grade
-                strokeDashArray: 0
-            }
-        };
+       const valoresAtuais = diasSemana.map(
+           (dia) => semanaAtual.find((item) => item.dia_semana === dia)?.componente_avg || 0
+       );
+       const valoresPassados = diasSemana.map(
+           (dia) => semanaPassada.find((item) => item.dia_semana === dia)?.componente_avg || 0
+       );
 
-        const chart2 = new ApexCharts(chartContainer2, options);
-        chart2.render();
-    }
+       const previsoes = [];
+       for (let i = 0; i < diasSemana.length; i++) {
+           const y = valoresPassados.slice(0, i + 1);
+           const x = Array.from({ length: i + 1 }, (_, idx) => idx);
+           const pontos = x.map((val, idx) => [val, y[idx]]);
+           const modelo = regression.linear(pontos);
+           previsoes.push(modelo.predict(i)[1]);
+       }
 
-    function traduzirDia(dia) {
-        const dias = {
-            Sunday: 'Domingo',
-            Monday: 'Segunda',
-            Tuesday: 'Terça',
-            Wednesday: 'Quarta',
-            Thursday: 'Quinta',
-            Friday: 'Sexta',
-            Saturday: 'Sábado'
-        };
-        return dias[dia] || dia;
-    }
+       const maiorPrevisao = Math.max(...previsoes);
+       const menorPrevisao = Math.min(...previsoes);
+       const indiceMaior = previsoes.indexOf(maiorPrevisao);
+       const indiceMenor = previsoes.indexOf(menorPrevisao);
 
-    async function fetchRanking() {
-        try {
-            const response = await fetch('/dashRegressao/ranking');
-            if (!response.ok) throw new Error('Erro ao buscar ranking.');
+       const diaMaiorPrevisao = diasSemana[indiceMaior];
+       const diaMenorPrevisao = diasSemana[indiceMenor];
 
-            const ranking = await response.json();
+       // Salva os dias com maior e menor previsão no sessionStorage
+       sessionStorage.setItem('DIA_MAIOR_PREVISAO', diaMaiorPrevisao);
+       sessionStorage.setItem('DIA_MENOR_PREVISAO', diaMenorPrevisao);
 
-            for (let i = 0; i < ranking.length; i++) {
-                document.getElementById(`posicao${i + 1}`).textContent = `${i + 1}°`;
-                document.getElementById(`nome${i + 1}`).textContent =
-                    `Totem ${ranking[i].totem} - ${ranking[i].componente}: ${ranking[i].valor.toFixed(2)}`;
-            }
+       // Atualiza os elementos de maior e menor previsão
+       const maiorPrevisaoEl = document.getElementById("maiorPrevisao");
+       const menorPrevisaoEl = document.getElementById("menorPrevisao");
+       maiorPrevisaoEl.textContent = traduzirDia(diaMaiorPrevisao);
+       menorPrevisaoEl.textContent = traduzirDia(diaMenorPrevisao);
 
-            const { totem, componente } = ranking[0];
-            document.getElementById('selectTotem').value = totem;
-            document.getElementById('selectComp').value = mapComponentName(componente);
+       // Adicionar eventos de clique para abrir o modal
+       maiorPrevisaoEl.addEventListener('click', () => {
+           sessionStorage.setItem('DIA_ATUAL', diaMaiorPrevisao); // Salva o dia atual
+           abrirModal(`Detalhes do dia com maior previsão: ${traduzirDia(diaMaiorPrevisao)}`, diaMaiorPrevisao);
+       });
 
-            fetchMetrics();
-        } catch (error) {
-            console.error('Erro ao buscar ranking:', error);
-        }
-    }
+       menorPrevisaoEl.addEventListener('click', () => {
+           sessionStorage.setItem('DIA_ATUAL', diaMenorPrevisao); // Salva o dia atual
+           abrirModal(`Detalhes do dia com menor previsão: ${traduzirDia(diaMenorPrevisao)}`, diaMenorPrevisao);
+       });
 
-    function mapComponentName(componente) {
-        const mapping = {
-            'CPU': 'Cpu',
-            'RAM': 'Ram',
-            'Disco': 'Disco',
-        };
-        return mapping[componente] || componente;
-    }
+       atualizarRanking(diasSemana, valoresAtuais, previsoes);
+       renderChart1(diasSemana, valoresAtuais, previsoes.map(p => p + 10), previsoes.map(p => p - 10));
+       renderChart2(diasSemana, valoresAtuais, previsoes);
 
-    document.addEventListener('DOMContentLoaded', fetchRanking);
-    document.addEventListener("DOMContentLoaded", fetchMetrics);
+   } catch (error) {
+       console.error('Erro ao buscar métricas:', error);
+   }
+}
+
+function atualizarRanking(dias, valoresReais, previsoes) {
+   const diasAcima = [];
+   const diasAbaixo = [];
+
+   dias.forEach((dia, index) => {
+       if (valoresReais[index] > previsoes[index]) {
+           diasAcima.push(dia);
+       } else if (valoresReais[index] < previsoes[index]) {
+           diasAbaixo.push(dia);
+       }
+   });
+
+   const listaAcima = document.getElementById('diasAcima');
+   const listaAbaixo = document.getElementById('diasAbaixo');
+
+   // Limpa o conteúdo anterior
+   listaAcima.innerHTML = '';
+   listaAbaixo.innerHTML = '';
+
+   // Adiciona os dias "Acima" como botões com eventos
+   diasAcima.forEach(dia => {
+       const elemento = document.createElement('div');
+       elemento.className = 'dia';
+       elemento.textContent = traduzirDia(dia);
+       elemento.style.cursor = 'pointer';
+       elemento.addEventListener('click', () => {
+           sessionStorage.setItem('DIA_ATUAL', dia); // Salva o dia atual
+           abrirModal(`Detalhes do dia: ${traduzirDia(dia)}`, dia);
+       });
+       listaAcima.appendChild(elemento);
+   });
+
+   // Adiciona os dias "Abaixo" como botões com eventos
+   diasAbaixo.forEach(dia => {
+       const elemento = document.createElement('div');
+       elemento.className = 'dia';
+       elemento.textContent = traduzirDia(dia);
+       elemento.style.cursor = 'pointer';
+       elemento.addEventListener('click', () => {
+           sessionStorage.setItem('DIA_ATUAL', dia); // Salva o dia atual
+           abrirModal(`Detalhes do dia: ${traduzirDia(dia)}`, dia);
+       });
+       listaAbaixo.appendChild(elemento);
+   });
+}
+
+
+   function renderChart1(dias, valores, previsaoMaxima, previsaoMinima) {
+       const selectedComponent = document.getElementById('selectComp').value;
+       const chartContainer = document.querySelector("#chart");
+       chartContainer.innerHTML = '';
+
+       const options = {
+           chart: { type: 'line', height: 290 },
+           series: [
+               { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
+               { name: 'Previsão Máxima', data: previsaoMaxima.map(v => Math.round(v)) },
+               { name: 'Previsão Mínima', data: previsaoMinima.map(v => Math.round(v)) },
+               {
+                   name: 'Limite (65%)',
+                   data: Array(dias.length).fill(65),
+               }
+           ],
+           xaxis: {
+               categories: dias.map(traduzirDia),
+               labels: { style: { colors: '#000000' } } // Cor para os valores no eixo X
+           },
+           yaxis: {
+               min: 0,
+               max: 100,
+               labels: {
+                   style: { colors: '#000000' }, // Cor para os valores no eixo Y
+                   formatter: val => val.toFixed(0)
+               }
+           },
+           stroke: {
+               curve: 'smooth',
+               width: [3, 3, 3, 2],
+               dashArray: [0, 0, 0, 7]
+           },
+           colors: ['#18204b', '#ff0000', '#1E90FF', '#000000'], // Cores das linhas
+           title: {
+               text: `Previsão do Percentual Máximo e Mínimo de ${selectedComponent}`,
+               align: 'left',
+               style: { color: '#000000', fontSize: '17px' } // Cor para o título do gráfico
+           },
+           legend: {
+               labels: { colors: '#000000' }, // Cor para as legendas
+               position: 'bottom'
+           },
+           grid: {
+               borderColor: '#000000', // Cor para a grade
+               strokeDashArray: 0
+           }
+       };
+
+       const chart = new ApexCharts(chartContainer, options);
+       chart.render();
+   }
+
+   function renderChart2(dias, valores, previsoes) {
+       const selectedComponent = document.getElementById('selectComp').value;
+       const chartContainer2 = document.querySelector("#chart2");
+       chartContainer2.innerHTML = '';
+
+       const options = {
+           chart: { type: 'line', height: 290, width: 470 },
+           series: [
+               { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
+               { name: 'Previsão', data: previsoes.map(v => Math.round(v)) },
+               {
+                   name: 'Limite (65%)',
+                   data: Array(dias.length).fill(65),
+               }
+           ],
+           xaxis: {
+               categories: dias.map(traduzirDia),
+               labels: {
+                   style: { colors: '#000000' }, // Cor para os valores no eixo X
+                   rotate: -45,
+                   hideOverlappingLabels: false
+               }
+           },
+           yaxis: {
+               min: 0,
+               max: 100,
+               labels: {
+                   style: { colors: '#000000' }, // Cor para os valores no eixo Y
+                   formatter: val => val.toFixed(0)
+               }
+           },
+           stroke: {
+               curve: 'smooth',
+               width: [3, 3, 2],
+               dashArray: [0, 0, 7]
+           },
+           colors: ['#1E90FF', '#18204b', '#000000'], // Cores das linhas
+           title: {
+               text: `Previsão do Percentual de ${selectedComponent}`,
+               align: 'left',
+               style: { color: '#000000', fontSize: '17px' } // Cor para o título do gráfico
+           },
+           legend: {
+               labels: { colors: '#000000' }, // Cor para as legendas
+               position: 'bottom'
+           },
+           grid: {
+               borderColor: '#000000', // Cor para a grade
+               strokeDashArray: 0
+           }
+       };
+
+       const chart2 = new ApexCharts(chartContainer2, options);
+       chart2.render();
+   }
+
+   function traduzirDia(dia) {
+       const dias = {
+           Sunday: 'Domingo',
+           Monday: 'Segunda',
+           Tuesday: 'Terça',
+           Wednesday: 'Quarta',
+           Thursday: 'Quinta',
+           Friday: 'Sexta',
+           Saturday: 'Sábado'
+       };
+       return dias[dia] || dia;
+   }
+
+   async function fetchRanking() {
+       try {
+           const response = await fetch('/dashRegressao/ranking');
+           if (!response.ok) throw new Error('Erro ao buscar ranking.');
+
+           const ranking = await response.json();
+
+           for (let i = 0; i < ranking.length; i++) {
+               document.getElementById(`posicao${i + 1}`).textContent = `${i + 1}°`;
+               document.getElementById(`nome${i + 1}`).textContent =
+                   `Totem ${ranking[i].totem} - ${ranking[i].componente}: ${ranking[i].valor.toFixed(2)}`;
+           }
+
+           const { totem, componente } = ranking[0];
+           document.getElementById('selectTotem').value = totem;
+           document.getElementById('selectComp').value = mapComponentName(componente);
+
+           fetchMetrics();
+       } catch (error) {
+           console.error('Erro ao buscar ranking:', error);
+       }
+   }
+
+   function mapComponentName(componente) {
+       const mapping = {
+           'CPU': 'Cpu',
+           'RAM': 'Ram',
+           'Disco': 'Disco',
+       };
+       return mapping[componente] || componente;
+   }
+
+   document.addEventListener('DOMContentLoaded', fetchRanking);
+   document.addEventListener("DOMContentLoaded", fetchMetrics);
+   document.addEventListener('DOMContentLoaded', configurarModal);
+
 </script>
-
-
 
 </html>
