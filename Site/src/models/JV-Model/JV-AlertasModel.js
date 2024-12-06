@@ -2,7 +2,8 @@ var database = require("../../database/config");
 
 async function obetertop5() {
     const query = `
-       SELECT 
+   SELECT 
+    t.nome_totem, 
     t.codigo_serie, 
     COUNT(*) AS totalAlertas
 FROM 
@@ -15,10 +16,11 @@ WHERE
     MONTH(a.dtAlerta) = MONTH(CURRENT_DATE()) 
     AND YEAR(a.dtAlerta) = YEAR(CURRENT_DATE())
 GROUP BY 
-    t.codigo_serie
+    t.idTotem
 ORDER BY 
     totalAlertas DESC
 LIMIT 5;
+
 
 
     `;

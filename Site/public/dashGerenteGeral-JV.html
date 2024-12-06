@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Métricas Gerente - GateWatch</title>
+    <title>Tendências Gerente - GateWatch</title>
     <link rel="stylesheet" href="./CSS/styleGerenteGeral-JV.css">
     <link >
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    
 
     <div class="conteudoPagina">
         <div class="boxLateral">
@@ -134,7 +135,7 @@
                     <div class="boxRankingAlertas">
                         <div class="boxTitulo">ALERTAS TOTEM</div>
                         <div class="boxQtd">
-                            <h3>CÓDIGO DE SÉRIE</h3>
+                            <h3>IDENTIFICAÇÃO</h3>
                             <h3>|</h3>
                             <h3>QUANTIDADE</h3>
                         </div>
@@ -372,14 +373,14 @@ async function carregarMeses(ano) {
 async function atualizarGraficoPorMes() {
     const ano = document.getElementById('selectAnoGrafico').value;
     const mes = document.getElementById('selectMesGrafico').value;
-    const response = await fetch(`http://localhost:3333/api/mensal/${ano}/${mes}`);
+    const response = await fetch(`/api/mensal/${ano}/${mes}`);
     const dados = await response.json();
     atualizarSemana(dados); 
 }
 
 async function atualizarGraficoPorAno() {
     const ano = document.getElementById('selectAnoGrafico').value;
-    const response = await fetch(`http://localhost:3333/api/anual/${ano}`);
+    const response = await fetch(`/api/anual/${ano}`);
     const dados = await response.json();
     atualizarSemana(dados); 
 }
@@ -390,7 +391,7 @@ async function atualizarGraficoPorAno() {
 
  async function obterEsta() {
     try {
-        const resposta = await fetch("http://localhost:3333/api/estabilidade");
+        const resposta = await fetch("/api/estabilidade");
         const dados = await resposta.json();
 
         if (dados.length > 0) {
@@ -405,7 +406,7 @@ async function atualizarGraficoPorAno() {
 
 async function obterTopAlertas() {
     try {
-        const resposta = await fetch('http://localhost:3333/api/top5');
+        const resposta = await fetch('/api/top5');
         if (!resposta.ok) {
             console.error("Erro na API:", resposta.status, await resposta.text());
             return;
@@ -423,7 +424,7 @@ async function obterTopAlertas() {
     async function obterHorario() {
     try {
         console.log("Fazendo requisição para /api/hora-picos");
-        const resposta = await fetch('http://localhost:3333/api/hora-picos');
+        const resposta = await fetch('/api/hora-picos');
         console.log("Resposta recebida:", resposta);
 
         if (!resposta.ok) {
@@ -478,12 +479,12 @@ function atualizarAlertas(dados) {
         return;
     }
 
-    dados.forEach(({ codigo_serie, totalAlertas }) => {
+    dados.forEach(({ nome_totem, totalAlertas }) => {
         const boxTotem = document.createElement('div');
         boxTotem.classList.add('boxTotem');
 
         const totemNome = document.createElement('h3');
-        totemNome.textContent = codigo_serie;
+        totemNome.textContent = nome_totem; 
 
         const alertasQtd = document.createElement('h3');
         alertasQtd.textContent = totalAlertas;
@@ -493,6 +494,7 @@ function atualizarAlertas(dados) {
         boxRankingTotens.appendChild(boxTotem);
     });
 }
+
 
 
 
@@ -632,7 +634,7 @@ function atualizarHorario(horario) {
 
 async function obterUptime(ano, mes, filtro) {
     try {
-        const resposta = await fetch(`http://localhost:3333/api/semanal/${ano}/${mes}`);
+        const resposta = await fetch(`/api/semanal/${ano}/${mes}`);
         const dados = await resposta.json();
 
         if (dados.length > 0) {
@@ -764,7 +766,7 @@ async function atualizarGeral() {
 
 async function popularSelects() {
     try {
-        const respostaAnos = await fetch("http://localhost:3333/api/anosDisponiveis");
+        const respostaAnos = await fetch("/api/anosDisponiveis");
         const anosDisponiveis = await respostaAnos.json();
 
         const selectAno = document.getElementById('selectAnoGrafico');
@@ -775,7 +777,7 @@ async function popularSelects() {
             selectAno.add(option);
         });
 
-        const respostaMeses = await fetch("http://localhost:3333/api/mesesDisponiveis/" + anosDisponiveis[0]);
+        const respostaMeses = await fetch("/api/mesesDisponiveis/" + anosDisponiveis[0]);
         const mesesDisponiveis = await respostaMeses.json();
 
         const selectMes = document.getElementById('selectMesGrafico');
