@@ -21,10 +21,10 @@
                 <h3>GERENTE DE DADOS</h3>
             </div>
             <div class="boxOpcoes">
-                <div class="box">TENDÊNCIAS</div>
+                <a href="dashGerenteGeral-JV.html"><div class="box" style="background-color: #41446877;">TENDÊNCIAS</div></a>
                 <a
                     href="dashboardCaue.html">
-                    <div class="box" style="background-color: #41446877;">RELATÓRIO</div>
+                    <div class="box">RELATÓRIO</div>
                 </a>
                 <a href="cadastroTotens.html">
                     <div class="box">TOTENS</div>
@@ -41,7 +41,7 @@
                     <span class="closePopup" id="closePopupTotem">&times;</span>
                     <h2>TOTEM COM MAIS ALERTAS NO MÊS</h2>
                     <p>Com o card exposto na tela é possível identificar o nome do totem de check in da companhia com
-                        maior quantidade de alertas no mês filtrado.
+                        maior quantidade de alertas no mês filtrado, para identificar e comparar qual totem está dando mais problema.
                     </p>
                 </div>
             </div>
@@ -50,8 +50,8 @@
                 <div class="popupContent">
                     <span class="closePopup" id="closePopupDia">&times;</span>
                     <h2>DIA DO MÊS COM MAIS ALERTAS</h2>
-                    <p>om o card exposto na tela é possível identificar o dia do mês filtrado em que o totem de check in
-                        da companhia registrou a maior quantidade de alertas.
+                    <p>Com o card exposto na tela é possível identificar o dia do mês filtrado em que o totem de check in
+                        da companhia registrou a maior quantidade de alertas. Para que possa ser ajudar a identificar se algum fator externo, como um feriado, possa ter colaborado para o aumento de alertas nesse dia.
                     </p>
                 </div>
             </div>
@@ -61,10 +61,10 @@
                     <span class="closePopup" id="closePopupPassageiros">&times;</span>
                     <h2>PASSAGEIROS POR MÊSES DO ANO - ANAC</h2>
                     <p>Através do gráfico é possível identificar a frequência de passageiros por meses do ano no
-                        aeroporto de
+                        aeroporto de Congonhas, expondo como essa quantidade pode variar ao decorrer dos meses.
                     </p>
-                    <span>*Os dados do gráfico são disponibilizados pelo ANAC e são atualizados
-                        Link:https://horus.labtrans.ufsc.br/gerencial/?auth=s#Movimentacao/DadosCompletos</span>
+                    <p>Os dados do gráfico são disponibilizados pelo ANAC e são atualizados periódicamente
+                        Link:https://horus.labtrans.ufsc.br/gerencial/?auth=s#Movimentacao/DadosCompletos</p >
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
                 <div class="popupContent">
                     <span class="closePopup" id="closePopupFreqAlertas">&times;</span>
                     <h2>FREQUÊNCIA DE ALERTAS POR DIAS DO MÊS</h2>
-                    <p>Aqui você pode adicionar detalhes sobre como os alertas funcionam e o que significa cada métrica.
+                    <p>Com o mês de visualização dos dados selecionado é possível selecionar o nome do totem de visualização da frequência de alertas por dia do mês escolhido. Com esse gráfico é possível identificar se algum feriado refletiu no aumento de alertas por exemplo.
                     </p>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <div class="popupContent">
                     <span class="closePopup" id="closePopupAlerxPass">&times;</span>
                     <h2>RELAÇÃO ENTRE A FREQUÊNCIA DE ALERTAS POR PASSAGEIROS</h2>
-                    <p>Aqui você pode adicionar detalhes sobre como os alertas funcionam e o que significa cada métrica.
+                    <p> Para entender se há alguma relação entre a frequência de alertas e a quantidade de passageiros no aeroporto por mês, podendo visualizar através de uma regressão linear a tendência desse dados.
                     </p>
                 </div>
             </div>
@@ -304,66 +304,6 @@
 
 
 
-
-
-
-
-
-    // // Dados simulados
-    // const passageiros = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
-    // const alertas = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
-
-    // // Dados do gráfico de dispersão
-    // const data = {
-    //     datasets: [{
-    //         label: 'Alertas vs Passageiros',
-    //         data: passageiros.map((p, index) => ({
-    //             x: p,
-    //             y: alertas[index]
-    //         })),
-    //         backgroundColor: '#18204b',
-    //         borderColor: 'rgba(75, 192, 192, 1)',
-    //         borderWidth: 1
-    //     }]
-    // };
-
-    // // Configuração do gráfico
-    // const config = {
-    //     type: 'scatter',
-    //     data: data,
-    //     options: {
-    //         responsive: true,
-    //         scales: {
-    //             x: {
-    //                 title: {
-    //                     display: true,
-    //                     text: 'Quantidade de Passageiros (milhares)'
-    //                 }
-    //             },
-    //             y: {
-    //                 title: {
-    //                     display: true,
-    //                     text: 'Frequência de Alertas'
-    //                 }
-    //             }
-    //         }
-    //     }
-    // };
-
-    // // Criando o gráfico no canvas
-    // const ctx = document.getElementById('graficoAlertasXPassageiros').getContext('2d');
-    // new Chart(ctx, config);
-
-
-
-    // const meses = [
-    //     'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-    //     'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-    // ];
-    // const passageirosMensais = [120, 150, 170, 140, 160, 180, 190, 200, 210, 220, 230, 240];
-
-
-
 // FUNÇÃO DE GERAR O GRÁFICO DO WEB CRAWLER COM A QTD DE PASSAGEIROS POR MÊS DO ANO
     function gerarGraficoPassageirosPorMes() {
         document.getElementById("graficoPassageiros").innerHTML += `
@@ -444,113 +384,201 @@
 
 
     // FUNÇÃO DE GERAR GRÁFICO DE FREQUÊNCIA DE ALERTA POR DIA DO MÊS SELECIONADO
-    let intervaloAtualizacao;
-    let myChartAlertas; // Referência global ao gráfico
-
     function gerarGraficoFrequenciaAlertas() {
-        var mesSelecionado = listaMeses.value;
-        var totemSelecionado = listaTotens.value;
+        var mesSelecionado = listaMeses.value
+        var totemSelecionado = listaTotens.value
+        document.getElementById("graficoAlertas").innerHTML = '';
 
-        document.getElementById("graficoAlertas").innerHTML = `
-        <canvas id="myChartCanvasGraficoAlertas" width="1220" height="400"></canvas>
-    `;
+        document.getElementById("graficoAlertas").innerHTML += `
+               
+               <canvas id="myChartCanvasGraficoAlertas" width="1220" height="400"></canvas>`;
 
         fetch(`/alertasGerente/gerarGraficoFrequenciaAlertas/${fkCompanhia}/${mesSelecionado}/${totemSelecionado}`,
-            { cache: 'no-store' })
-            .then(response => {
+            { cache: 'no-store' }).then(function (response) {
                 if (response.ok) {
-                    return response.json();
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        resposta;
+
+
+                        plotarGraficoAlertas(resposta);
+
+
+                    });
                 } else {
-                    throw new Error('Nenhum dado encontrado ou erro na API');
+                    console.error('Nenhum dado encontrado ou erro na API');
                 }
             })
-            .then(resposta => {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                if (myChartAlertas) {
-                    atualizarGrafico(resposta); // Atualiza se o gráfico já existir
-                } else {
-                    plotarGraficoAlertas(resposta); // Plota o gráfico pela primeira vez
-                    iniciarAtualizacaoAutomatica(); // Inicia o intervalo de atualização
-                }
-            })
-            .catch(error => {
-                console.error(`Erro ao obter dados para o gráfico: ${error.message}`);
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
+
     }
 
     function plotarGraficoAlertas(resposta) {
-        const labels = [];
-        const dados = [];
 
-        resposta.forEach(registro => {
+        console.log('iniciando plotagem do gráfico...');
+
+        // Criando estrutura para plotar gráfico - labels
+        let labels = [];
+
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Dias do mês',
+                data: [],
+                fill: false,
+                borderColor: '#18204b',
+                tension: 0.1
+            }]
+        };
+
+        console.log('----------------------------------------------')
+        console.log('Estes dados foram recebidos pela funcao "gerarGraficoPassageirosPorMes" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
             labels.push(registro.diaMes);
-            dados.push(registro.totalAlertas);
-        });
+            dados.datasets[0].data.push(registro.totalAlertas);
+        }
 
+
+        console.log('----------------------------------------------')
+        console.log('O gráfico será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
+
+        // Criando estrutura para plotar gráfico - config
         const config = {
             type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Dias do mês',
-                    data: dados,
+            data: dados,
+        };
+
+        // Adicionando gráfico criado em div na tela
+
+        let myChartAlertas = new Chart(
+            document.getElementById(`myChartCanvasGraficoAlertas`),
+            config
+        );
+
+    }
+
+
+
+    async function gerarRegressaoAlertasXPassageiros() {
+        return fetch(`/alertasGerente/gerarRegressaoAlertasXPassageiros/${fkCompanhia}/`, {
+            method: "GET",
+            cache: 'no-store',
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+                return [];
+            }
+        }).catch(error => {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            return [];
+        });
+    }
+
+    function calcularRegressaoLinear(x, y) {
+        const n = x.length;
+        const somaX = x.reduce((acc, val) => acc + val, 0);
+        const somaY = y.reduce((acc, val) => acc + val, 0);
+        const somaXY = x.reduce((acc, val, i) => acc + val * y[i], 0);
+        const somaX2 = x.reduce((acc, val) => acc + val * val, 0);
+
+        const m = (n * somaXY - somaX * somaY) / (n * somaX2 - somaX * somaX);
+        const b = (somaY - m * somaX) / n;
+
+        return { m, b };
+    }
+
+    // Configurar o Chart.js
+    document.addEventListener("DOMContentLoaded", async function () {
+        const resposta = await gerarRegressaoAlertasXPassageiros();
+
+        let alertas = [];
+        let passageirosAzul = [];
+
+        resposta.forEach(registro => {
+            alertas.push(registro.quantidadeAlertas);
+            passageirosAzul.push(registro.passageirosAzul);
+        });
+
+        // Calcular a linha de regressão
+        const { m, b } = calcularRegressaoLinear(passageirosAzul, alertas);
+
+        // Gerar os pontos da linha de regressão
+        const xMin = Math.min(...passageirosAzul);
+        const xMax = Math.max(...passageirosAzul);
+        const linhaRegressao = [
+            { x: xMin, y: m * xMin + b },
+            { x: xMax, y: m * xMax + b }
+        ];
+
+        // Configurar os datasets
+        const data = {
+            datasets: [
+                {
+                    label: 'Alertas',
+                    data: passageirosAzul.map((x, i) => ({ x: x, y: alertas[i] })),
+                    backgroundColor: '#236B8E',
+                    borderColor: '#236B8E',
+                    pointRadius: 5
+                },
+                {
+                    label: 'Linha de Regressão',
+                    data: linhaRegressao,
+                    type: 'line',
                     borderColor: '#18204b',
-                    tension: 0.1,
-                    fill: false
-                }]
+                    borderWidth: 2,
+                    fill: false,
+                    pointRadius: 0
+                }
+            ]
+        };
+
+        // Configurações do gráfico
+        const config = {
+            type: 'scatter',
+            data: data,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Passageiros Azul'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Quantidade de Alertas'
+                        }
+                    }
+                }
             }
         };
 
-        myChartAlertas = new Chart(
-            document.getElementById('myChartCanvasGraficoAlertas'),
-            config
-        );
-    }
-
-    function atualizarGrafico(resposta) {
-        const labels = [];
-        const dados = [];
-
-        resposta.forEach(registro => {
-            labels.push(registro.diaMes);
-            dados.push(registro.totalAlertas);
-        });
-
-        // Atualiza os dados do gráfico existente
-        myChartAlertas.data.labels = labels;
-        myChartAlertas.data.datasets[0].data = dados;
-
-        // Atualiza a exibição
-        myChartAlertas.update();
-    }
-
-    function iniciarAtualizacaoAutomatica() {
-        if (intervaloAtualizacao) {
-            clearInterval(intervaloAtualizacao);
-        }
-
-        intervaloAtualizacao = setInterval(() => {
-            var mesSelecionado = listaMeses.value;
-            var totemSelecionado = listaTotens.value;
-
-            fetch(`/alertasGerente/gerarGraficoFrequenciaAlertas/${fkCompanhia}/${mesSelecionado}/${totemSelecionado}`,
-                { cache: 'no-store' })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Nenhum dado encontrado ou erro na API');
-                    }
-                })
-                .then(resposta => {
-                    atualizarGrafico(resposta); // Atualiza o gráfico em tempo real
-                })
-                .catch(error => {
-                    console.error(`Erro ao buscar dados para atualização: ${error.message}`);
-                });
-        }, 5000); // Atualiza a cada 5 segundos
-    }
-
+        // Renderizar o gráfico
+        const ctx = document.getElementById('graficoAlertasXPassageiros').getContext('2d');
+        new Chart(ctx, config);
+    });
 
 
 
