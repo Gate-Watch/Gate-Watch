@@ -37,8 +37,8 @@ router.get("/alertas", function (req, res) {
     dashJoaoController.alerta(req, res);
 });
 
-router.post("/atualizarStatus/:idAlerta", function (req, res) {
-    usuarioController.pontos(req, res);
+router.post("/atualizarStatus/:id", function (req, res) {
+    dashJoaoController.atualizarStatus(req, res);
 })
 
 module.exports = router;

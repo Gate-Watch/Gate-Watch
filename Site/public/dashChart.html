@@ -23,7 +23,7 @@
         <div class="nav">
             <div class="boxIdentificacao">
                 <h1 class="fonte_perfil" id="nome_perfil"></h1>
-                <h3>GERENTE DE DADOS</h3>
+                <h3>ANALISTA DE DADOS</h3>
             </div>
             <div class="boxOpcoes">
                 <div class="box">TENDÊNCIAS</div>
@@ -409,6 +409,15 @@
 
 <script>
 
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+    const fkCompanhia = sessionStorage.getItem('FK_COMPANHIA');
+
+    if (nomeUsuario) {
+        document.getElementById('nome_perfil').textContent = nomeUsuario;
+    } else {
+        document.getElementById('nome_perfil').textContent = 'Usuário não identificado';
+    }
+
     function alertas() {
         fetch('/dashJoao/alertas/') // Corrigir a barra final e adicionar uma URL válida
             .then(response => {
@@ -479,23 +488,27 @@
                 });
 
                 // Função que recebe o array de IDs selecionados
-                function funcaoComValorDaCheckbox(ids) {
-                    console.log("IDs selecionados: " + ids.join(", "));
-                    // Aqui você pode fazer o que quiser com os IDs selecionados
+                function funcaoComValorDaCheckbox(id) {
+                    fetch(`/dashJoao/atualizarStatus/${id}`, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Status alterado com sucesso', data);
+                            alert('Status alterado com sucesso');
+                        })
+                        .catch(error => {
+                            console.error('Erro ao alterar status', error);
+                        });
                 }
-
-
             })
             .catch(function (error) {
                 console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
             });
     }
-
-    function funcaoComValorDaCheckbox(id) {
-        console.log("Valor da checkbox selecionada: " + id);
-
-    }
-
 
     setInterval(alertas, 6000);
 

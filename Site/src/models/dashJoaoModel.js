@@ -148,10 +148,20 @@ function alerta() {
     medida, 
     statusTotem 
 from 
-    alerta;
+    alerta
+where
+    statusTotem = 'Alertado';
 `;
     return database.executar(instrucaoSql);
 }
+
+function atualizarStatus(id) {
+    const instrucaoSql = `
+    update alerta set statusTotem = 'resolvido' where idAlerta = '${id}';
+`;
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     dashJoaoCpu,
@@ -163,5 +173,6 @@ module.exports = {
     dashDisco,
     dashDisco2,
     dashDisco3,
-    alerta
+    alerta,
+    atualizarStatus
 };

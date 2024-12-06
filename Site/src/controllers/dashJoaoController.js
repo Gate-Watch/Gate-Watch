@@ -254,6 +254,25 @@ function alerta(req, res) {
         res.status(500).json({ error: 'Erro ao buscar dados de Alerta' });
     }
 }
+
+function atualizarStatus(req, res) {
+    var id = req.params.id;
+    dashJoaoModel.atualizarStatus(id)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao atualizar o status! Erro:",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+}
 module.exports = {
     dashCpu,
     dashCpu2,
@@ -264,5 +283,6 @@ module.exports = {
     dashDisco,
     dashDisco2,
     dashDisco3,
-    alerta
+    alerta,
+    atualizarStatus
 };
