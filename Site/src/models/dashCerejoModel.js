@@ -25,7 +25,7 @@ async function getProcessCpuUsage() {
 // Consulta para obter o total de processos registrados
 async function getTotalProcessCount() {
     const query = `
-        SELECT COUNT(*) AS totalProcessos
+        SELECT count(distinct nomeProcesso) AS totalProcessos
         FROM Processos;
     `;
     return db.executar(query);
