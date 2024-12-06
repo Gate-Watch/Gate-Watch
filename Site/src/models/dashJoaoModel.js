@@ -139,6 +139,20 @@ ORDER BY
     return database.executar(instrucaoSql);
 }
 
+function alerta() {
+    const instrucaoSql = `
+    SELECT 
+    idAlerta,
+    dtAlerta, 
+    componente, 
+    medida, 
+    statusTotem 
+from 
+    alerta;
+`;
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     dashJoaoCpu,
     dashJoaoCpu2,
@@ -148,5 +162,6 @@ module.exports = {
     dashJoaoRam3,
     dashDisco,
     dashDisco2,
-    dashDisco3
+    dashDisco3,
+    alerta
 };

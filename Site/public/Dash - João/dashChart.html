@@ -21,7 +21,23 @@
 <body onload="escolherTotem(), escolherTotemCompara(), escolherTotemComparar()">
     <section class="container">
         <div class="nav">
-
+            <div class="boxIdentificacao">
+                <h1 class="fonte_perfil" id="nome_perfil"></h1>
+                <h3>GERENTE DE DADOS</h3>
+            </div>
+            <div class="boxOpcoes">
+                <div class="box">TENDÊNCIAS</div>
+                <a
+                    href="https://bandteccom-my.sharepoint.com/:x:/r/personal/felipe_nogueira_sptech_school/_layouts/15/doc2.aspx?sourcedoc=%7B2C447587-16DA-4CF9-A5B1-0F51B1FB95C3%7D&file=DashboardWebCrawler.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1&ct=1730116379171&wdOrigin=OFFICECOM-WEB.MAIN.REC&cid=e50e6cf2-9a29-4df0-99db-651175d6dc5b&wdPreviousSessionSrc=HarmonyWeb&wdPreviousSession=8d45903a-d7da-4337-b5a8-bbb41545c8c3">
+                    <div class="box" style="background-color: #41446877;">ALERTAS</div>
+                </a>
+                <a href="cadastroTotens.html">
+                    <div class="box">TOTENS</div>
+                </a>
+            </div>
+            <a href="cadastro.html">
+                <div class="boxSair">SAIR</div>
+            </a>
         </div>
 
         <!-- Dashboard Comparar -->
@@ -32,39 +48,49 @@
             </div>
             <div class="comparar_comparator">
                 <div class="totem_comparar">
-                    <h1>Selecione o Totem</h1>
-                    <select onchange="escolherTotemCompara()" name="totem" id="escolheTotemCompara">
-                        <option value="totemUm">Totem 1</option>
-                        <option value="totemDois">Totem 2</option>
-                        <option value="totemTres">Totem 3</option>
-                    </select>
-                    <h1>Selecione oque monitorar</h1>
-                    <div id="checklist-compara1">
-                        <input value="1" name="r" type="checkbox" id="01" onclick="cpuCompara('totem1')">
-                        <label for="01">CPU</label>
-                        <input value="2" name="r" type="checkbox" id="02" onclick="ramCompara('totem1')">
-                        <label for="02">RAM</label>
-                        <input value="3" name="r" type="checkbox" id="03" onclick="discoCompara('totem1')">
-                        <label for="03">Disco</label>
-                    </div>
-                    <div id="checklist-compara2">
-                        <input value="1" name="r" type="checkbox" id="01" onclick="cpuCompara('totem2')">
-                        <label for="01">CPU</label>
-                        <input value="2" name="r" type="checkbox" id="02" onclick="ramCompara('totem2')">
-                        <label for="02">RAM</label>
-                        <input value="3" name="r" type="checkbox" id="03" onclick="discoCompara('totem2')">
-                        <label for="03">Disco</label>
-                    </div>
-                    <div id="checklist-compara3">
-                        <input value="1" name="r" type="checkbox" id="01" onclick="cpuCompara('totem3')">
-                        <label for="01">CPU</label>
-                        <input value="2" name="r" type="checkbox" id="02" onclick="ramCompara('totem3')">
-                        <label for="02">RAM</label>
-                        <input value="3" name="r" type="checkbox" id="03" onclick="discoCompara('totem3')">
-                        <label for="03">Disco</label>
-                    </div>
+                    <div class="totemComparaSelect">
 
-                    <div class="métricas-compara">
+                        <h1>Selecione o Totem</h1>
+                        <select onchange="escolherTotemCompara()" name="totem" id="escolheTotemCompara"
+                            class="selectComparar">
+                            <option value="totemUm">Totem 1</option>
+                            <option value="totemDois">Totem 2</option>
+                            <option value="totemTres">Totem 3</option>
+                        </select>
+
+                    </div>
+                    <div class="checkDiscoCompara">
+                        <div class="cardCheckCompara">
+                            <div class="tituloCompara">
+                                <h1>Selecione oque monitorar</h1>
+                            </div>
+                            <div class="checkboxCompara">
+                                <div id="checklist-compara1">
+                                    <input value="1" name="r" type="checkbox" id="01" onclick="cpuCompara('totem1')">
+                                    <label class="desabilitado" for="01">CPU</label>
+                                    <input value="2" name="r" type="checkbox" id="02" onclick="ramCompara('totem1')">
+                                    <label class="desabilitado" for="02">RAM</label>
+                                    <input value="3" name="r" type="checkbox" id="03" onclick="discoCompara('totem1')">
+                                    <label class="desabilitado" for="03">Disco</label>
+                                </div>
+                                <div id="checklist-compara2">
+                                    <input value="1" name="r" type="checkbox" id="01" onclick="cpuCompara('totem2')">
+                                    <label class="desabilitado" for="01">CPU</label>
+                                    <input value="2" name="r" type="checkbox" id="02" onclick="ramCompara('totem2')">
+                                    <label class="desabilitado" for="02">RAM</label>
+                                    <input value="3" name="r" type="checkbox" id="03" onclick="discoCompara('totem2')">
+                                    <label class="desabilitado" for="03">Disco</label>
+                                </div>
+                                <div id="checklist-compara3">
+                                    <input value="1" name="r" type="checkbox" id="01" onclick="cpuCompara('totem3')">
+                                    <label class="desabilitado" for="01">CPU</label>
+                                    <input value="2" name="r" type="checkbox" id="02" onclick="ramCompara('totem3')">
+                                    <label class="desabilitado" for="02">RAM</label>
+                                    <input value="3" name="r" type="checkbox" id="03" onclick="discoCompara('totem3')">
+                                    <label class="desabilitado" for="03">Disco</label>
+                                </div>
+                            </div>
+                        </div>
                         <div id="totemDiscoCompara1">
                             <div class="metade-ade" id="cardDiscoCompara1">
                                 <div class="div-disco">
@@ -86,7 +112,8 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="métricas-compara">
                         <div id="totemRamCpuCompara1">
                             <div class="slice2-met" id="cardCpuCompara1">
                                 <div class="div-cpu">
@@ -128,39 +155,47 @@
                     </div>
                 </div>
                 <div class="totem_comparar">
-                    <h1>Selecione o Totem</h1>
-                    <select onchange="escolherTotemComparar()" name="totem" id="escolheTotemComparar">
-                        <option value="totemUm">Totem 1</option>
-                        <option value="totemDois">Totem 2</option>
-                        <option value="totemTres">Totem 3</option>
-                    </select>
-                    <h1>Selecione oque monitorar</h1>
-                    <div id="checklist-comparar1">
-                        <input value="1" name="r" type="checkbox" id="01" onclick="cpuComparar('totem1')">
-                        <label for="01">CPU</label>
-                        <input value="2" name="r" type="checkbox" id="02" onclick="ramComparar('totem1')">
-                        <label for="02">RAM</label>
-                        <input value="3" name="r" type="checkbox" id="03" onclick="discoComparar('totem1')">
-                        <label for="03">Disco</label>
+                    <div class="totemComparaSelect">
+                        <h1>Selecione o Totem</h1>
+                        <select onchange="escolherTotemComparar()" name="totem" id="escolheTotemComparar"
+                            class="selectComparar">
+                            <option value="totemUm">Totem 1</option>
+                            <option value="totemDois">Totem 2</option>
+                            <option value="totemTres">Totem 3</option>
+                        </select>
                     </div>
-                    <div id="checklist-comparar2">
-                        <input value="1" name="r" type="checkbox" id="01" onclick="cpuComparar('totem2')">
-                        <label for="01">CPU</label>
-                        <input value="2" name="r" type="checkbox" id="02" onclick="ramComparar('totem2')">
-                        <label for="02">RAM</label>
-                        <input value="3" name="r" type="checkbox" id="03" onclick="discoComparar('totem2')">
-                        <label for="03">Disco</label>
-                    </div>
-                    <div id="checklist-comparar3">
-                        <input value="1" name="r" type="checkbox" id="01" onclick="cpuComparar('totem3')">
-                        <label for="01">CPU</label>
-                        <input value="2" name="r" type="checkbox" id="02" onclick="ramComparar('totem3')">
-                        <label for="02">RAM</label>
-                        <input value="3" name="r" type="checkbox" id="03" onclick="discoComparar('totem3')">
-                        <label for="03">Disco</label>
-                    </div>
-
-                    <div class="métricas-comparar">
+                    <div class="checkDiscoCompara">
+                        <div class="cardCheckCompara">
+                            <div class="tituloCompara">
+                                <h1>Selecione oque monitorar</h1>
+                            </div>
+                            <div class="checkboxCompara">
+                                <div id="checklist-comparar1">
+                                    <input value="1" name="r" type="checkbox" id="01" onclick="cpuComparar('totem1')">
+                                    <label class="desabilitado" for="01">CPU</label>
+                                    <input value="2" name="r" type="checkbox" id="02" onclick="ramComparar('totem1')">
+                                    <label class="desabilitado" for="02">RAM</label>
+                                    <input value="3" name="r" type="checkbox" id="03" onclick="discoComparar('totem1')">
+                                    <label class="desabilitado" for="03">Disco</label>
+                                </div>
+                                <div id="checklist-comparar2">
+                                    <input value="1" name="r" type="checkbox" id="01" onclick="cpuComparar('totem2')">
+                                    <label class="desabilitado" for="01">CPU</label>
+                                    <input value="2" name="r" type="checkbox" id="02" onclick="ramComparar('totem2')">
+                                    <label class="desabilitado" for="02">RAM</label>
+                                    <input value="3" name="r" type="checkbox" id="03" onclick="discoComparar('totem2')">
+                                    <label class="desabilitado" for="03">Disco</label>
+                                </div>
+                                <div id="checklist-comparar3">
+                                    <input value="1" name="r" type="checkbox" id="01" onclick="cpuComparar('totem3')">
+                                    <label class="desabilitado" for="01">CPU</label>
+                                    <input value="2" name="r" type="checkbox" id="02" onclick="ramComparar('totem3')">
+                                    <label class="desabilitado" for="02">RAM</label>
+                                    <input value="3" name="r" type="checkbox" id="03" onclick="discoComparar('totem3')">
+                                    <label class="desabilitado" for="03">Disco</label>
+                                </div>
+                            </div>
+                        </div>
                         <div id="totemDiscoComparar1">
                             <div class="metade-ade" id="cardDiscoComparar1">
                                 <div class="div-disco">
@@ -182,7 +217,8 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="métricas-comparar">
                         <div id="totemRamCpuComparar1">
                             <div class="slice2-met" id="cardCpuComparar1">
                                 <div class="div-cpu">
@@ -231,38 +267,42 @@
             <div class="slice1">
                 <div class="slice1-met">
                     <div class="metade-met">
-                        <h1>Selecione o Totem</h1>
-                        <select onchange="escolherTotem()" name="totem" id="escolheTotem">
-                            <option value="totemUm">Totem 1</option>
-                            <option value="totemDois">Totem 2</option>
-                            <option value="totemTres">Totem 3</option>
-                        </select>
-                        <h1>Selecione oque monitorar</h1>
-                        <div id="checklist">
-                            <input value="1" name="r" type="checkbox" id="01" onclick="cpu('totem1')">
-                            <label for="01">CPU</label>
-                            <input value="2" name="r" type="checkbox" id="02" onclick="ram('totem1')">
-                            <label for="02">RAM</label>
-                            <input value="3" name="r" type="checkbox" id="03" onclick="disco('totem1')">
-                            <label for="03">Disco</label>
+                        <div class="selectDiscoBox">
+                            <div class="selectTotem">
+                                <h1>Selecione o Totem</h1>
+                                <select onchange="escolherTotem()" name="totem" id="escolheTotem">
+                                    <option value="totemUm">Totem 1</option>
+                                    <option value="totemDois">Totem 2</option>
+                                    <option value="totemTres">Totem 3</option>
+                                </select>
+                            </div>
+                            <h1>Selecione oque monitorar</h1>
+                            <div id="checklist">
+                                <input value="1" name="r" type="checkbox" id="01" onclick="cpu('totem1')">
+                                <label for="01">CPU</label>
+                                <input value="2" name="r" type="checkbox" id="02" onclick="ram('totem1')">
+                                <label for="02">RAM</label>
+                                <input value="3" name="r" type="checkbox" id="03" onclick="disco('totem1')">
+                                <label for="03">Disco</label>
+                            </div>
+                            <div id="checklist2">
+                                <input value="1" name="r" type="checkbox" id="01" onclick="cpu('totem2')">
+                                <label for="01">CPU</label>
+                                <input value="2" name="r" type="checkbox" id="02" onclick="ram('totem2')">
+                                <label for="02">RAM</label>
+                                <input value="3" name="r" type="checkbox" id="03" onclick="disco('totem2')">
+                                <label for="03">Disco</label>
+                            </div>
+                            <div id="checklist3">
+                                <input value="1" name="r" type="checkbox" id="01" onclick="cpu('totem3')">
+                                <label for="01">CPU</label>
+                                <input value="2" name="r" type="checkbox" id="02" onclick="ram('totem3')">
+                                <label for="02">RAM</label>
+                                <input value="3" name="r" type="checkbox" id="03" onclick="disco('totem3')">
+                                <label for="03">Disco</label>
+                            </div>
+                            <button onclick="comparar()">Comparar</button>
                         </div>
-                        <div id="checklist2">
-                            <input value="1" name="r" type="checkbox" id="01" onclick="cpu('totem2')">
-                            <label for="01">CPU</label>
-                            <input value="2" name="r" type="checkbox" id="02" onclick="ram('totem2')">
-                            <label for="02">RAM</label>
-                            <input value="3" name="r" type="checkbox" id="03" onclick="disco('totem2')">
-                            <label for="03">Disco</label>
-                        </div>
-                        <div id="checklist3">
-                            <input value="1" name="r" type="checkbox" id="01" onclick="cpu('totem3')">
-                            <label for="01">CPU</label>
-                            <input value="2" name="r" type="checkbox" id="02" onclick="ram('totem3')">
-                            <label for="02">RAM</label>
-                            <input value="3" name="r" type="checkbox" id="03" onclick="disco('totem3')">
-                            <label for="03">Disco</label>
-                        </div>
-                        <button onclick="comparar()">Comparar</button>
                     </div>
                     <div id="totemDisco1">
                         <div class="metade-ade" id="cardDisco1">
@@ -293,7 +333,20 @@
                         </div>
                         <div class="alerta-content">
                             <div class="alerta-alertas">
-
+                                <table border="1" id="tabela-json">
+                                    <thead>
+                                        <tr>
+                                            <th>idAlerta</th>
+                                            <th>Data</th>
+                                            <th>componente</th>
+                                            <th>Medida</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- As linhas serão inseridas aqui dinamicamente -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="alerta-button">
@@ -355,6 +408,96 @@
 </html>
 
 <script>
+
+    function alertas() {
+        fetch('/dashJoao/alertas/') // Corrigir a barra final e adicionar uma URL válida
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                var tabela = document.getElementById("tabela-json").getElementsByTagName("tbody")[0];
+
+                // Limpa todas as linhas existentes no corpo da tabela
+                tabela.innerHTML = "";
+
+                // Cria um array para armazenar os valores das checkboxes selecionadas
+                var selectedIds = [];
+
+                // Insere os novos dados
+                for (var i = 0; i < response.length; i++) {
+
+                    // Cria uma nova linha na tabela
+                    var novaLinha = tabela.insertRow();
+
+                    // Adiciona células na nova linha
+                    var celulaId = novaLinha.insertCell(0);
+                    var celulaData = novaLinha.insertCell(1);
+                    var celulaComponente = novaLinha.insertCell(2);
+                    var celulaMedida = novaLinha.insertCell(3);
+                    var celulaStatus = novaLinha.insertCell(4);
+
+                    // Cria a checkbox e insere na célula do ID
+                    var checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.value = response[i].idAlerta;
+
+                    // Adiciona o evento de clique na checkbox
+                    checkbox.addEventListener("change", function () {
+                        // Verifica se a checkbox foi selecionada ou desmarcada
+                        if (this.checked) {
+                            selectedIds.push(this.value); // Adiciona o ID ao array
+                        } else {
+                            var index = selectedIds.indexOf(this.value);
+                            if (index > -1) {
+                                selectedIds.splice(index, 1); // Remove o ID do array
+                            }
+                        }
+                    });
+
+                    celulaId.appendChild(checkbox);
+
+                    // Insere os valores nas outras células
+                    celulaData.innerHTML = formatarHorario(response[i].dtAlerta);
+                    celulaComponente.innerHTML = response[i].componente;
+                    celulaMedida.innerHTML = response[i].medida;
+                    celulaStatus.innerHTML = response[i].statusTotem;
+                }
+
+                // Captura o botão "Resolvido"
+                var botaoResolvido = document.querySelector(".alerta-button button");
+
+                // Adiciona o evento ao botão "Resolvido"
+                botaoResolvido.addEventListener("click", function () {
+                    // Passa os IDs selecionados como argumento para a função
+                    if (selectedIds.length > 0) {
+                        funcaoComValorDaCheckbox(selectedIds);
+                        selectedIds = []; // Limpa o array de IDs
+                    }
+                });
+
+                // Função que recebe o array de IDs selecionados
+                function funcaoComValorDaCheckbox(ids) {
+                    console.log("IDs selecionados: " + ids.join(", "));
+                    // Aqui você pode fazer o que quiser com os IDs selecionados
+                }
+
+
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    function funcaoComValorDaCheckbox(id) {
+        console.log("Valor da checkbox selecionada: " + id);
+
+    }
+
+
+    setInterval(alertas, 6000);
 
     // disco - 1 
 
@@ -636,7 +779,7 @@
             });
     }
 
-    setInterval(obterDadosCpu1, 1000);
+    setInterval(obterDadosCpu1, 6000);
 
     const dataCpu = {
         labels: [],
@@ -734,7 +877,7 @@
             });
     }
 
-    setInterval(obterDadosCpu2, 1000);
+    setInterval(obterDadosCpu2, 6000);
 
     const dataCpuDois = {
         labels: [],
@@ -832,7 +975,7 @@
             });
     }
 
-    setInterval(obterDadosCpu3, 1000);
+    setInterval(obterDadosCpu3, 6000);
 
     const dataCpuTres = {
         labels: [],
@@ -931,7 +1074,7 @@
             });
     }
 
-    setInterval(obterDadosRam, 1000);
+    setInterval(obterDadosRam, 6000);
 
     const dataRamUm = {
         labels: [],
@@ -1036,7 +1179,7 @@
             });
     }
 
-    setInterval(obterDadosRam2, 1000);
+    setInterval(obterDadosRam2, 6000);
 
     const dataRamDois = {
         labels: [],
@@ -1140,7 +1283,7 @@
             });
     }
 
-    setInterval(obterDadosRam3, 1000);
+    setInterval(obterDadosRam3, 6000);
 
     const dataRamTres = {
         labels: [],
@@ -1481,7 +1624,7 @@
             });
     }
 
-    setInterval(obterDadosCpu1Compara, 1000);
+    setInterval(obterDadosCpu1Compara, 6000);
 
     const dataCpuCompara = {
         labels: [],
@@ -1581,7 +1724,7 @@
             });
     }
 
-    setInterval(obterDadosCpu2Compara, 1000);
+    setInterval(obterDadosCpu2Compara, 6000);
 
     const dataCpuDoisCompara = {
         labels: [],
@@ -1680,7 +1823,7 @@
             });
     }
 
-    setInterval(obterDadosCpu3Compara, 1000);
+    setInterval(obterDadosCpu3Compara, 6000);
 
     const dataCpuTresCompara = {
         labels: [],
@@ -1745,315 +1888,315 @@
     chartCpuTresCompara = new Chart(cpuTresConfigCompara, configCpuTresCompara);
 
     function obterDadosRamCompara() {
-    fetch('/dashJoao/dashRam/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(response => {
-            const usoDeRam = response.percent;
-            const dataHoraRam = response.dtHora;
-
-            if (usoDeRam !== undefined && dataHoraRam !== undefined) {
-                const horarioFormatado = formatarHorarioCompara(dataHoraRam);
-
-                if (dataRamUmCompara.labels.length >= 10) {
-                    dataRamUmCompara.labels.shift();
-                    dataRamUmCompara.datasets[0].data.shift();
+        fetch('/dashJoao/dashRam/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
 
-                dataRamUmCompara.labels.push(horarioFormatado);
-                dataRamUmCompara.datasets[0].data.push(usoDeRam)
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorarioCompara(dataHoraRam);
 
-                chartRamUmCompara.update();
-            } else {
-                console.error('Erro: Dados inválidos recebidos do servidor.', response);
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-        });
-}
+                    if (dataRamUmCompara.labels.length >= 10) {
+                        dataRamUmCompara.labels.shift();
+                        dataRamUmCompara.datasets[0].data.shift();
+                    }
 
-setInterval(obterDadosRamCompara, 1000);
+                    dataRamUmCompara.labels.push(horarioFormatado);
+                    dataRamUmCompara.datasets[0].data.push(usoDeRam)
 
-const dataRamUmCompara = {
-    labels: [],
-    datasets: [{
-        label: 'Uso de RAM',
-        data: [],
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-    }]
-};
+                    chartRamUmCompara.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
 
-const configUmRamCompara = {
-    type: 'line',
-    data: dataRamUmCompara,
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Monitoramento de RAM',
-                font: {
-                    size: 18,
-                    weight: 'bold',
-                    family: 'Arial',
+    setInterval(obterDadosRamCompara, 6000);
+
+    const dataRamUmCompara = {
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
+    };
+
+    const configUmRamCompara = {
+        type: 'line',
+        data: dataRamUmCompara,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monitoramento de RAM',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial',
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'start'
                 },
-                color: 'black',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                },
-                align: 'start'
-            },
-            annotation: {
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 80,
-                        yMax: 80,
-                        borderColor: 'red',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        label: {
-                            enabled: true,
-                            content: 'Limite de 80',
-                            position: 'center',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: 'red'
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                enabled: true,
+                                content: 'Limite de 80',
+                                position: 'center',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: 'red'
+                            }
                         }
                     }
                 }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
             },
-        },
-    }
-};
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
+    };
 
-const ramUmConfigCompara = document.getElementById('ram1compara');
-chartRamUmCompara = new Chart(ramUmConfigCompara, configUmRamCompara);
+    const ramUmConfigCompara = document.getElementById('ram1compara');
+    chartRamUmCompara = new Chart(ramUmConfigCompara, configUmRamCompara);
 
-// ram - 2
+    // ram - 2
 
-function obterDadosRam2Compara() {
-    fetch('/dashJoao/dashRam2/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(response => {
-            const usoDeRam = response.percent;
-            const dataHoraRam = response.dtHora;
-
-
-            if (usoDeRam !== undefined && dataHoraRam !== undefined) {
-                const horarioFormatado = formatarHorarioCompara(dataHoraRam);
-
-                if (dataRamDoisCompara.labels.length >= 10) {
-                    dataRamDoisCompara.labels.shift();
-                    dataRamDoisCompara.datasets[0].data.shift();
+    function obterDadosRam2Compara() {
+        fetch('/dashJoao/dashRam2/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
 
-                dataRamDoisCompara.labels.push(horarioFormatado);
-                dataRamDoisCompara.datasets[0].data.push(usoDeRam)
 
-                chartRamDoisCompara.update();
-            } else {
-                console.error('Erro: Dados inválidos recebidos do servidor.', response);
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-        });
-}
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorarioCompara(dataHoraRam);
 
-setInterval(obterDadosRam2Compara, 1000);
+                    if (dataRamDoisCompara.labels.length >= 10) {
+                        dataRamDoisCompara.labels.shift();
+                        dataRamDoisCompara.datasets[0].data.shift();
+                    }
 
-const dataRamDoisCompara = {
-    labels: [],
-    datasets: [{
-        label: 'Uso de RAM',
-        data: [],
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-    }]
-};
+                    dataRamDoisCompara.labels.push(horarioFormatado);
+                    dataRamDoisCompara.datasets[0].data.push(usoDeRam)
 
-const configDoisRamCompara = {
-    type: 'line',
-    data: dataRamDoisCompara,
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Monitoramento de RAM',
-                font: {
-                    size: 18,
-                    weight: 'bold',
-                    family: 'Arial',
+                    chartRamDoisCompara.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosRam2Compara, 6000);
+
+    const dataRamDoisCompara = {
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
+    };
+
+    const configDoisRamCompara = {
+        type: 'line',
+        data: dataRamDoisCompara,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monitoramento de RAM',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial',
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'start'
                 },
-                color: 'black',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                },
-                align: 'start'
-            },
-            annotation: {
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 80,
-                        yMax: 80,
-                        borderColor: 'red',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        label: {
-                            enabled: true,
-                            content: 'Limite de 80',
-                            position: 'center',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: 'red'
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                enabled: true,
+                                content: 'Limite de 80',
+                                position: 'center',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: 'red'
+                            }
                         }
                     }
                 }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
             },
-        },
-    }
-};
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
+    };
 
-const ramDoisConfigCompara = document.getElementById('ram2compara');
-chartRamDoisCompara = new Chart(ramDoisConfigCompara, configDoisRamCompara);
+    const ramDoisConfigCompara = document.getElementById('ram2compara');
+    chartRamDoisCompara = new Chart(ramDoisConfigCompara, configDoisRamCompara);
 
-// ram - 3
+    // ram - 3
 
-function obterDadosRam3Compara() {
-    fetch('/dashJoao/dashRam3/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(response => {
-            const usoDeRam = response.percent;
-            const dataHoraRam = response.dtHora;
-
-            if (usoDeRam !== undefined && dataHoraRam !== undefined) {
-                const horarioFormatado = formatarHorarioCompara(dataHoraRam);
-
-                if (dataRamTresCompara.labels.length >= 10) {
-                    dataRamTresCompara.labels.shift();
-                    dataRamTresCompara.datasets[0].data.shift();
+    function obterDadosRam3Compara() {
+        fetch('/dashJoao/dashRam3/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
 
-                dataRamTresCompara.labels.push(horarioFormatado);
-                dataRamTresCompara.datasets[0].data.push(usoDeRam)
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorarioCompara(dataHoraRam);
 
-                chartRamTresCompara.update();
-            } else {
-                console.error('Erro: Dados inválidos recebidos do servidor.', response);
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-        });
-}
+                    if (dataRamTresCompara.labels.length >= 10) {
+                        dataRamTresCompara.labels.shift();
+                        dataRamTresCompara.datasets[0].data.shift();
+                    }
 
-setInterval(obterDadosRam3Compara, 1000);
+                    dataRamTresCompara.labels.push(horarioFormatado);
+                    dataRamTresCompara.datasets[0].data.push(usoDeRam)
 
-const dataRamTresCompara = {
-    labels: [],
-    datasets: [{
-        label: 'Uso de RAM',
-        data: [],
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-    }]
-};
+                    chartRamTresCompara.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
 
-const configTresRamCompara = {
-    type: 'line',
-    data: dataRamTresCompara,
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Monitoramento de RAM',
-                font: {
-                    size: 18,
-                    weight: 'bold',
-                    family: 'Arial',
+    setInterval(obterDadosRam3Compara, 6000);
+
+    const dataRamTresCompara = {
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
+    };
+
+    const configTresRamCompara = {
+        type: 'line',
+        data: dataRamTresCompara,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monitoramento de RAM',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial',
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'start'
                 },
-                color: 'black',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                },
-                align: 'start'
-            },
-            annotation: {
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 80,
-                        yMax: 80,
-                        borderColor: 'red',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        label: {
-                            enabled: true,
-                            content: 'Limite de 80',
-                            position: 'center',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: 'red'
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                enabled: true,
+                                content: 'Limite de 80',
+                                position: 'center',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: 'red'
+                            }
                         }
                     }
                 }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
             },
-        },
-    }
-};
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
+    };
 
-const ramTresConfigCompara = document.getElementById('ram3compara');
-chartRamTresCompara = new Chart(ramTresConfigCompara, configTresRamCompara);
+    const ramTresConfigCompara = document.getElementById('ram3compara');
+    chartRamTresCompara = new Chart(ramTresConfigCompara, configTresRamCompara);
 
     // compara 2
 
@@ -2327,7 +2470,7 @@ chartRamTresCompara = new Chart(ramTresConfigCompara, configTresRamCompara);
             });
     }
 
-    setInterval(obterDadosCpu1Comparar, 1000);
+    setInterval(obterDadosCpu1Comparar, 6000);
 
     const dataCpuComparar = {
         labels: [],
@@ -2427,7 +2570,7 @@ chartRamTresCompara = new Chart(ramTresConfigCompara, configTresRamCompara);
             });
     }
 
-    setInterval(obterDadosCpu2Comparar, 1000);
+    setInterval(obterDadosCpu2Comparar, 6000);
 
     const dataCpuDoisComparar = {
         labels: [],
@@ -2526,7 +2669,7 @@ chartRamTresCompara = new Chart(ramTresConfigCompara, configTresRamCompara);
             });
     }
 
-    setInterval(obterDadosCpu3Comparar, 1000);
+    setInterval(obterDadosCpu3Comparar, 6000);
 
     const dataCpuTresComparar = {
         labels: [],
@@ -2591,315 +2734,315 @@ chartRamTresCompara = new Chart(ramTresConfigCompara, configTresRamCompara);
     chartCpuTresComparar = new Chart(cpuTresConfigComparar, configCpuTresComparar);
 
     function obterDadosRamComparar() {
-    fetch('/dashJoao/dashRam/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(response => {
-            const usoDeRam = response.percent;
-            const dataHoraRam = response.dtHora;
-
-            if (usoDeRam !== undefined && dataHoraRam !== undefined) {
-                const horarioFormatado = formatarHorarioComparar(dataHoraRam);
-
-                if (dataRamUmComparar.labels.length >= 10) {
-                    dataRamUmComparar.labels.shift();
-                    dataRamUmComparar.datasets[0].data.shift();
+        fetch('/dashJoao/dashRam/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
 
-                dataRamUmComparar.labels.push(horarioFormatado);
-                dataRamUmComparar.datasets[0].data.push(usoDeRam)
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorarioComparar(dataHoraRam);
 
-                chartRamUmComparar.update();
-            } else {
-                console.error('Erro: Dados inválidos recebidos do servidor.', response);
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-        });
-}
+                    if (dataRamUmComparar.labels.length >= 10) {
+                        dataRamUmComparar.labels.shift();
+                        dataRamUmComparar.datasets[0].data.shift();
+                    }
 
-setInterval(obterDadosRamComparar, 1000);
+                    dataRamUmComparar.labels.push(horarioFormatado);
+                    dataRamUmComparar.datasets[0].data.push(usoDeRam)
 
-const dataRamUmComparar = {
-    labels: [],
-    datasets: [{
-        label: 'Uso de RAM',
-        data: [],
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-    }]
-};
+                    chartRamUmComparar.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
 
-const configUmRamComparar = {
-    type: 'line',
-    data: dataRamUmComparar,
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Monitoramento de RAM',
-                font: {
-                    size: 18,
-                    weight: 'bold',
-                    family: 'Arial',
+    setInterval(obterDadosRamComparar, 6000);
+
+    const dataRamUmComparar = {
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
+    };
+
+    const configUmRamComparar = {
+        type: 'line',
+        data: dataRamUmComparar,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monitoramento de RAM',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial',
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'start'
                 },
-                color: 'black',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                },
-                align: 'start'
-            },
-            annotation: {
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 80,
-                        yMax: 80,
-                        borderColor: 'red',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        label: {
-                            enabled: true,
-                            content: 'Limite de 80',
-                            position: 'center',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: 'red'
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                enabled: true,
+                                content: 'Limite de 80',
+                                position: 'center',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: 'red'
+                            }
                         }
                     }
                 }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
             },
-        },
-    }
-};
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
+    };
 
-const ramUmConfigComparar = document.getElementById('ram1comparar');
-chartRamUmComparar = new Chart(ramUmConfigComparar, configUmRamComparar);
+    const ramUmConfigComparar = document.getElementById('ram1comparar');
+    chartRamUmComparar = new Chart(ramUmConfigComparar, configUmRamComparar);
 
-// ram - 2
+    // ram - 2
 
-function obterDadosRam2Comparar() {
-    fetch('/dashJoao/dashRam2/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(response => {
-            const usoDeRam = response.percent;
-            const dataHoraRam = response.dtHora;
-
-
-            if (usoDeRam !== undefined && dataHoraRam !== undefined) {
-                const horarioFormatado = formatarHorarioComparar(dataHoraRam);
-
-                if (dataRamDoisComparar.labels.length >= 10) {
-                    dataRamDoisComparar.labels.shift();
-                    dataRamDoisComparar.datasets[0].data.shift();
+    function obterDadosRam2Comparar() {
+        fetch('/dashJoao/dashRam2/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
 
-                dataRamDoisComparar.labels.push(horarioFormatado);
-                dataRamDoisComparar.datasets[0].data.push(usoDeRam)
 
-                chartRamDoisComparar.update();
-            } else {
-                console.error('Erro: Dados inválidos recebidos do servidor.', response);
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-        });
-}
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorarioComparar(dataHoraRam);
 
-setInterval(obterDadosRam2Comparar, 1000);
+                    if (dataRamDoisComparar.labels.length >= 10) {
+                        dataRamDoisComparar.labels.shift();
+                        dataRamDoisComparar.datasets[0].data.shift();
+                    }
 
-const dataRamDoisComparar = {
-    labels: [],
-    datasets: [{
-        label: 'Uso de RAM',
-        data: [],
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-    }]
-};
+                    dataRamDoisComparar.labels.push(horarioFormatado);
+                    dataRamDoisComparar.datasets[0].data.push(usoDeRam)
 
-const configDoisRamComparar = {
-    type: 'line',
-    data: dataRamDoisComparar,
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Monitoramento de RAM',
-                font: {
-                    size: 18,
-                    weight: 'bold',
-                    family: 'Arial',
+                    chartRamDoisComparar.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
+
+    setInterval(obterDadosRam2Comparar, 6000);
+
+    const dataRamDoisComparar = {
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
+    };
+
+    const configDoisRamComparar = {
+        type: 'line',
+        data: dataRamDoisComparar,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monitoramento de RAM',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial',
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'start'
                 },
-                color: 'black',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                },
-                align: 'start'
-            },
-            annotation: {
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 80,
-                        yMax: 80,
-                        borderColor: 'red',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        label: {
-                            enabled: true,
-                            content: 'Limite de 80',
-                            position: 'center',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: 'red'
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                enabled: true,
+                                content: 'Limite de 80',
+                                position: 'center',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: 'red'
+                            }
                         }
                     }
                 }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
             },
-        },
-    }
-};
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
+    };
 
-const ramDoisConfigComparar = document.getElementById('ram2comparar');
-chartRamDoisComparar = new Chart(ramDoisConfigComparar, configDoisRamComparar);
+    const ramDoisConfigComparar = document.getElementById('ram2comparar');
+    chartRamDoisComparar = new Chart(ramDoisConfigComparar, configDoisRamComparar);
 
-// ram - 3
+    // ram - 3
 
-function obterDadosRam3Comparar() {
-    fetch('/dashJoao/dashRam3/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(response => {
-            const usoDeRam = response.percent;
-            const dataHoraRam = response.dtHora;
-
-            if (usoDeRam !== undefined && dataHoraRam !== undefined) {
-                const horarioFormatado = formatarHorarioComparar(dataHoraRam);
-
-                if (dataRamTresComparar.labels.length >= 10) {
-                    dataRamTresComparar.labels.shift();
-                    dataRamTresComparar.datasets[0].data.shift();
+    function obterDadosRam3Comparar() {
+        fetch('/dashJoao/dashRam3/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
+                return response.json();
+            })
+            .then(response => {
+                const usoDeRam = response.percent;
+                const dataHoraRam = response.dtHora;
 
-                dataRamTresComparar.labels.push(horarioFormatado);
-                dataRamTresComparar.datasets[0].data.push(usoDeRam)
+                if (usoDeRam !== undefined && dataHoraRam !== undefined) {
+                    const horarioFormatado = formatarHorarioComparar(dataHoraRam);
 
-                chartRamTresComparar.update();
-            } else {
-                console.error('Erro: Dados inválidos recebidos do servidor.', response);
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-        });
-}
+                    if (dataRamTresComparar.labels.length >= 10) {
+                        dataRamTresComparar.labels.shift();
+                        dataRamTresComparar.datasets[0].data.shift();
+                    }
 
-setInterval(obterDadosRam3Comparar, 1000);
+                    dataRamTresComparar.labels.push(horarioFormatado);
+                    dataRamTresComparar.datasets[0].data.push(usoDeRam)
 
-const dataRamTresComparar = {
-    labels: [],
-    datasets: [{
-        label: 'Uso de RAM',
-        data: [],
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-    }]
-};
+                    chartRamTresComparar.update();
+                } else {
+                    console.error('Erro: Dados inválidos recebidos do servidor.', response);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            });
+    }
 
-const configTresRamComparar = {
-    type: 'line',
-    data: dataRamTresComparar,
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Monitoramento de RAM',
-                font: {
-                    size: 18,
-                    weight: 'bold',
-                    family: 'Arial',
+    setInterval(obterDadosRam3Comparar, 6000);
+
+    const dataRamTresComparar = {
+        labels: [],
+        datasets: [{
+            label: 'Uso de RAM',
+            data: [],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1,
+        }]
+    };
+
+    const configTresRamComparar = {
+        type: 'line',
+        data: dataRamTresComparar,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monitoramento de RAM',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial',
+                    },
+                    color: 'black',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    align: 'start'
                 },
-                color: 'black',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                },
-                align: 'start'
-            },
-            annotation: {
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 80,
-                        yMax: 80,
-                        borderColor: 'red',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        label: {
-                            enabled: true,
-                            content: 'Limite de 80',
-                            position: 'center',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: 'red'
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: 80,
+                            yMax: 80,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                enabled: true,
+                                content: 'Limite de 80',
+                                position: 'center',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: 'red'
+                            }
                         }
                     }
                 }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
             },
-        },
-    }
-};
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
+    };
 
-const ramTresConfigComparar = document.getElementById('ram3comparar');
-chartRamTresComparar = new Chart(ramTresConfigComparar, configTresRamComparar);
+    const ramTresConfigComparar = document.getElementById('ram3comparar');
+    chartRamTresComparar = new Chart(ramTresConfigComparar, configTresRamComparar);
 
 
 </script>

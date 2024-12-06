@@ -238,6 +238,22 @@ function dashDisco3(req, res) {
         res.status(500).json({ error: 'Erro ao buscar dados de Disco' });
     }
 }
+
+function alerta(req, res) {
+    try {
+        dashJoaoModel.alerta()
+            .then(function(data) {
+                res.status(200).json(data)
+            })
+            .catch(function(error) {
+                console.error("Erro ao buscar dados de Alerta:", error);
+                res.status(500).json({ error: 'Erro ao buscar dados de Alerta' });
+            });
+    } catch (error) {
+        console.error('Erro ao buscar dados de Alerta:', error);
+        res.status(500).json({ error: 'Erro ao buscar dados de Alerta' });
+    }
+}
 module.exports = {
     dashCpu,
     dashCpu2,
@@ -247,5 +263,6 @@ module.exports = {
     dashRam3,
     dashDisco,
     dashDisco2,
-    dashDisco3
+    dashDisco3,
+    alerta
 };
