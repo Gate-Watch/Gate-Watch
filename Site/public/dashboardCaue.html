@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="CSS/caue.css" />
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+  <title>Relatório Gerente - GateWatch</title>
+</head>
+
+<body>
+  <div class="containerPagina">
+    <div class="colunaLateral">
+      <div class="boxIdentificacao">
+        <h1 class="fonte_perfil" id="nome_perfil"></h1>
+        <h3>GERENTE DE DADOS</h3>
+      </div>
+      <div class="boxOpcoes">
+        <a href="dashGerenteGeral-JV.html">
+          <div class="box">
+            TENDÊNCIAS
+          </div>
+        </a>
+        <a href="dashboardCaue.html" style="background-color: #41446877">
+          <div class="box">RELATÓRIO</div>
+        </a>
+        <a href="cadastroTotens.html">
+          <div class="box">TOTENS</div>
+        </a>
+      </div>
+      <a href="cadastro.html">
+        <div class="boxSair">SAIR</div>
+      </a>
+    </div>
+    <div class="containerMetricas1">
+      <div class="boxAeroporto">
+        <h1>RELATÓRIO ANUAL DOS TOTENS</h1>
+        <h2>Quantidade totens : <span id="quantidadeTotens"></span></h2>
+      </div>
+
+      <div class="boxWord">
+        <div class="WordCloud">
+          <div class="titleWordCloud">
+            <h2>WordCloud-Processos</h2> 
+            <select name="selectAnoWordCloud" id="anoWordCloud" onchange="selectAnoWord()">
+              <!--<option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option> -->
+            </select>
+          </div>
+          <div id="wordCloudProcessos"></div>
+        </div>
+        <div class="Componentes">
+          <div class="textoComponentes">
+            <h2>Porcentagem de uso dos componentes</h2>
+            <select id="anoSelectBarraLateral" onchange="selectAnoBarra()"></select>
+            <select id="mesSelect" onchange="selectMesBarra()"></select>
+          </div>
+          <div class="graficoComponentes">
+            <div id="graficoComponentes"></div>
+          </div>
+        </div>
+      </div>
+      <div class="gráficoAlertas">
+        <div class="texto">
+          <h2>Gráfico média de alertas anuais</h2>
+          <select id="graficoLinhaSelect" onchange="selectAnoLinha()">
+            <option value="2024" selected disabled>Selecionar o ano</option>
+          </select>
+        </div>
+        <div id="graficoAlerta"></div>
+      </div>
+    </div>
+    <div id="smileOverlay" class="smileOverlay">
+      <div class="smileMessageBox" onclick="event.stopPropagation()">
+        <div class="graficosTop">
+          <div class="informacoesTotem">
+            <p id="smileMessage">Totem: Nome do Totem</p>
+          </div>
+          <div class="rosquinhaJanela">
+            <p>Porcentagem Alertas por componente</p>
+            <div id="rosquinhaComponentes" class="rosquinhaComponentes"></div>
+          </div>
+          <div class="lateralBar">
+            <p>Dia e Hora do Último Alerta</p>
+            <h2 id="DiaUltimoAlerta"></h2>
+            <h2 id="HoraUlimoAlerta"></h2>
+          </div>
+          <div class="radarComponente">
+            <p>Distribuição Alertas por Componente</p>
+            <div id="barraComponentes"></div>
+          </div>
+        </div>
+        <div class="alertaLinhaContainer">
+          <div class="itensTopoComparacao">
+            <p>Alertas Anuais</p> <select name="" id="anoSelectComparacao" onchange="selectAnoComparacao()"></select>
+          </div>
+          <div id="alertasLinha"></div>
+        </div>
+        <button onclick="fecharOverlay()">Fechar</button>
+      </div>
+    </div>
+    <div class="containerMetricas2">
+      <div class="logo">
+        <a href="index.html"><img src="Images/gwLogo_black.png" alt="Botão para voltar a tela inicial" /></a>
+      </div>
+      <div class="rank">
+        <div class="rankTitle">
+          <h1>TOTEM</h1>
+          <select name="" id="ordenar-por" onchange="ordenarTotens()">
+            <option value="0" disabled selected>Ordenar por:</option>
+            <option value="qtdAlertas">Quantidade Alertas</option>
+            <option value="alertaRecente">Alertas recentes</option>
+            <option value="nome">Ordem alfabética</option>
+          </select>
+        </div>
+        <div class="ranking">
+          <div id="botao-container" class="botao-rank"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coloque todos os scripts no final para garantir que o DOM esteja completamente carregado -->
+  <script src="JavaScript/botoes.js"></script>
+  <script src="JavaScript/selectDinamico.js"></script>
+  <script src="JavaScript/quantidadeTotens.js"></script>
+  <script src="JavaScript/graficoLinha.js"></script>
+  <script src="JavaScript/graficoBarraLateralInicio.js"></script>
+  <script src="JavaScript/wordCloud.js"></script>
+  <script src="JavaScript/caueGraficos.js"></script>
+</body>
+
+</html>

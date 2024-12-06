@@ -33,6 +33,12 @@ router.get("/dashDisco3", function (req, res) {
     dashJoaoController.dashDisco3(req, res);
 });
 
+router.get("/alertas", function (req, res) {
+    dashJoaoController.alerta(req, res);
+});
 
+router.post("/atualizarStatus/:id", function (req, res) {
+    dashJoaoController.atualizarStatus(req, res);
+})
 
 module.exports = router;

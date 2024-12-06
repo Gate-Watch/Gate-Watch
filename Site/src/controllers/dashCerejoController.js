@@ -22,4 +22,15 @@ async function getProcessCpuUsage(req, res) {
     }
 }
 
-module.exports = { getProcessFrequency, getProcessCpuUsage };
+// Obtém o total de processos registrados
+async function getTotalProcessCount(req, res) {
+    try {
+        const data = await model.getTotalProcessCount();
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Erro ao obter o total de processos:", error);
+        res.status(500).json({ error: "Erro ao buscar o total de processos." });
+    }
+}
+
+module.exports = { getProcessFrequency, getProcessCpuUsage, getTotalProcessCount };
