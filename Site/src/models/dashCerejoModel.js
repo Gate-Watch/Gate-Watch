@@ -22,4 +22,13 @@ async function getProcessCpuUsage() {
     return db.executar(query);
 }
 
-module.exports = { getProcessFrequency, getProcessCpuUsage };
+// Consulta para obter o total de processos registrados
+async function getTotalProcessCount() {
+    const query = `
+        SELECT COUNT(*) AS totalProcessos
+        FROM Processos;
+    `;
+    return db.executar(query);
+}
+
+module.exports = { getProcessFrequency, getProcessCpuUsage, getTotalProcessCount };

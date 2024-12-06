@@ -8,4 +8,7 @@ router.get('/frequencia', controller.getProcessFrequency);
 // Rota para obter o total de CPU por processo
 router.get('/cpu', controller.getProcessCpuUsage);
 
+// Rota para obter o total de processos
+router.get('/totalProcessos', controller.getTotalProcessCount);
+
 module.exports = router;
