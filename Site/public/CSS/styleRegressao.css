@@ -115,7 +115,7 @@
     width: 30vw;
     display: flex;
     align-items: flex-end;
-    margin-left: 15.3vw;
+    margin-left: 11.6vw;
     margin-top: -3.5vh;
  }
  
@@ -404,12 +404,11 @@
  .modal {
     position: relative;
     background: white;
-    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);;
+    width: 80vw;
+    height: 90vh;
+    margin-left: 15vw;
  }
  
  /* Botão para fechar (estilizado no canto superior direito) */
