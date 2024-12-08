@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas Analista - GateWatch</title>
+    <link rel="stylesheet" href="CSS/dashboardCerejo.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-wordcloud"></script>
+</head>
+
+<body>
+    <div class="conteudoPagina">
+        <div class="boxLateral">
+            <div class="boxIdentificacao">
+                <h1 class="fonte_perfil" id="nome_perfil"></h1>
+                <h3>ANALISTA DE DADOS</h3>
+            </div>
+            <div class="boxOpcoes">
+                <a href="index.html">
+                    <div class="box">HOME</div>
+                </a>
+                <a href="../public/dashboardAnalistaMetricas.html">
+                    <div class="box">DASHBOARD</div>
+                </a>
+                <a href="dashboardAnalistaRegressao.html">
+                    <div class="box">PREVISÕES</div>
+                </a>
+            </div>
+            <a href="cadastro.html">
+                <div class="boxSair">SAIR</div>
+            </a>
+        </div>
+
+        <div class="mainContent">
+            <div class="header">
+                <h1>ANÁLISE DE PROCESSOS</h1>
+                <select name="" id="totemSelect">
+                    <option value="toten1">TÓTEM 1</option>
+                    <option value="toten2">TÓTEM 2</option>
+                    <option value="toten3">TÓTEM 3</option>
+                </select>
+                <button onclick="aplicar()">APLICAR</button>
+            </div>
+
+            <div class="blocoTop">
+                <div class="frequencia">
+                    <div class="titulo2">
+                        <div class="bar"></div>Frequência de processos
+                    </div>
+                    <div id="chart2"></div>
+                </div>
+            </div>
+
+            <div class="blocoBottom">
+                <div class="nuvem">
+                    <div class="titulo1">
+                        <div class="bar"></div>Nuvem de processamento
+                    </div>
+                    <div class="wordcloud">
+                        <canvas id="chart3"></canvas>
+                    </div>
+                </div>
+
+                <div class="projecao">
+                    <div class="titulo3">
+                        <div class="bar"></div>Projeção da execução
+                    </div>
+                    <div id="scatterChart"></div>
+                </div>
+
+                <div class="adicionais">
+                    <div class="total">
+                        <div class="titulo4">
+                            <div class="bar"></div>Total de Processos
+                        </div>
+                        <h1></h1>
+                    </div>
+
+                    <div class="sistema">
+                        <div class="titulo5">
+                            <div class="bar"></div>Processos de sistema
+                        </div>
+                        <h1>5</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/wordcloud2.js"></script>
+
+    <script>
+        async function aplicar() {
+            var totem = totemSelect.value;
+
+            if (totem == "toten1") {
+                // Scatter Chart com regressão linear e ajustes
+                // Scatter Chart (ApexCharts)
+                async function renderScatterChart() {
+                    try {
+                        const responseFreq = await fetch('/dashCerejo/frequencia');
+                        const dataFreq = await responseFreq.json();
+
+                        const responseCpu = await fetch('/dashCerejo/cpu');
+                        const dataCpu = await responseCpu.json();
+
+                        // Combinar os dois datasets
+                        const combinedData = dataFreq.map(freqItem => {
+                            const cpuItem = dataCpu.find(cpu => cpu.nomeProcesso === freqItem.nomeProcesso);
+                            return {
+                                nomeProcesso: freqItem.nomeProcesso,
+                                x: cpuItem ? (parseFloat(cpuItem.total_cpu) / Math.max(...dataCpu.map(cpu => parseFloat(cpu.total_cpu))) * 100).toFixed(1) : 0, // CPU (%)
+                                y: freqItem.frequencia.toFixed(1) // Frequência
+                            };
+                        });
+
+                        // Coletar dados de X e Y para regressão
+                        const xValues = combinedData.map(item => parseFloat(item.x));
+                        const yValues = combinedData.map(item => parseFloat(item.y));
+
+                        // Calcular regressão linear
+                        const n = xValues.length;
+                        const xSum = xValues.reduce((a, b) => a + b, 0);
+                        const ySum = yValues.reduce((a, b) => a + b, 0);
+                        const xySum = xValues.reduce((sum, x, i) => sum + x * yValues[i], 0);
+                        const xSquaredSum = xValues.reduce((sum, x) => sum + x * x, 0);
+
+                        const slope = (n * xySum - xSum * ySum) / (n * xSquaredSum - xSum * xSum);
+                        const intercept = (ySum - slope * xSum) / n;
+
+                        // Gerar pontos para a linha de regressão
+                        const regressionPoints = xValues.map(x => ({
+                            x: x,
+                            y: slope * x + intercept
+                        }));
+
+                        const options = {
+                            series: [
+                                {
+                                    name: "Dados Reais",
+                                    data: combinedData
+                                },
+                                {
+                                    name: "Regressão Linear",
+                                    data: regressionPoints,
+                                }
+                            ],
+                            chart: {
+                                height: 280,
+                                type: 'scatter',
+                                zoom: { enabled: true, type: 'xy' }
+                            },
+                            xaxis: {
+                                tickAmount: 10,
+                                title: { text: "Total de CPU (%)" },
+                                labels: {
+                                    formatter: function (val) { return parseFloat(val).toFixed(1) }
+                                }
+                            },
+                            yaxis: {
+                                tickAmount: 7,
+                                title: { text: "Frequência" },
+                                labels: {
+                                    formatter: function (val) { return parseFloat(val).toFixed(1) }
+                                }
+                            },
+                            tooltip: {
+                                shared: false,
+                                custom: function ({ seriesIndex, dataPointIndex, w }) {
+                                    const pointData = w.config.series[seriesIndex].data[dataPointIndex];
+                                    if (seriesIndex === 0) { // Dados Reais
+                                        return `<div style="padding: 8px;">
+                            <strong>${pointData.nomeProcesso}</strong><br>
+                            CPU: ${pointData.x}%<br>
+                            Frequência: ${pointData.y}
+                        </div>`;
+                                    } else { // Regressão Linear
+                                        return `<div style="padding: 8px;">
+                            <strong>Regressão Linear</strong><br>
+                            CPU: ${pointData.x}%<br>
+                            Frequência: ${pointData.y.toFixed(1)}
+                        </div>`;
+                                    }
+                                }
+                            },
+                            colors: ['blue', 'red'],
+                            legend: { show: true }
+                        };
+
+                        const scatterChart = new ApexCharts(document.querySelector("#scatterChart"), options);
+                        scatterChart.render();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Scatter Chart:', error);
+                    }
+                }
+
+
+                // Bar Chart (ApexCharts)
+                async function renderBarChart() {
+                    try {
+                        const response = await fetch('/dashCerejo/frequencia');
+                        const data = await response.json();
+
+                        const seriesData = data.map(item => ({
+                            x: item.nomeProcesso,
+                            y: item.frequencia,
+                            goals: [{
+                                name: 'Esperado',
+                                value: 100,
+                                strokeHeight: 5,
+                                strokeColor: 'violet'
+                            }]
+                        }));
+
+                        const options = {
+                            series: [{
+                                name: 'Frequência Atual',
+                                data: seriesData,
+                            }],
+                            chart: { height: 170, type: 'bar' },
+                            plotOptions: { bar: { columnWidth: '60%' } },
+                            colors: ['darkblue'],
+                            legend: { show: true }
+                        };
+
+                        const barChart = new ApexCharts(document.querySelector("#chart2"), options);
+                        barChart.render();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Bar Chart:', error);
+                    }
+                }
+
+                // Word Cloud (Chart.js)
+                // Word Cloud (Chart.js)
+                async function renderWordCloud() {
+                    try {
+                        const response = await fetch('/dashCerejo/cpu');
+                        const data = await response.json();
+
+                        // Normalização dos valores para ajuste do tamanho das palavras
+                        const maxValue = Math.max(...data.map(item => parseFloat(item.total_cpu)));
+                        const minValue = Math.min(...data.map(item => parseFloat(item.total_cpu)));
+
+                        const normalizedData = data.map(item => ({
+                            label: item.nomeProcesso,
+                            value: ((parseFloat(item.total_cpu) - minValue) / (maxValue - minValue)) * 30 + 10 // Ajuste de tamanho (10 a 40)
+                        }));
+
+                        const limitedData = normalizedData.slice(0, 20); // Limita a 20 palavras
+                        const labels = limitedData.map(item => item.label);
+                        const weights = limitedData.map(item => item.value);
+
+                        // Função para gerar tons de azul baseados no peso
+                        const generateColor = (value) => {
+                            const intensity = Math.round((value / Math.max(...weights)) * 255); // Normaliza o peso para [0, 255]
+                            return `rgb(0, 0, ${intensity})`; // Azul crescente com a intensidade
+                        };
+
+                        const colors = weights.map(generateColor); // Gera cores para cada palavra
+
+                        // Criação do gráfico Word Cloud
+                        const ctxWordCloud = document.getElementById('chart3').getContext('2d');
+                        const wordCloudChart = new Chart(ctxWordCloud, {
+                            type: 'wordCloud',
+                            data: {
+                                labels,
+                                datasets: [{
+                                    label: 'Word Cloud',
+                                    data: weights,
+                                    color: colors // Aplica as cores geradas
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                plugins: { legend: { display: false } },
+                                elements: {
+                                    wordCloud: {
+                                        minFontSize: 12,
+                                        maxFontSize: 40
+                                    }
+                                }
+                            }
+                        });
+
+                        wordCloudChart.update();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Word Cloud:', error);
+                    }
+                }
+
+
+                // Inicialização dos gráficos
+                document.addEventListener("DOMContentLoaded", async () => {
+                    renderScatterChart();
+                    renderBarChart();
+                    renderWordCloud();
+                });
+
+                async function updateTotalProcesses() {
+                    try {
+                        const response = await fetch('/dashCerejo/totalProcessos');
+                        const data = await response.json();
+
+                        // Atualiza a div com o total de processos
+                        const totalDiv = document.querySelector('.total h1');
+                        totalDiv.textContent = data[0].totalProcessos; // Acessa o total de processos retornado pela consulta
+                    } catch (error) {
+                        console.error("Erro ao buscar o total de processos:", error);
+                    }
+                }
+
+                // Chamar a função ao carregar a página
+                document.addEventListener('DOMContentLoaded', updateTotalProcesses);
+            }
+
+            if (totem == "toten2") {
+                async function renderScatterChart() {
+                    try {
+                        const responseFreq = await fetch('/dashCerejo/frequencia2');
+                        const dataFreq = await responseFreq.json();
+
+                        const responseCpu = await fetch('/dashCerejo/cpu2');
+                        const dataCpu = await responseCpu.json();
+
+                        // Combinar os dois datasets
+                        const combinedData = dataFreq.map(freqItem => {
+                            const cpuItem = dataCpu.find(cpu => cpu.nomeProcesso === freqItem.nomeProcesso);
+                            return {
+                                nomeProcesso: freqItem.nomeProcesso,
+                                x: cpuItem ? (parseFloat(cpuItem.total_cpu) / Math.max(...dataCpu.map(cpu => parseFloat(cpu.total_cpu))) * 100).toFixed(1) : 0, // CPU (%)
+                                y: freqItem.frequencia.toFixed(1) // Frequência
+                            };
+                        });
+
+                        // Coletar dados de X e Y para regressão
+                        const xValues = combinedData.map(item => parseFloat(item.x));
+                        const yValues = combinedData.map(item => parseFloat(item.y));
+
+                        // Calcular regressão linear
+                        const n = xValues.length;
+                        const xSum = xValues.reduce((a, b) => a + b, 0);
+                        const ySum = yValues.reduce((a, b) => a + b, 0);
+                        const xySum = xValues.reduce((sum, x, i) => sum + x * yValues[i], 0);
+                        const xSquaredSum = xValues.reduce((sum, x) => sum + x * x, 0);
+
+                        const slope = (n * xySum - xSum * ySum) / (n * xSquaredSum - xSum * xSum);
+                        const intercept = (ySum - slope * xSum) / n;
+
+                        // Gerar pontos para a linha de regressão
+                        const regressionPoints = xValues.map(x => ({
+                            x: x,
+                            y: slope * x + intercept
+                        }));
+
+                        const options = {
+                            series: [
+                                {
+                                    name: "Dados Reais",
+                                    data: combinedData
+                                },
+                                {
+                                    name: "Regressão Linear",
+                                    data: regressionPoints,
+                                }
+                            ],
+                            chart: {
+                                height: 280,
+                                type: 'scatter',
+                                zoom: { enabled: true, type: 'xy' }
+                            },
+                            xaxis: {
+                                tickAmount: 10,
+                                title: { text: "Total de CPU (%)" },
+                                labels: {
+                                    formatter: function (val) { return parseFloat(val).toFixed(1) }
+                                }
+                            },
+                            yaxis: {
+                                tickAmount: 7,
+                                title: { text: "Frequência" },
+                                labels: {
+                                    formatter: function (val) { return parseFloat(val).toFixed(1) }
+                                }
+                            },
+                            tooltip: {
+                                shared: false,
+                                custom: function ({ seriesIndex, dataPointIndex, w }) {
+                                    const pointData = w.config.series[seriesIndex].data[dataPointIndex];
+                                    if (seriesIndex === 0) { // Dados Reais
+                                        return `<div style="padding: 8px;">
+                            <strong>${pointData.nomeProcesso}</strong><br>
+                            CPU: ${pointData.x}%<br>
+                            Frequência: ${pointData.y}
+                        </div>`;
+                                    } else { // Regressão Linear
+                                        return `<div style="padding: 8px;">
+                            <strong>Regressão Linear</strong><br>
+                            CPU: ${pointData.x}%<br>
+                            Frequência: ${pointData.y.toFixed(1)}
+                        </div>`;
+                                    }
+                                }
+                            },
+                            colors: ['blue', 'red'],
+                            legend: { show: true }
+                        };
+
+                        const scatterChart = new ApexCharts(document.querySelector("#scatterChart"), options);
+                        scatterChart.render();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Scatter Chart:', error);
+                    }
+                }
+
+
+                // Bar Chart (ApexCharts)
+                async function renderBarChart() {
+                    try {
+                        const response = await fetch('/dashCerejo/frequencia2');
+                        const data = await response.json();
+
+                        const seriesData = data.map(item => ({
+                            x: item.nomeProcesso,
+                            y: item.frequencia,
+                            goals: [{
+                                name: 'Esperado',
+                                value: 100,
+                                strokeHeight: 5,
+                                strokeColor: 'violet'
+                            }]
+                        }));
+
+                        const options = {
+                            series: [{
+                                name: 'Frequência Atual',
+                                data: seriesData,
+                            }],
+                            chart: { height: 170, type: 'bar' },
+                            plotOptions: { bar: { columnWidth: '60%' } },
+                            colors: ['darkblue'],
+                            legend: { show: true }
+                        };
+
+                        const barChart = new ApexCharts(document.querySelector("#chart2"), options);
+                        barChart.render();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Bar Chart:', error);
+                    }
+                }
+
+                // Word Cloud (Chart.js)
+                // Word Cloud (Chart.js)
+                async function renderWordCloud() {
+                    try {
+                        const response = await fetch('/dashCerejo/cpu2');
+                        const data = await response.json();
+
+                        // Normalização dos valores para ajuste do tamanho das palavras
+                        const maxValue = Math.max(...data.map(item => parseFloat(item.total_cpu)));
+                        const minValue = Math.min(...data.map(item => parseFloat(item.total_cpu)));
+
+                        const normalizedData = data.map(item => ({
+                            label: item.nomeProcesso,
+                            value: ((parseFloat(item.total_cpu) - minValue) / (maxValue - minValue)) * 30 + 10 // Ajuste de tamanho (10 a 40)
+                        }));
+
+                        const limitedData = normalizedData.slice(0, 20); // Limita a 20 palavras
+                        const labels = limitedData.map(item => item.label);
+                        const weights = limitedData.map(item => item.value);
+
+                        // Função para gerar tons de azul baseados no peso
+                        const generateColor = (value) => {
+                            const intensity = Math.round((value / Math.max(...weights)) * 255); // Normaliza o peso para [0, 255]
+                            return `rgb(0, 0, ${intensity})`; // Azul crescente com a intensidade
+                        };
+
+                        const colors = weights.map(generateColor); // Gera cores para cada palavra
+
+                        // Criação do gráfico Word Cloud
+                        const ctxWordCloud = document.getElementById('chart3').getContext('2d');
+                        const wordCloudChart = new Chart(ctxWordCloud, {
+                            type: 'wordCloud',
+                            data: {
+                                labels,
+                                datasets: [{
+                                    label: 'Word Cloud',
+                                    data: weights,
+                                    color: colors // Aplica as cores geradas
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                plugins: { legend: { display: false } },
+                                elements: {
+                                    wordCloud: {
+                                        minFontSize: 12,
+                                        maxFontSize: 40
+                                    }
+                                }
+                            }
+                        });
+
+                        wordCloudChart.update();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Word Cloud:', error);
+                    }
+                }
+
+
+                // Inicialização dos gráficos
+                document.addEventListener("DOMContentLoaded", () => {
+                    renderScatterChart();
+                    renderBarChart();
+                    renderWordCloud();
+                });
+
+                async function updateTotalProcesses() {
+                    try {
+                        const response = await fetch('/dashCerejo/totalProcessos2');
+                        const data = await response.json();
+
+                        // Atualiza a div com o total de processos
+                        const totalDiv = document.querySelector('.total h1');
+                        totalDiv.textContent = data[0].totalProcessos; // Acessa o total de processos retornado pela consulta
+                    } catch (error) {
+                        console.error("Erro ao buscar o total de processos:", error);
+                    }
+                }
+
+                // Chamar a função ao carregar a página
+                document.addEventListener('DOMContentLoaded', updateTotalProcesses);
+            }
+
+
+
+            if (totem == "toten3") {
+                async function renderScatterChart() {
+                    try {
+                        const responseFreq = await fetch('/dashCerejo/frequencia3');
+                        const dataFreq = await responseFreq.json();
+
+                        const responseCpu = await fetch('/dashCerejo/cpu3');
+                        const dataCpu = await responseCpu.json();
+
+                        // Combinar os dois datasets
+                        const combinedData = dataFreq.map(freqItem => {
+                            const cpuItem = dataCpu.find(cpu => cpu.nomeProcesso === freqItem.nomeProcesso);
+                            return {
+                                nomeProcesso: freqItem.nomeProcesso,
+                                x: cpuItem ? (parseFloat(cpuItem.total_cpu) / Math.max(...dataCpu.map(cpu => parseFloat(cpu.total_cpu))) * 100).toFixed(1) : 0, // CPU (%)
+                                y: freqItem.frequencia.toFixed(1) // Frequência
+                            };
+                        });
+
+                        // Coletar dados de X e Y para regressão
+                        const xValues = combinedData.map(item => parseFloat(item.x));
+                        const yValues = combinedData.map(item => parseFloat(item.y));
+
+                        // Calcular regressão linear
+                        const n = xValues.length;
+                        const xSum = xValues.reduce((a, b) => a + b, 0);
+                        const ySum = yValues.reduce((a, b) => a + b, 0);
+                        const xySum = xValues.reduce((sum, x, i) => sum + x * yValues[i], 0);
+                        const xSquaredSum = xValues.reduce((sum, x) => sum + x * x, 0);
+
+                        const slope = (n * xySum - xSum * ySum) / (n * xSquaredSum - xSum * xSum);
+                        const intercept = (ySum - slope * xSum) / n;
+
+                        // Gerar pontos para a linha de regressão
+                        const regressionPoints = xValues.map(x => ({
+                            x: x,
+                            y: slope * x + intercept
+                        }));
+
+                        const options = {
+                            series: [
+                                {
+                                    name: "Dados Reais",
+                                    data: combinedData
+                                },
+                                {
+                                    name: "Regressão Linear",
+                                    data: regressionPoints,
+                                }
+                            ],
+                            chart: {
+                                height: 280,
+                                type: 'scatter',
+                                zoom: { enabled: true, type: 'xy' }
+                            },
+                            xaxis: {
+                                tickAmount: 10,
+                                title: { text: "Total de CPU (%)" },
+                                labels: {
+                                    formatter: function (val) { return parseFloat(val).toFixed(1) }
+                                }
+                            },
+                            yaxis: {
+                                tickAmount: 7,
+                                title: { text: "Frequência" },
+                                labels: {
+                                    formatter: function (val) { return parseFloat(val).toFixed(1) }
+                                }
+                            },
+                            tooltip: {
+                                shared: false,
+                                custom: function ({ seriesIndex, dataPointIndex, w }) {
+                                    const pointData = w.config.series[seriesIndex].data[dataPointIndex];
+                                    if (seriesIndex === 0) { // Dados Reais
+                                        return `<div style="padding: 8px;">
+                            <strong>${pointData.nomeProcesso}</strong><br>
+                            CPU: ${pointData.x}%<br>
+                            Frequência: ${pointData.y}
+                        </div>`;
+                                    } else { // Regressão Linear
+                                        return `<div style="padding: 8px;">
+                            <strong>Regressão Linear</strong><br>
+                            CPU: ${pointData.x}%<br>
+                            Frequência: ${pointData.y.toFixed(1)}
+                        </div>`;
+                                    }
+                                }
+                            },
+                            colors: ['blue', 'red'],
+                            legend: { show: true }
+                        };
+
+                        const scatterChart = new ApexCharts(document.querySelector("#scatterChart"), options);
+                        scatterChart.render();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Scatter Chart:', error);
+                    }
+                }
+
+
+                // Bar Chart (ApexCharts)
+                async function renderBarChart() {
+                    try {
+                        const response = await fetch('/dashCerejo/frequencia3');
+                        const data = await response.json();
+
+                        const seriesData = data.map(item => ({
+                            x: item.nomeProcesso,
+                            y: item.frequencia,
+                            goals: [{
+                                name: 'Esperado',
+                                value: 100,
+                                strokeHeight: 5,
+                                strokeColor: 'violet'
+                            }]
+                        }));
+
+                        const options = {
+                            series: [{
+                                name: 'Frequência Atual',
+                                data: seriesData,
+                            }],
+                            chart: { height: 170, type: 'bar' },
+                            plotOptions: { bar: { columnWidth: '60%' } },
+                            colors: ['darkblue'],
+                            legend: { show: true }
+                        };
+
+                        const barChart = new ApexCharts(document.querySelector("#chart2"), options);
+                        barChart.render();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Bar Chart:', error);
+                    }
+                }
+
+                // Word Cloud (Chart.js)
+                // Word Cloud (Chart.js)
+                async function renderWordCloud() {
+                    try {
+                        const response = await fetch('/dashCerejo/cpu3');
+                        const data = await response.json();
+
+                        // Normalização dos valores para ajuste do tamanho das palavras
+                        const maxValue = Math.max(...data.map(item => parseFloat(item.total_cpu)));
+                        const minValue = Math.min(...data.map(item => parseFloat(item.total_cpu)));
+
+                        const normalizedData = data.map(item => ({
+                            label: item.nomeProcesso,
+                            value: ((parseFloat(item.total_cpu) - minValue) / (maxValue - minValue)) * 30 + 10 // Ajuste de tamanho (10 a 40)
+                        }));
+
+                        const limitedData = normalizedData.slice(0, 20); // Limita a 20 palavras
+                        const labels = limitedData.map(item => item.label);
+                        const weights = limitedData.map(item => item.value);
+
+                        // Função para gerar tons de azul baseados no peso
+                        const generateColor = (value) => {
+                            const intensity = Math.round((value / Math.max(...weights)) * 255); // Normaliza o peso para [0, 255]
+                            return `rgb(0, 0, ${intensity})`; // Azul crescente com a intensidade
+                        };
+
+                        const colors = weights.map(generateColor); // Gera cores para cada palavra
+
+                        // Criação do gráfico Word Cloud
+                        const ctxWordCloud = document.getElementById('chart3').getContext('2d');
+                        const wordCloudChart = new Chart(ctxWordCloud, {
+                            type: 'wordCloud',
+                            data: {
+                                labels,
+                                datasets: [{
+                                    label: 'Word Cloud',
+                                    data: weights,
+                                    color: colors // Aplica as cores geradas
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                plugins: { legend: { display: false } },
+                                elements: {
+                                    wordCloud: {
+                                        minFontSize: 12,
+                                        maxFontSize: 40
+                                    }
+                                }
+                            }
+                        });
+
+                        wordCloudChart.update();
+                    } catch (error) {
+                        console.error('Erro ao carregar dados do Word Cloud:', error);
+                    }
+                }
+
+
+                // Inicialização dos gráficos
+                document.addEventListener("DOMContentLoaded", () => {
+                    renderScatterChart();
+                    renderBarChart();
+                    renderWordCloud();
+                });
+
+                async function updateTotalProcesses() {
+                    try {
+                        const response = await fetch('/dashCerejo/totalProcessos3');
+                        const data = await response.json();
+
+                        // Atualiza a div com o total de processos
+                        const totalDiv = document.querySelector('.total h1');
+                        totalDiv.textContent = data[0].totalProcessos; // Acessa o total de processos retornado pela consulta
+                    } catch (error) {
+                        console.error("Erro ao buscar o total de processos:", error);
+                    }
+                }
+
+                // Chamar a função ao carregar a página
+                document.addEventListener('DOMContentLoaded', updateTotalProcesses);
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>

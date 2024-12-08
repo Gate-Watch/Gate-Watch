@@ -2,8 +2,9 @@ const model = require('../models/dashCerejoModel');
 
 // Obtém a frequência dos processos
 async function getProcessFrequency(req, res) {
+    var totem = req.body.totemServer
     try {
-        const data = await model.getProcessFrequency();
+        const data = await model.getProcessFrequency(totem);
         res.status(200).json(data);
     } catch (error) {
         console.error("Erro ao obter frequência de processos:", error);
@@ -13,8 +14,9 @@ async function getProcessFrequency(req, res) {
 
 // Obtém o total de CPU utilizado pelos processos
 async function getProcessCpuUsage(req, res) {
+    var totem = req.body.totemServer
     try {
-        const data = await model.getProcessCpuUsage();
+        const data = await model.getProcessCpuUsage(totem);
         res.status(200).json(data);
     } catch (error) {
         console.error("Erro ao obter uso de CPU:", error);
