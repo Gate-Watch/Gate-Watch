@@ -86,7 +86,7 @@
                         <h3 style="text-align: center; margin-top: -0.8vh;">Dias com Métrica Acima e Abaixo da Previsão
                         </h3>
                         <div class="linha-central"></div> <!-- Linha centralizada -->
-                        <div class="conteudo-ranking" style="margin-top: -4.5vh;">
+                        <div class="conteudo-ranking" style="margin-top: -3vh;">
                             <div class="acima">
                                 <h4>Dias Acima:</h4>
                                 <ul id="diasAcima" style="margin-right: 3.7vw; margin-top: 0.5vh"></ul>
@@ -104,143 +104,11 @@
             </div>
         </div>
     </div>
-    <div class="overlay" style="display: none;">
-        <div class="modal">
-            <button class="close-button">
-                <span class="X"></span>
-                <span class="Y"></span>
-                <div class="close">Sair</div>
-            </button>
-            <h2 id="modal-title">Detalhes do Dia</h2>
-            <p id="modal-content">Carregando informações...</p>
-
-            <!-- Botão de Select -->
-            <label for="select-dia">Escolha outro dia:</label>
-            <select id="select-dia">
-                <option value="Sunday">Domingo</option>
-                <option value="Monday">Segunda</option>
-                <option value="Tuesday">Terça</option>
-                <option value="Wednesday">Quarta</option>
-                <option value="Thursday">Quinta</option>
-                <option value="Friday">Sexta</option>
-                <option value="Saturday">Sábado</option>
-            </select>
-
-            <!-- Container para o Gráfico -->
-            <div id="modal-chart" style="height: 800px; width: 600px; "></div>
-        </div>
-    </div>
 
 </body>
 
 <script>
     nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
-
-    let chartInstance = null; // Instância do gráfico
-
-    function abrirModal(dia) {
-        const modal = document.querySelector('.overlay');
-        const modalConteudo = document.querySelector('#modal-content');
-        const selectDia = document.getElementById('select-dia');
-
-        // Atualiza o conteúdo do modal
-        modalConteudo.textContent = `Detalhes do dia: ${traduzirDia(dia)}`;
-
-        // Atualiza o valor do select no modal
-        selectDia.value = dia;
-
-        // Renderiza o gráfico com o dia selecionado
-        carregarGraficoDia(dia);
-
-        // Exibe o modal
-        modal.style.display = 'flex';
-    }
-
-    function configurarModal() {
-        const modal = document.querySelector('.overlay');
-        const closeButton = document.querySelector('.close-button');
-        const selectDia = document.getElementById('select-dia');
-
-        // Fechar modal ao clicar no botão de fechar
-        closeButton.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        // Fechar modal ao clicar fora do conteúdo
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Atualizar o gráfico ao mudar o dia no select
-        selectDia.addEventListener('change', (event) => {
-            const dia = event.target.value;
-            carregarGraficoDia(dia);
-        });
-    }
-
-    async function carregarGraficoDia(dia) {
-        const selectedTotem = document.getElementById('selectTotem').value;
-        const selectedComponent = document.getElementById('selectComp').value;
-
-        try {
-            const response = await fetch(`/dashRegressao/diario/${selectedTotem}/${selectedComponent}/${dia}`);
-            const data = await response.json();
-
-            if (!Array.isArray(data)) {
-                console.error("Os dados retornados não são válidos.");
-                return;
-            }
-
-            // Processa os dados para o gráfico
-            const categorias = data.map(d => d.hora); // Horários (0-23)
-            const valores = data.map(d => d.valor);   // Valores correspondentes
-
-            // Configuração do gráfico
-            const options = {
-                chart: {
-                    type: 'line',
-                    height: 300,
-                },
-                series: [{
-                    name: 'Valores',
-                    data: valores
-                }],
-                xaxis: {
-                    categories: categorias,
-                    title: {
-                        text: 'Horas'
-                    }
-                },
-                yaxis: {
-                    min: 0,
-                    max: 100,
-                    title: {
-                        text: 'Valores'
-                    }
-                },
-                title: {
-                    text: `Gráfico para o dia ${traduzirDia(dia)}`,
-                    align: 'center'
-                }
-            };
-
-            // Renderiza o gráfico no modal
-            const chartContainer = document.getElementById('modal-chart');
-
-            // Limpa o gráfico anterior, se existir
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
-
-            chartInstance = new ApexCharts(chartContainer, options);
-            chartInstance.render();
-
-        } catch (error) {
-            console.error('Erro ao carregar os dados:', error);
-        }
-    }
 
     async function fetchMetrics() {
         const selectedTotem = document.getElementById('selectTotem').value;
@@ -284,10 +152,6 @@
             maiorPrevisaoEl.textContent = traduzirDia(diaMaiorPrevisao);
             menorPrevisaoEl.textContent = traduzirDia(diaMenorPrevisao);
 
-            // Adicionar eventos de clique para abrir o modal
-            maiorPrevisaoEl.onclick = () => abrirModal(diaMaiorPrevisao);
-            menorPrevisaoEl.onclick = () => abrirModal(diaMenorPrevisao);
-
             // Atualiza o ranking
             atualizarRanking(diasSemana, valoresAtuais, previsoes);
 
@@ -324,7 +188,6 @@
             elemento.className = 'dia';
             elemento.textContent = traduzirDia(dia);
             elemento.style.cursor = 'pointer';
-            elemento.onclick = () => abrirModal(dia); // Passa o dia corretamente
             listaAcima.appendChild(elemento);
         });
 
@@ -334,7 +197,6 @@
             elemento.className = 'dia';
             elemento.textContent = traduzirDia(dia);
             elemento.style.cursor = 'pointer';
-            elemento.onclick = () => abrirModal(dia); // Passa o dia corretamente
             listaAbaixo.appendChild(elemento);
         });
     }
@@ -359,7 +221,7 @@
         chartContainer.innerHTML = '';
 
         const options = {
-            chart: { type: 'line', height: 290 },
+            chart: { type: 'line', height: 400 },
             series: [
                 { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
                 { name: 'Previsão Máxima', data: previsaoMaxima.map(v => Math.round(v)) },
@@ -412,7 +274,7 @@
         chartContainer2.innerHTML = '';
 
         const options = {
-            chart: { type: 'line', height: 290, width: 470 },
+            chart: { type: 'line', height: 400, width: 590 },
             series: [
                 { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
                 { name: 'Previsão', data: previsoes.map(v => Math.round(v)) },
@@ -496,7 +358,6 @@
 
     document.addEventListener('DOMContentLoaded', fetchRanking);
     document.addEventListener("DOMContentLoaded", fetchMetrics);
-    document.addEventListener('DOMContentLoaded', configurarModal);
 
 </script>
 

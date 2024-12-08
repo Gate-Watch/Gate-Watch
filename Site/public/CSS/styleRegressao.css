@@ -115,7 +115,7 @@
     width: 30vw;
     display: flex;
     align-items: flex-end;
-    margin-left: 11.6vw;
+    margin-left: 19.5vw;
     margin-top: -3.5vh;
  }
  
@@ -275,7 +275,7 @@
  
  .conteudoPagina .conteudoMetricas .boxConteudo .boxAlertas .boxRankingAlertas {
     font-family: "openSans";
-    height: 33vh; /* Ajusta a altura para o conteúdo */
+    height: 33.5vh; /* Ajusta a altura para o conteúdo */
     width: 33.5vw;
     display: flex;
     flex-direction: column;
