@@ -7,7 +7,7 @@ function dashJoaoCpu() {
     cpu_usage, 
     dtHora 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 1
 ORDER BY 
@@ -23,7 +23,7 @@ function dashJoaoCpu2() {
     cpu_usage, 
     dtHora 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 2
 ORDER BY 
@@ -38,7 +38,7 @@ function dashJoaoCpu3() {
     cpu_usage, 
     dtHora 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 3
 ORDER BY 
@@ -54,7 +54,7 @@ function dashJoaoRam() {
     memory_perc, 
     dtHora 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 1
 ORDER BY 
@@ -69,7 +69,7 @@ function dashJoaoRam2() {
     memory_perc, 
     dtHora 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 1
 ORDER BY 
@@ -84,7 +84,7 @@ function dashJoaoRam3() {
     memory_perc, 
     dtHora 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 1
 ORDER BY 
@@ -99,7 +99,7 @@ function dashDisco() {
     disk_usage, 
     disk_total 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 1
 ORDER BY 
@@ -114,7 +114,7 @@ function dashDisco2() {
     disk_usage, 
     disk_total
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 2
 ORDER BY 
@@ -129,7 +129,7 @@ function dashDisco3() {
     disk_usage, 
     disk_total 
 FROM 
-    desempenho 
+    Desempenho 
 WHERE 
     fkTotem = 3
 ORDER BY 
@@ -148,7 +148,7 @@ function alerta() {
     medida, 
     statusTotem 
 from 
-    alerta
+    Alerta
 where
     statusTotem = 'Alertado';
 `;
@@ -157,7 +157,7 @@ where
 
 function atualizarStatus(id) {
     const instrucaoSql = `
-    update alerta set statusTotem = 'resolvido' where idAlerta = '${id}';
+    update Alerta set statusTotem = 'resolvido' where idAlerta = '${id}';
 `;
     return database.executar(instrucaoSql);
 }

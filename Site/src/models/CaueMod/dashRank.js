@@ -3,22 +3,23 @@ const db = require('../../database/config');
 function getTotens(ordenarPor) {
     let query = `
          SELECT 
-    totem.codigo_serie AS 'Código de Série', 
-    COUNT(alerta.idAlerta) AS 'Valor Alertas',
-    MAX(alerta.dtAlerta) AS 'Data do Primeiro Alerta'
-    FROM totem 
-     LEFT JOIN alerta ON totem.idTotem = alerta.fkTotem `;
+    Totem.codigo_serie AS 'Código de Série', 
+    COUNT(Alerta.idAlerta) AS 'Valor Alertas',
+    MAX(Alerta.dtAlerta) AS 'Data do Primeiro Alerta' ,
+    nome_totem
+    FROM Totem 
+     LEFT JOIN Alerta ON Totem.idTotem = Alerta.fkTotem `;
 
     // Adiciona a cláusula ORDER BY conforme o critério recebido
     if (ordenarPor == 'qtdAlertas') {
-        query += ' GROUP BY totem.codigo_serie ORDER BY count(alerta.idAlerta) desc;'; // Ordenar por alertas de forma decrescente
+        query += ' GROUP BY Totem.codigo_serie, nome_totem ORDER BY count(alerta.idAlerta) desc;'; // Ordenar por alertas de forma decrescente
     } else if (ordenarPor == 'nome') {
-        query += ' GROUP BY totem.codigo_serie ORDER BY totem.codigo_serie ASC;'; // Ordenar por código de série (nome) de forma crescente
+        query += ' GROUP BY Totem.codigo_serie, nome_totem ORDER BY Totem.codigo_serie ASC;'; // Ordenar por código de série (nome) de forma crescente
     } else if (ordenarPor == 'alertaRecente') {
-        query += ' GROUP BY totem.codigo_serie ORDER BY MAX(alerta.dtAlerta) DESC;'
+        query += ' GROUP BY Totem.codigo_serie, nome_totem ORDER BY MAX(alerta.dtAlerta) DESC;'
     } 
     //else if (ordenarPor == 'anoFabricacao') {
-        //query += ' GROUP BY totem.codigo_serie ORDER BY totem.ano_totem DESC;'
+        //query += ' GROUP BY Totem.codigo_serie ORDER BY Totem.ano_Totem DESC;'
     //}
 
     return db.executar(query);
@@ -26,7 +27,7 @@ function getTotens(ordenarPor) {
 
 function getQuantidadeTotem() {
     const query = `
-        SELECT COUNT(idTotem) AS count FROM totem;
+        SELECT COUNT(idTotem) AS count FROM Totem;
     `;
     return db.executar(query);
 }
@@ -49,7 +50,7 @@ FROM Processos where year(dataProcesso) = ${anoWord} GROUP BY nomeProcesso, mes)
 
 function getAnoDisponivelWord(){
     const query = `
-        SELECT distinct Year(dtAlerta) as ano from alerta order by ano desc;
+        SELECT distinct Year(dtAlerta) as ano from Alerta order by ano desc;
     `
     return db.executar(query)
 
@@ -57,7 +58,7 @@ function getAnoDisponivelWord(){
 
 function getAnoDisponivelGraficoLinha(){
     const query = `
-        SELECT distinct Year(dtAlerta) as ano from alerta order by ano desc;
+        SELECT distinct Year(dtAlerta) as ano from Alerta order by ano desc;
     `
     return db.executar(query)
 
@@ -65,7 +66,7 @@ function getAnoDisponivelGraficoLinha(){
 
 function getAnoDisponivelGraficoBarrasLateral(){
     const query = `
-        SELECT distinct Year(dtHora) as ano from desempenho order by ano desc;
+        SELECT distinct Year(dtHora) as ano from Desempenho order by ano desc;
     `
     return db.executar(query)
 
@@ -73,7 +74,7 @@ function getAnoDisponivelGraficoBarrasLateral(){
 
 function getMesDisponivelGraficoBarrasLateral(){
     const query = `
-        SELECT distinct month(dtHora) as ano from desempenho order by ano;
+        SELECT distinct month(dtHora) as ano from Desempenho order by ano;
     `
     return db.executar(query)
 

@@ -543,3 +543,7 @@ select option {
     justify-content: space-between;
     align-items: center;
 }
+
+.alerta-alertas table {
+    width: 100%;
+}

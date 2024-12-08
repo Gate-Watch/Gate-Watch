@@ -27,10 +27,10 @@ async function fetchTotens(ordenarPor) {
 
         data.forEach(item => {
             const botao = document.createElement('button');
-            botao.textContent = `Totem: ${item["Código de Série"]} // ${item["Valor Alertas"]} alertas`;
+            botao.textContent = `Totem: ${item["nome_totem"]} // ${item["Valor Alertas"]} alertas`;
 
             botao.addEventListener('click', function() {
-                mostrarTotemNaTela(item["Código de Série"]);
+                mostrarTotemNaTela(item["nome_totem"]);
                 fetchGraficoDonut(item["Código de Série"]);
                 fetchDiaEHora(item["Código de Série"]);
                 fetchGraficoRadar(item["Código de Série"]);
@@ -50,7 +50,7 @@ function mostrarTotemNaTela(nomeTotem) {
     const smileOverlay = document.getElementById('smileOverlay');
     const smileMessage = document.getElementById('smileMessage');
     
-    smileMessage.textContent = `Totem: ${nomeTotem}`;
+    smileMessage.textContent = `${nomeTotem}`;
     smileOverlay.style.display = 'flex';
 
     smileOverlay.addEventListener('click', fecharOverlay);
