@@ -19,11 +19,11 @@
                 <h3>ANALISTA DE DADOS</h3>
             </div>
             <div class="boxOpcoes">
-                <a href="index.html">
-                    <div class="box">HOME</div>
+                <a href="dashChart.html">
+                    <div class="box">ALERTAS</div>
                 </a>
                 <a href="DashboardAnalistaCerejo.html">
-                    <div class="box">DASHBOARD</div>
+                    <div class="box" >DASHBOARD</div>
                 </a>
                 <a href="dashboardAnalistaRegressao.html">
                     <div class="box" style="background-color: #41446877;">PREVISÕES</div>
@@ -35,21 +35,23 @@
         </div>
         <div class="conteudoMetricas">
             <div class="boxTitulo">
-                <h2 class="tituloDash">Previsão das Métricas dos Componentes</h3>
-                    <div class="selecionarTotem">
-                        <select id="selectTotem" onchange="fetchMetrics()">
-                            <option value="1" selected>Totem 1</option>
-                            <option value="2">Totem 2</option>
-                            <option value="3">Totem 3</option>
-                        </select>
-                        <select id="selectComp" onchange="fetchMetrics()">
-                            <option value="Cpu" selected>CPU</option>
-                            <option value="Ram">RAM</option>
-                            <option value="Disco">DISCO</option>
-                        </select>
-                        <!-- <button id="openModal" class="modal-button">Abrir Modal</button> -->
-                    </div>
-                    <img src="Images/gwLogo_black.png" alt="" style="height: 7.5vh; width: 3.5vw; margin-left: 0.6vw;">
+                <div class="divTitulo">
+                    <h2 class="tituloDash">Previsão das Métricas dos Componentes</h3>
+                </div>
+                <div class="selecionarTotem">
+                    <select id="selectTotem" onchange="fetchMetrics()">
+                        <option value="1" selected>Totem 1</option>
+                        <option value="2">Totem 2</option>
+                        <option value="3">Totem 3</option>
+                    </select>
+                    <select id="selectComp" onchange="fetchMetrics()">
+                        <option value="Cpu" selected>CPU</option>
+                        <option value="Ram">RAM</option>
+                        <option value="Disco">DISCO</option>
+                    </select>
+                    <!-- <button id="openModal" class="modal-button">Abrir Modal</button> -->
+                </div>
+                <img src="Images/gwLogo_black.png" alt="" style="height: 7.5vh; width: 3.5vw; margin-left: 0.6vw;">
             </div>
             <div class="boxConteudo">
                 <div class="boxComponentes">
@@ -221,7 +223,7 @@
         chartContainer.innerHTML = '';
 
         const options = {
-            chart: { type: 'line', height: 400 },
+            chart: { type: 'line', height: 350 },
             series: [
                 { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
                 { name: 'Previsão Máxima', data: previsaoMaxima.map(v => Math.round(v)) },
@@ -274,7 +276,7 @@
         chartContainer2.innerHTML = '';
 
         const options = {
-            chart: { type: 'line', height: 400, width: 590 },
+            chart: { type: 'line', height: 350, width: 500 },
             series: [
                 { name: 'Valores Reais', data: valores.map(v => Math.round(v)) },
                 { name: 'Previsão', data: previsoes.map(v => Math.round(v)) },

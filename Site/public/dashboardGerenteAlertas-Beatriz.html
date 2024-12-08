@@ -21,9 +21,10 @@
                 <h3>GERENTE DE DADOS</h3>
             </div>
             <div class="boxOpcoes">
-                <a href="dashGerenteGeral-JV.html"><div class="box" style="background-color: #41446877;">TENDÊNCIAS</div></a>
-                <a
-                    href="dashboardCaue.html">
+                <a href="dashGerenteGeral-JV.html">
+                    <div class="box" style="background-color: #41446877;">TENDÊNCIAS</div>
+                </a>
+                <a href="dashboardCaue.html">
                     <div class="box">RELATÓRIO</div>
                 </a>
                 <a href="cadastroTotens.html">
@@ -36,12 +37,21 @@
         </div>
         <div class="conteudoMetricas">
             <!-- Pop-up -->
+            <div id="popupAjudaSelect" class="popup">
+                <div class="popupContent">
+                    <span class="closePopup" id="closePopupSelect">&times;</span>
+                    <h2>SELECIONE MÊS</h2>
+                    <p>O campo disponível para selecionar o mês que deseja visualizar os dados funciona apenas para os cards "Totem com mais alertas" e "Dia do mês com mais alertas", além do gráfico no canto inferior esquerdo "Frequência de alertas por mês do ano". Assim ao aplicar o filtro do mês você poderá escolher o totem que deseja visualizar os alertas.
+                    </p>
+                </div>
+            </div>
             <div id="popupAjudaTotem" class="popup">
                 <div class="popupContent">
                     <span class="closePopup" id="closePopupTotem">&times;</span>
                     <h2>TOTEM COM MAIS ALERTAS NO MÊS</h2>
                     <p>Com o card exposto na tela é possível identificar o nome do totem de check in da companhia com
-                        maior quantidade de alertas no mês filtrado, para identificar e comparar qual totem está dando mais problema.
+                        maior quantidade de alertas no mês filtrado, para identificar e comparar qual totem está dando
+                        mais problema.
                     </p>
                 </div>
             </div>
@@ -50,8 +60,10 @@
                 <div class="popupContent">
                     <span class="closePopup" id="closePopupDia">&times;</span>
                     <h2>DIA DO MÊS COM MAIS ALERTAS</h2>
-                    <p>Com o card exposto na tela é possível identificar o dia do mês filtrado em que o totem de check in
-                        da companhia registrou a maior quantidade de alertas. Para que possa ser ajudar a identificar se algum fator externo, como um feriado, possa ter colaborado para o aumento de alertas nesse dia.
+                    <p>Com o card exposto na tela é possível identificar o dia do mês filtrado em que o totem de check
+                        in
+                        da companhia registrou a maior quantidade de alertas. Para que possa ser ajudar a identificar se
+                        algum fator externo, como um feriado, possa ter colaborado para o aumento de alertas nesse dia.
                     </p>
                 </div>
             </div>
@@ -64,7 +76,7 @@
                         aeroporto de Congonhas, expondo como essa quantidade pode variar ao decorrer dos meses.
                     </p>
                     <p>Os dados do gráfico são disponibilizados pelo ANAC e são atualizados periódicamente
-                        Link:https://horus.labtrans.ufsc.br/gerencial/?auth=s#Movimentacao/DadosCompletos</p >
+                        Link:https://horus.labtrans.ufsc.br/gerencial/?auth=s#Movimentacao/DadosCompletos</p>
                 </div>
             </div>
 
@@ -72,7 +84,9 @@
                 <div class="popupContent">
                     <span class="closePopup" id="closePopupFreqAlertas">&times;</span>
                     <h2>FREQUÊNCIA DE ALERTAS POR DIAS DO MÊS</h2>
-                    <p>Com o mês de visualização dos dados selecionado é possível selecionar o nome do totem de visualização da frequência de alertas por dia do mês escolhido. Com esse gráfico é possível identificar se algum feriado refletiu no aumento de alertas por exemplo.
+                    <p>Com o mês de visualização dos dados selecionado é possível selecionar o nome do totem de
+                        visualização da frequência de alertas por dia do mês escolhido. Com esse gráfico é possível
+                        identificar se algum feriado refletiu no aumento de alertas por exemplo.
                     </p>
                 </div>
             </div>
@@ -81,7 +95,9 @@
                 <div class="popupContent">
                     <span class="closePopup" id="closePopupAlerxPass">&times;</span>
                     <h2>RELAÇÃO ENTRE A FREQUÊNCIA DE ALERTAS POR PASSAGEIROS</h2>
-                    <p> Para entender se há alguma relação entre a frequência de alertas e a quantidade de passageiros no aeroporto por mês, podendo visualizar através de uma regressão linear a tendência desse dados.
+                    <p> Para entender se há alguma relação entre a frequência de alertas e a quantidade de passageiros
+                        no aeroporto por mês, podendo visualizar através de uma regressão linear a tendência desse
+                        dados.
                     </p>
                 </div>
             </div>
@@ -101,6 +117,7 @@
                             <select id="listaMeses" onchange="diaMaiorAlerta(), totemMaiorAlerta(), listarTotens()">
                                 <option value="" selected disabled>Selecione um Mês</option>
                             </select>
+                            <img src="Images/iconAjuda.png" alt="" style="width: 4.7%; height: 75%; cursor: pointer; margin-left: 2%; margin-top: 1%;" id="ajudaSelect">
                         </div>
                         <div class="divKpis">
                             <div class="boxKpiTotem">
@@ -108,7 +125,9 @@
                                     <div class="divLinha"></div>
                                     <div class="divMetrica">
                                         <h1>TOTEM COM MAIS ALERTAS</h1>
-                                        <h2><span id="TotemMaisAlerta"></span></h2>
+                                        <h2><span id="TotemMaisAlerta"
+                                                style="font-size: 23px; color: rgb(75, 15, 15);">Selecione um mês para
+                                                visualizar</span></h2>
                                         <div class="divAjuda">
                                             <img src="Images/iconAjuda.png" alt="" style="width: 12%; "
                                                 id="ajudaMetricaTotem">
@@ -121,7 +140,9 @@
                                     <div class="divLinha"></div>
                                     <div class="divMetrica">
                                         <h1>DIA COM MAIS ALERTAS</h1>
-                                        <h2><span id="DiaMaisAlerta"></span></h2>
+                                        <h2><span id="DiaMaisAlerta"
+                                                style="font-size: 23px; color: rgb(75, 15, 15);">Selecione um mês para
+                                                visualizar</span></h2>
                                         <div class="divAjuda">
                                             <img src="Images/iconAjuda.png" alt="" style="width: 12%;"
                                                 id="ajudaMetricaDia">
@@ -158,6 +179,7 @@
                             </div>
                         </div>
                         <div class="divGrafFreqAlertas" id="graficoAlertas">
+                            Selecione um totem para visualizar
                         </div>
                     </div>
                     <div class="divAlertasXPassageiros">
@@ -198,7 +220,7 @@
 
 
 
-// FUNÇÃO DE MOSTRAR O TOTEM COM MAIS ALERTAS
+    // FUNÇÃO DE MOSTRAR O TOTEM COM MAIS ALERTAS
     function totemMaiorAlerta() {
         var mesSelecionado = listaMeses.value
         fetch(`/alertasGerente/totemMaiorAlerta/${fkCompanhia}/${mesSelecionado}`, {
@@ -217,6 +239,11 @@
 
                     console.log(dados);
                     TotemMaisAlerta.innerHTML = dados.nome;
+
+
+                    TotemMaisAlerta.style.color = '#000000';
+                    TotemMaisAlerta.style.fontSize = '28px';
+
                 })
             }
         })
@@ -225,7 +252,7 @@
 
 
 
-// FUNÇÃO DE MOSTRAR O DIA COM MAIS ALERTAS
+    // FUNÇÃO DE MOSTRAR O DIA COM MAIS ALERTAS
     function diaMaiorAlerta() {
         var mesSelecionado = listaMeses.value
 
@@ -245,6 +272,9 @@
 
                     console.log(dados);
                     DiaMaisAlerta.innerHTML = dados.dia;
+
+                    DiaMaisAlerta.style.color = '#000000';
+                    DiaMaisAlerta.style.fontSize = '28px';
                 })
             }
         })
@@ -252,7 +282,7 @@
     }
 
 
-// FUNÇÃO DE LISTAR APENAS OS TOTENS COM ALERTAS
+    // FUNÇÃO DE LISTAR APENAS OS TOTENS COM ALERTAS
     function listarTotens() {
         var mesSelecionado = listaMeses.value
         fetch(`/alertasGerente/listarTotens/${fkCompanhia}/${mesSelecionado}`, {
@@ -304,7 +334,7 @@
 
 
 
-// FUNÇÃO DE GERAR O GRÁFICO DO WEB CRAWLER COM A QTD DE PASSAGEIROS POR MÊS DO ANO
+    // FUNÇÃO DE GERAR O GRÁFICO DO WEB CRAWLER COM A QTD DE PASSAGEIROS POR MÊS DO ANO
     function gerarGraficoPassageirosPorMes() {
         document.getElementById("graficoPassageiros").innerHTML += `
                
@@ -413,16 +443,16 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
 
+
+
     }
 
     function plotarGraficoAlertas(resposta) {
 
         console.log('iniciando plotagem do gráfico...');
 
-        // Criando estrutura para plotar gráfico - labels
         let labels = [];
 
-        // Criando estrutura para plotar gráfico - dados
         let dados = {
             labels: labels,
             datasets: [{
@@ -438,7 +468,6 @@
         console.log('Estes dados foram recebidos pela funcao "gerarGraficoPassageirosPorMes" e passados para "plotarGrafico":')
         console.log(resposta)
 
-        // Inserindo valores recebidos em estrutura para plotar o gráfico
 
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
@@ -455,13 +484,11 @@
         console.log(dados.datasets)
         console.log('----------------------------------------------')
 
-        // Criando estrutura para plotar gráfico - config
         const config = {
             type: 'line',
             data: dados,
         };
 
-        // Adicionando gráfico criado em div na tela
 
         let myChartAlertas = new Chart(
             document.getElementById(`myChartCanvasGraficoAlertas`),
@@ -582,7 +609,7 @@
 
 
 
-// FUNÇÃO DE PLOTAR A REGRESSÃO LINEAR DA FREQ DE ALERTAS PELO NÚMERO DE PASSAGEIROS
+    // FUNÇÃO DE PLOTAR A REGRESSÃO LINEAR DA FREQ DE ALERTAS PELO NÚMERO DE PASSAGEIROS
     async function gerarRegressaoAlertasXPassageiros() {
         return fetch(`/alertasGerente/gerarRegressaoAlertasXPassageiros/${fkCompanhia}/`, {
             method: "GET",
@@ -616,7 +643,7 @@
         return { m, b };
     }
 
-    // Configurar o Chart.js
+
     document.addEventListener("DOMContentLoaded", async function () {
         const resposta = await gerarRegressaoAlertasXPassageiros();
 
@@ -803,6 +830,29 @@
     window.addEventListener("click", (event) => {
         if (event.target === popupAjudaAlerxPass) {
             popupAjudaAlerxPass.style.display = "none";
+        }
+    });
+
+
+    // Icone de ajuda da métrica de frequência de alertas por passageiros (regressão) 
+    const ajudaSelect = document.getElementById("ajudaSelect");
+    const popupAjudaSelect = document.getElementById("popupAjudaSelect");
+    const closePopupSelect = document.getElementById("closePopupSelect");
+
+    // Abrir o pop-up
+    ajudaSelect.addEventListener("click", () => {
+        popupAjudaSelect.style.display = "flex";
+    });
+
+    // Fechar o pop-up
+    closePopupSelect.addEventListener("click", () => {
+        popupAjudaSelect.style.display = "none";
+    });
+
+    // Fechar ao clicar fora do pop-up
+    window.addEventListener("click", (event) => {
+        if (event.target === popupAjudaSelect) {
+            popupAjudaSelect.style.display = "none";
         }
     });
 

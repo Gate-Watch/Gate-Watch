@@ -12,6 +12,7 @@
  body {
     padding: 0;
     margin: 0;
+    overflow-y: hidden;
  }
  .conteudoPagina {
     display: flex;
@@ -27,7 +28,7 @@
     align-items: center;
     background-color: #000000;
     height: 100vh;
-    width: 15vw;
+    width: 13vw;
  }
  
  .conteudoPagina .boxLateral .boxIdentificacao {
@@ -56,7 +57,7 @@
  }
  
  .conteudoPagina .boxLateral .boxOpcoes {
-    width: 15vw;
+    width: 13vw;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -70,7 +71,7 @@
     align-items: center;
     font-family: "montSerrat";
     font-weight: 700;
-    width: 15vw;
+    width: 13vw;
     height: 5vw;   
  }
  
@@ -83,7 +84,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: 15vw;
+    width: 13vw;
     height: 7vh;
     color: #ffffff;
     font-family: "montSerrat";
@@ -92,14 +93,14 @@
  
  .conteudoPagina .conteudoMetricas {
     height: 100vh;
-    width: 85vw;
+    width: 87vw;
     display: flex;
     flex-direction: column;
  }
  
  .conteudoPagina .conteudoMetricas .boxTitulo {
     height: 9vh;
-    width: 85vw;
+    width: 87vw;
     display: flex;
  }
  
@@ -108,14 +109,18 @@
     font-size: 19;
     margin-top: 1.8vh;
     margin-left: 2vw;
+    width: 50vw;
  }
  
+ .conteudoPagina .conteudoMetricas .boxTitulo .divTitulo {
+   width: 50vw;
+ }
+
  .conteudoPagina .conteudoMetricas .boxTitulo .selecionarTotem {
     height: 10vh;   
     width: 30vw;
     display: flex;
     align-items: flex-end;
-    margin-left: 19.5vw;
     margin-top: -3.5vh;
  }
  
@@ -137,7 +142,7 @@
  
  .conteudoPagina .conteudoMetricas .boxConteudo{
     height: 90vh;
-    width: 85vw;
+    width: 87vw;
     display: flex;
     flex-direction: row;
  }

@@ -8,6 +8,9 @@
     src: url(../Fonts/OpenSans-Regular.ttf);
   }
 
+  body {
+    overflow-y: hidden;
+  }
 
 .conteudoPagina .conteudoMetricas {
     height: 100vh;
@@ -44,13 +47,15 @@
 .boxGeralKpi .divSelect {
     height: 5vh;
     width: 38vw;
+    display: flex;
+    flex-direction: row;
 }
 
 .boxGeralKpi .divSelect select {
     background-color: #18204b;
     color: white;
     height: 5vh;
-    width: 38vw;
+    width: 35vw;
     border-radius: 10px;
     font-family: "openSans";
     font-size: 15px;
@@ -267,7 +272,11 @@
     width: 49vw;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    font-size: 23px;
+    color: rgb(75, 15, 15);
+    font-family: "openSans";
+    font-weight: 750;
 }
 
 .divAlertasXPassageiros {
